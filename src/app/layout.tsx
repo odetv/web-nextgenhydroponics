@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Maintenance from "../components/Maintenance";
 import { maintenanceMode } from "../config/config";
+import { Providers } from "./providers";
+import Header from "../components/Header";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,15 +28,21 @@ export default function RootLayout({
     return (
       <html lang="en">
         <body className={poppins.className}>
-          <Maintenance />
+          <Providers>
+            <Maintenance />
+          </Providers>
         </body>
       </html>
     );
   }
-
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
