@@ -1,4 +1,4 @@
-const maintenanceMode = true;
+const maintenanceMode = false;
 module.exports = {
   maintenanceMode,
 };

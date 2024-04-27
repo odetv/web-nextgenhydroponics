@@ -87,7 +87,7 @@ function Footer() {
           <div className="space-y-3">
             <h3 className="tracki uppercase font-bold text-gray-50">HALAMAN</h3>
             <ul className="space-y-1 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-              <li>
+              <li key="dashboard">
                 <a
                   rel="noopener noreferrer"
                   href="/#"
@@ -96,7 +96,7 @@ function Footer() {
                   Dashboard
                 </a>
               </li>
-              <li>
+              <li key="produk">
                 <a
                   rel="noopener noreferrer"
                   href="/#"
@@ -105,7 +105,7 @@ function Footer() {
                   Produk
                 </a>
               </li>
-              <li>
+              <li key="fitur">
                 <a
                   rel="noopener noreferrer"
                   href="/#"
@@ -114,7 +114,7 @@ function Footer() {
                   Fitur
                 </a>
               </li>
-              <li>
+              <li key="tentang">
                 <a
                   rel="noopener noreferrer"
                   href="/#"
@@ -123,7 +123,6 @@ function Footer() {
                   Tentang
                 </a>
               </li>
-              <li></li>
             </ul>
           </div>
         </div>

@@ -11,6 +11,8 @@ import {
   DropdownMenu,
   Avatar,
   Image,
+  NavbarBrand,
+  NavbarContent,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -69,15 +71,15 @@ export default function Header() {
 
   return (
     <Navbar isBordered>
-      <div className="-ml-3">
+      <NavbarContent className="-ml-3">
         <Image
           width={100}
           alt="Logo Next-Gen Hydroponics"
           src={LogoNextGenHydroponics.src}
         />
-      </div>
+      </NavbarContent>
 
-      <div className="hidden sm:flex gap-4 font-medium">
+      <NavbarContent className="hidden sm:flex gap-4 font-medium">
         <NavbarItem>
           <Link
             color="foreground"
@@ -114,7 +116,7 @@ export default function Header() {
             Tentang
           </Link>
         </NavbarItem>
-      </div>
+      </NavbarContent>
 
       <div className="items-center flex gap-4">
         <Input
@@ -144,64 +146,70 @@ export default function Header() {
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem
               key="profile"
-              className="h-14 gap-2 text-blue-800 bg-blue-100"
               color="secondary"
+              textValue="profile"
+              className="h-14 gap-2 text-blue-800 bg-blue-100"
             >
-              <div className="">
-                <p className="font-semibold">
+              <div>
+                <NavbarContent className="font-semibold">
                   {user ? (
                     user.displayName
                   ) : (
-                    <p className="text-center">Selamat Datang👋</p>
+                    <span className="text-center">Selamat Datang👋</span>
                   )}
-                </p>
-                <p className="font-medium text-xs text-green-800">
+                </NavbarContent>
+                <NavbarContent className="font-medium text-xs text-green-800">
                   {user ? user.email : ""}
-                </p>
+                </NavbarContent>
               </div>
             </DropdownItem>
-            <DropdownItem color="default" key="settings">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem color="default" key="dashboard" textValue="Dashboard">
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <DashboardIcon color="action" />
                 Dashboard
-              </div>
+              </NavbarContent>
             </DropdownItem>
-            <DropdownItem color="default" key="settings">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem color="default" key="produk" textValue="produk">
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <CategoryIcon color="action" />
                 Produk
-              </div>
+              </NavbarContent>
             </DropdownItem>
-            <DropdownItem color="default" key="settings">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem color="default" key="fitur" textValue="fitur">
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <GamepadIcon color="action" />
                 Fitur
-              </div>
+              </NavbarContent>
             </DropdownItem>
-            <DropdownItem color="default" key="settings">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem color="default" key="tentang" textValue="tentang">
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <InfoIcon color="action" />
                 Tentang
-              </div>
+              </NavbarContent>
             </DropdownItem>
-            <DropdownItem color="default" key="settings">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem
+              color="default"
+              key="pengaturan"
+              textValue="pengaturan"
+            >
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <SettingsIcon color="action" />
                 Pengaturan
-              </div>
+              </NavbarContent>
             </DropdownItem>
-            <DropdownItem color="default" key="help_and_feedback">
-              <div className="flex flex-row items-center gap-1">
+            <DropdownItem color="default" key="bantuan" textValue="bantuan">
+              <NavbarContent className="flex flex-row items-center gap-1">
                 <HelpIcon color="action" />
                 Bantuan
-              </div>
+              </NavbarContent>
             </DropdownItem>
             <DropdownItem
               color="danger"
               key="logout"
               className="mt-1 bg-red-100"
+              textValue="actionauth"
             >
-              <div className="font-semibold text-red-800 flex flex-row items-center justify-center">
+              <NavbarContent className="font-semibold text-red-800 flex flex-row items-center justify-center">
                 {user ? (
                   <button
                     onClick={handleLogout}
@@ -219,7 +227,7 @@ export default function Header() {
                     <LoginIcon />
                   </button>
                 )}
-              </div>
+              </NavbarContent>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
