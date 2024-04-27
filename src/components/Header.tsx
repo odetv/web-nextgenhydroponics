@@ -13,6 +13,7 @@ import {
   DropdownMenu,
   Avatar,
   Image,
+  Divider,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
 import LogoNextGenHydroponics from "../assets/image/logo/LogoNextGenHydroponics.png";
@@ -56,6 +57,15 @@ export default function App() {
             Fitur
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link
+            color="foreground"
+            href="#"
+            className="hover:text-green-800 transition-all ease-in-out duration-250"
+          >
+            Tentang
+          </Link>
+        </NavbarItem>
       </div>
 
       <div className="items-center flex gap-4">
@@ -78,7 +88,7 @@ export default function App() {
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
+              color="success"
               name="Jason Hughes"
               size="sm"
               src="https://i.pravatar.cc/150?u=a042581f4e29026704a"
@@ -91,14 +101,27 @@ export default function App() {
               color="secondary"
             >
               <p className="font-semibold">Selamat datang,</p>
-              <p className="font-semibold">Tamu</p>
+              <p className="font-semibold">👤Tamu</p>
             </DropdownItem>
-            <DropdownItem key="settings">Dashboard</DropdownItem>
-            <DropdownItem key="settings">Produk</DropdownItem>
-            <DropdownItem key="settings">Fitur</DropdownItem>
-            <DropdownItem key="settings">Pengaturan</DropdownItem>
-            <DropdownItem key="help_and_feedback">Bantuan</DropdownItem>
-            <DropdownItem key="logout">
+            <DropdownItem color="success" key="settings">
+              Dashboard
+            </DropdownItem>
+            <DropdownItem color="success" key="settings">
+              Produk
+            </DropdownItem>
+            <DropdownItem color="success" key="settings">
+              Fitur
+            </DropdownItem>
+            <DropdownItem color="success" key="settings">
+              Tentang
+            </DropdownItem>
+            <DropdownItem color="success" key="settings">
+              Pengaturan
+            </DropdownItem>
+            <DropdownItem color="success" key="help_and_feedback">
+              Bantuan
+            </DropdownItem>
+            <DropdownItem color="success" key="logout" className="mt-1">
               <p className="font-semibold text-red-800">Log Out →</p>
             </DropdownItem>
           </DropdownMenu>
