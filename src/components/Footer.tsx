@@ -51,7 +51,7 @@ function Footer() {
                 href="https://wa.me/6285739683673/"
                 target="_blank"
                 title="WhatsApp"
-                className="flex items-center py-1 hover:text-emerald-400 transition-all ease-in-out"
+                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <WhatsAppIcon />
                 <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
@@ -63,7 +63,7 @@ function Footer() {
                 href="https://instagram.com/nextgen.hydroponics"
                 target="_blank"
                 title="Instagram"
-                className="flex items-center py-1 hover:text-emerald-400 transition-all ease-in-out"
+                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <InstagramIcon />
                 <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
@@ -75,7 +75,7 @@ function Footer() {
                 href="mailto:research.nextgenhydroponics@gmail.com"
                 target="_blank"
                 title="Email"
-                className="flex items-center py-1 hover:text-emerald-400 transition-all ease-in-out"
+                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <MailOutlineIcon />
                 <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
@@ -99,7 +99,7 @@ function Footer() {
               <li>
                 <a
                   rel="noopener noreferrer"
-                  href="/#produk"
+                  href="/#"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Produk
@@ -108,7 +108,7 @@ function Footer() {
               <li>
                 <a
                   rel="noopener noreferrer"
-                  href="/#keunggulan"
+                  href="/#"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Fitur
@@ -117,7 +117,7 @@ function Footer() {
               <li>
                 <a
                   rel="noopener noreferrer"
-                  href="/#informasi"
+                  href="/#"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Tentang
@@ -135,9 +135,8 @@ function Footer() {
             target="_blank"
             className="hover:text-emerald-400 transition-all ease-in-out"
           >
-            ©️2024 Next-Gen Hydroponics
-          </a>{" "}
-          | All rights reserved
+            ©️2024 Next-Gen Hydroponics | All rights reserved
+          </a>
         </p>
       </div>
     </footer>

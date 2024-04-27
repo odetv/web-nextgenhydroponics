@@ -21,7 +21,7 @@ import LogoNextGenHydroponics from "../assets/image/logo/LogoNextGenHydroponics.
 export default function App() {
   return (
     <Navbar isBordered>
-      <div>
+      <div className="-ml-3">
         <Image
           width={100}
           alt="Logo Next-Gen Hydroponics"
@@ -91,7 +91,7 @@ export default function App() {
               color="success"
               name="Jason Hughes"
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704a"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQoYalG0iZwdwwSFMhNL4aDADjcSJFcuo31Y9OY6saF8ZG5dq3lLc8uXw0eJfUwvdwjTw&usqp=CAU"
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
