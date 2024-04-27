@@ -1,4 +1,4 @@
-import LogoNextGenHydroponics from "../assets/image/logo/LogoNextGenHydroponics.png";
+import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
 import { Image, Link } from "@nextui-org/react";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -78,7 +78,7 @@ function Footer() {
                 className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <MailOutlineIcon />
-                <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
+                <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm break-all">
                   research.nextgenhydroponics@gmail.com
                 </p>
               </a>

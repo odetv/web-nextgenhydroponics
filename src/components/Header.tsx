@@ -2,8 +2,6 @@
 import React from "react";
 import {
   Navbar,
-  NavbarBrand,
-  NavbarContent,
   NavbarItem,
   Link,
   Input,
@@ -13,10 +11,18 @@ import {
   DropdownMenu,
   Avatar,
   Image,
-  Divider,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
-import LogoNextGenHydroponics from "../assets/image/logo/LogoNextGenHydroponics.png";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import CategoryIcon from "@mui/icons-material/Category";
+import GamepadIcon from "@mui/icons-material/Gamepad";
+import InfoIcon from "@mui/icons-material/Info";
+import SettingsIcon from "@mui/icons-material/Settings";
+import HelpIcon from "@mui/icons-material/Help";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
+import GuestIcon from "../assets/images/user/Guest.png";
 import { useState, useEffect } from "react";
 import app from "../../firebaseConfig";
 import { getAuth, User, signOut, onAuthStateChanged } from "firebase/auth";
@@ -132,49 +138,88 @@ export default function Header() {
               className="transition-transform"
               color="success"
               size="sm"
-              src={
-                user?.photoURL ||
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQoYalG0iZwdwwSFMhNL4aDADjcSJFcuo31Y9OY6saF8ZG5dq3lLc8uXw0eJfUwvdwjTw&usqp=CAU"
-              }
+              src={user?.photoURL || GuestIcon.src}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem
               key="profile"
-              className="h-14 gap-2 text-blue-800"
+              className="h-14 gap-2 text-blue-800 bg-blue-100"
               color="secondary"
             >
-              <p className="font-semibold">Selamat datang,</p>
-              <p className="font-semibold">
-                {user ? user.displayName : "Guest"}
-              </p>
+              <div className="">
+                <p className="font-semibold">
+                  {user ? (
+                    user.displayName
+                  ) : (
+                    <p className="text-center">Selamat Datang👋</p>
+                  )}
+                </p>
+                <p className="font-medium text-xs text-green-800">
+                  {user ? user.email : ""}
+                </p>
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="settings">
-              Dashboard
+            <DropdownItem color="default" key="settings">
+              <div className="flex flex-row items-center gap-1">
+                <DashboardIcon color="action" />
+                Dashboard
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="settings">
-              Produk
+            <DropdownItem color="default" key="settings">
+              <div className="flex flex-row items-center gap-1">
+                <CategoryIcon color="action" />
+                Produk
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="settings">
-              Fitur
+            <DropdownItem color="default" key="settings">
+              <div className="flex flex-row items-center gap-1">
+                <GamepadIcon color="action" />
+                Fitur
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="settings">
-              Tentang
+            <DropdownItem color="default" key="settings">
+              <div className="flex flex-row items-center gap-1">
+                <InfoIcon color="action" />
+                Tentang
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="settings">
-              Pengaturan
+            <DropdownItem color="default" key="settings">
+              <div className="flex flex-row items-center gap-1">
+                <SettingsIcon color="action" />
+                Pengaturan
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="help_and_feedback">
-              Bantuan
+            <DropdownItem color="default" key="help_and_feedback">
+              <div className="flex flex-row items-center gap-1">
+                <HelpIcon color="action" />
+                Bantuan
+              </div>
             </DropdownItem>
-            <DropdownItem color="success" key="logout" className="mt-1">
-              <p className="font-semibold text-red-800">
+            <DropdownItem
+              color="danger"
+              key="logout"
+              className="mt-1 bg-red-100"
+            >
+              <div className="font-semibold text-red-800 flex flex-row items-center justify-center">
                 {user ? (
-                  <button onClick={handleLogout}>Keluar →</button>
+                  <button
+                    onClick={handleLogout}
+                    className="flex flex-row items-center gap-1"
+                  >
+                    <p>Keluar</p>
+                    <LogoutIcon />
+                  </button>
                 ) : (
-                  <button onClick={signInWithGoogle}>Masuk →</button>
+                  <button
+                    onClick={signInWithGoogle}
+                    className="flex flex-row items-center gap-1"
+                  >
+                    <p>Masuk</p>
+                    <LoginIcon />
+                  </button>
                 )}
-              </p>
+              </div>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
