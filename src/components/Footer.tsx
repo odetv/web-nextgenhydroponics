@@ -132,7 +132,6 @@ function Footer() {
         <p rel="noopener noreferrer">
           <a
             href="/"
-            target="_blank"
             className="hover:text-emerald-400 transition-all ease-in-out"
           >
             ©️2024 Next-Gen Hydroponics | All rights reserved
