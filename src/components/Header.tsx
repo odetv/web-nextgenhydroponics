@@ -151,16 +151,16 @@ export default function Header() {
               className="h-14 gap-2 text-blue-800 bg-blue-100"
             >
               <div>
-                <NavbarContent className="font-semibold">
+                <div className="font-semibold">
                   {user ? (
                     user.displayName
                   ) : (
-                    <span className="text-center">Selamat Datang👋</span>
+                    <p className="text-center">Selamat Datang👋</p>
                   )}
-                </NavbarContent>
-                <NavbarContent className="font-medium text-xs text-green-800">
+                </div>
+                <div className="font-medium text-xs text-green-800">
                   {user ? user.email : ""}
-                </NavbarContent>
+                </div>
               </div>
             </DropdownItem>
             <DropdownItem color="default" key="dashboard" textValue="Dashboard">
