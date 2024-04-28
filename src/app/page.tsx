@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { Typography } from "@mui/material";
-import CookieConsent from "../components/CookieConsent";
 
 export default function Dashboard() {
   return (

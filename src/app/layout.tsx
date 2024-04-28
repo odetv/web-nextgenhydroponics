@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Maintenance from "../components/Maintenance";
-import { maintenanceMode } from "../config/config";
 import { Providers } from "./providers";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  if (maintenanceMode) {
+  if (process.env.MAINTENANCE_MODE === "true") {
     return (
       <html lang="en">
         <body className={poppins.className}>
@@ -35,18 +35,24 @@ export default function RootLayout({
             <Footer />
           </Providers>
         </body>
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ""}
+        />
       </html>
     );
-  }
-  return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <Providers>
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
-      </body>
-    </html>
-  );
+  } else
+    return (
+      <html lang="en">
+        <body className={poppins.className}>
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
+          </Providers>
+        </body>
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ""}
+        />
+      </html>
+    );
 }
