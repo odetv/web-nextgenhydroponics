@@ -77,6 +77,7 @@ export default function App() {
         backdrop="blur"
         scrollBehavior="outside"
         shadow="lg"
+        className="mr-4 ml-4"
       >
         <ModalContent>
           {(onClose) => (
