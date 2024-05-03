@@ -21,7 +21,7 @@ import {
 import { SearchIcon } from "./SearchIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
-import GamepadIcon from "@mui/icons-material/Gamepad";
+import ArticleIcon from "@mui/icons-material/Article";
 import InfoIcon from "@mui/icons-material/Info";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
@@ -70,7 +70,7 @@ export default function Header() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/#"
             className="hover:text-green-800 transition-all ease-in-out duration-250"
           >
             Dashboard
@@ -79,7 +79,7 @@ export default function Header() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/#"
             className="hover:text-green-800 transition-all ease-in-out duration-250"
           >
             Produk
@@ -88,16 +88,16 @@ export default function Header() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/blog"
             className="hover:text-green-800 transition-all ease-in-out duration-250"
           >
-            Fitur
+            Blog
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
+            href="/#"
             className="hover:text-green-800 transition-all ease-in-out duration-250"
           >
             Tentang
@@ -171,10 +171,10 @@ export default function Header() {
                     Produk
                   </NavbarContent>
                 </DropdownItem>
-                <DropdownItem color="default" key="fitur" textValue="fitur">
+                <DropdownItem color="default" key="blog" textValue="blog">
                   <NavbarContent className="flex flex-row items-center gap-1">
-                    <GamepadIcon color="action" />
-                    Fitur
+                    <ArticleIcon color="action" />
+                    Blog
                   </NavbarContent>
                 </DropdownItem>
                 <DropdownItem color="default" key="tentang" textValue="tentang">
