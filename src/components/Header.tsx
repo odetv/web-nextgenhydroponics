@@ -161,13 +161,21 @@ export default function Header() {
                   key="dashboard"
                   textValue="Dashboard"
                 >
-                  <Link className="flex flex-row items-center gap-1" href="/#">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
                     <DashboardIcon color="action" />
                     Dashboard
                   </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="produk" textValue="produk">
-                  <Link className="flex flex-row items-center gap-1" href="/#">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
                     <CategoryIcon color="action" />
                     Produk
                   </Link>
@@ -176,13 +184,18 @@ export default function Header() {
                   <Link
                     className="flex flex-row items-center gap-1"
                     href="/blog"
+                    color="foreground"
                   >
                     <ArticleIcon color="action" />
                     Blog
                   </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="tentang" textValue="tentang">
-                  <Link className="flex flex-row items-center gap-1" href="/#">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
                     <InfoIcon color="action" />
                     Tentang
                   </Link>
@@ -192,13 +205,21 @@ export default function Header() {
                   key="pengaturan"
                   textValue="pengaturan"
                 >
-                  <Link className="flex flex-row items-center gap-1" href="/#">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
                     <SettingsIcon color="action" />
                     Pengaturan
                   </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="bantuan" textValue="bantuan">
-                  <Link className="flex flex-row items-center gap-1" href="/#">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
                     <HelpIcon color="action" />
                     Bantuan
                   </Link>
@@ -246,6 +267,7 @@ export default function Header() {
                     <Link
                       className="flex flex-row items-center gap-1"
                       href="/#"
+                      color="foreground"
                     >
                       <DashboardIcon color="action" />
                       Dashboard
@@ -255,6 +277,7 @@ export default function Header() {
                     <Link
                       className="flex flex-row items-center gap-1"
                       href="/#"
+                      color="foreground"
                     >
                       <CategoryIcon color="action" />
                       Produk
@@ -264,6 +287,7 @@ export default function Header() {
                     <Link
                       className="flex flex-row items-center gap-1"
                       href="/blog"
+                      color="foreground"
                     >
                       <ArticleIcon color="action" />
                       Blog
@@ -277,6 +301,7 @@ export default function Header() {
                     <Link
                       className="flex flex-row items-center gap-1"
                       href="/#"
+                      color="foreground"
                     >
                       <InfoIcon color="action" />
                       Tentang
