@@ -9,9 +9,11 @@ export default function Dashboard() {
   return (
     <main className="flex flex-col justify-center items-center min-h-screen gap-3">
       {user ? (
-        <Typography>Selamat datang di Dashboard.</Typography>
+        <Typography className="text-center p-4">
+          Selamat datang di Dashboard.
+        </Typography>
       ) : (
-        <Typography>
+        <Typography className="text-center p-4">
           Anda tidak memiliki akses. Silahkan masuk terlebih dahulu!
         </Typography>
       )}

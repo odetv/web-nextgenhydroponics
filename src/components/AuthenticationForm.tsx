@@ -355,14 +355,14 @@ export default function AuthenticationForm() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
 
-                      <div className="flex flex-col justify-center items-center p-6 rounded-xl cursor-pointer outline-dashed outline-emerald-400 outline-2 outline-offset-2 m-1">
+                      <div className="flex flex-col justify-center items-center rounded-md pt-6 pb-6 cursor-pointer outline-dashed outline-emerald-400 outline-2 outline-offset-2 m-1">
                         <p className="text-center text-xs">
                           Upload Foto Profil
                         </p>
                         <input
                           id="photoProfile"
                           type="file"
-                          className="text-sm"
+                          className="text-xs"
                         />
                       </div>
                       <div className="flex flex-col gap-2">
