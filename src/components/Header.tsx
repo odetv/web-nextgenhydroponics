@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import app from "../../firebaseConfig";
 import { getAuth, User, signOut } from "firebase/auth";
-import AuthForm from "./AuthForm";
+import AuthenticationForm from "./AuthenticationForm";
 import {
   Navbar,
   NavbarItem,
@@ -247,7 +247,7 @@ export default function Header() {
           </Dropdown>
         ) : (
           <>
-            <AuthForm />
+            <AuthenticationForm />
             <Dropdown placement="bottom-start">
               <DropdownTrigger>
                 <Avatar

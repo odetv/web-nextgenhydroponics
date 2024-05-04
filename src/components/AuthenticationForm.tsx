@@ -1,9 +1,11 @@
 import React, { Key } from "react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import app from "../../firebaseConfig";
-import { getAuth, User } from "firebase/auth";
-import { redirect, useRouter } from "next/navigation";
 import {
+  getAuth,
+  updateProfile,
+  User,
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -30,20 +32,17 @@ import EmailIcon from "@mui/icons-material/Email";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 
-export default function AuthForm() {
+export default function AuthenticationForm() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selected, setSelected] = React.useState<string | number>("masuk");
-
-  const [displayName, setdisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [error, setError] = useState("");
-
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const [fullName, setdisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const auth = getAuth(app);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
@@ -57,7 +56,6 @@ export default function AuthForm() {
         setUser(null);
       }
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -75,7 +73,10 @@ export default function AuthForm() {
   const handleSignInWithEmailAndPassword = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      router.refresh();
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
     } catch (error: any) {
       console.error("Error signing in with email and password", error.message);
       setError("Email atau password salah. Silakan coba lagi!");
@@ -85,13 +86,16 @@ export default function AuthForm() {
   const handleSignUpWithEmailAndPassword = async (
     email: string,
     password: string,
-    displayName: string,
+    fullName: string,
     confirmPassword: string
   ) => {
     try {
-      validateNameAndEmail(displayName, email);
+      if (!validateName(fullName)) {
+        throw new Error("Nama tidak boleh mengandung karakter selain abjad!");
+      }
+      validateNameAndEmail(fullName, email);
       if (!validateEmail(email)) {
-        throw new Error("Alamat email tidak valid!");
+        throw new Error("Email tidak valid!");
       }
       if (password !== confirmPassword) {
         throw new Error("Konfirmasi Password Tidak Cocok!");
@@ -102,11 +106,23 @@ export default function AuthForm() {
         );
       }
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await updateProfile(currentUser, { displayName: fullName });
+      }
+      router.refresh();
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
     } catch (error: any) {
       console.error("Error signing up with email and password", error.message);
       setError(error.message);
     }
+  };
+
+  const validateName = (name: string) => {
+    const nameRegex = /^[A-Za-z\s]+$/;
+    return nameRegex.test(name);
   };
 
   const validatePassword = (password: string) => {
@@ -279,7 +295,7 @@ export default function AuthForm() {
                         label="Nama Lengkap"
                         placeholder="Nama Lengkap"
                         variant="bordered"
-                        value={displayName}
+                        value={fullName}
                         onChange={(e) => setdisplayName(e.target.value)}
                       />
                       <Input
@@ -338,6 +354,17 @@ export default function AuthForm() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
+
+                      <div className="flex flex-col justify-center items-center p-6 rounded-xl cursor-pointer outline-dashed outline-emerald-400 outline-2 outline-offset-2 m-1">
+                        <p className="text-center text-xs">
+                          Upload Foto Profil
+                        </p>
+                        <input
+                          id="photoProfile"
+                          type="file"
+                          className="text-sm"
+                        />
+                      </div>
                       <div className="flex flex-col gap-2">
                         {error && (
                           <p className="text-red-500 text-xs">{error}</p>
@@ -347,7 +374,7 @@ export default function AuthForm() {
                             handleSignUpWithEmailAndPassword(
                               email,
                               password,
-                              displayName,
+                              fullName,
                               confirmPassword
                             );
                           }}

@@ -1,11 +1,4 @@
-import { Metadata } from "next";
 import GalleryInstagram from "../../components/GalleryInstagram";
-
-export const metadata: Metadata = {
-  title: "Next-Gen Hydroponics | Blog",
-  description:
-    "Website Tim Next-Gen Hydroponics Program MBKM Riset Independen Smart Green Garden Dago Engineering FTK Undiksha",
-};
 
 export default function Blog() {
   return (
