@@ -168,7 +168,7 @@ export default function App() {
                                 width={24}
                                 height={24}
                               />
-                              <p className="text-sm">Login with Google</p>
+                              <p className="text-sm">Continue with Google</p>
                             </button>
                           </div>
                           <div className="flex flex-row gap-1 justify-center pb-6">
@@ -283,7 +283,7 @@ export default function App() {
                                 width={24}
                                 height={24}
                               />
-                              <p className="text-sm">Sign up with Google</p>
+                              <p className="text-sm">Continue with Google</p>
                             </button>
                           </div>
                           <div className="flex flex-row gap-1 justify-center pb-6">
