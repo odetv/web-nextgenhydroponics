@@ -93,7 +93,7 @@ export default function GalleryInstagram() {
           }) => (
             <div key={post.id} className="flex justify-center">
               {post.media_type === "VIDEO" ? (
-                <div className="w-[200px] h-[200px] overflow-hidden rounded-xl">
+                <div className="w-[172px] h-[172px] sm:w-[200px] sm:h-[200px] md:w-[172px] md:h-[200px] lg:w-[200px] lg:h-[200px] xl:w-[200px] xl:h-[200px] overflow-hidden rounded-xl">
                   <div className="w-full h-full overflow-hidden rounded-xl">
                     <Image
                       onClick={() => openModal(post)}
@@ -104,12 +104,12 @@ export default function GalleryInstagram() {
                   </div>
                 </div>
               ) : (
-                <div className="w-[200px] h-[200px] overflow-hidden rounded-xl">
+                <div className="w-[172px] h-[172px] sm:w-[200px] sm:h-[200px] md:w-[172px] md:h-[200px] lg:w-[200px] lg:h-[200px] xl:w-[200px] xl:h-[200px] overflow-hidden rounded-xl">
                   <div className="w-full h-full overflow-hidden rounded-xl">
                     <Image
                       onClick={() => openModal(post)}
                       alt={post.id}
-                      className="object-cover rounded-xl w-full h-[200px] cursor-pointer"
+                      className="object-cover rounded-xl w-full h-[172px] sm:w-[200px] sm:h-[200px] md:w-[172px] md:h-[200px] lg:w-[200px] lg:h-[200px] xl:w-[200px] xl:h-[200px] cursor-pointer"
                       src={post.media_url}
                     />
                   </div>
