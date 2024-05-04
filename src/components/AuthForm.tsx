@@ -64,9 +64,10 @@ export default function App() {
     <>
       <Button
         color="success"
-        variant="solid"
+        variant="flat"
         onClick={onOpen}
-        className="text-white font-medium"
+        className="font-medium"
+        radius="sm"
       >
         Masuk
       </Button>

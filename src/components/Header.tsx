@@ -7,7 +7,6 @@ import AuthForm from "./AuthForm";
 import {
   Navbar,
   NavbarItem,
-  Link,
   Input,
   DropdownItem,
   DropdownTrigger,
@@ -28,6 +27,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
 import GuestIcon from "../assets/images/user/Guest.png";
+import Link from "next/link";
 
 export default function Header() {
   const auth = getAuth(app);
@@ -122,6 +122,7 @@ export default function Header() {
             }}
             placeholder="Cari sesuatu..."
             size="sm"
+            radius="sm"
             startContent={<SearchIcon size={18} />}
             type="search"
           />
@@ -160,44 +161,47 @@ export default function Header() {
                   key="dashboard"
                   textValue="Dashboard"
                 >
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link className="flex flex-row items-center gap-1" href="/#">
                     <DashboardIcon color="action" />
                     Dashboard
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="produk" textValue="produk">
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link className="flex flex-row items-center gap-1" href="/#">
                     <CategoryIcon color="action" />
                     Produk
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="blog" textValue="blog">
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/blog"
+                  >
                     <ArticleIcon color="action" />
                     Blog
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="tentang" textValue="tentang">
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link className="flex flex-row items-center gap-1" href="/#">
                     <InfoIcon color="action" />
                     Tentang
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem
                   color="default"
                   key="pengaturan"
                   textValue="pengaturan"
                 >
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link className="flex flex-row items-center gap-1" href="/#">
                     <SettingsIcon color="action" />
                     Pengaturan
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="bantuan" textValue="bantuan">
-                  <NavbarContent className="flex flex-row items-center gap-1">
+                  <Link className="flex flex-row items-center gap-1" href="/#">
                     <HelpIcon color="action" />
                     Bantuan
-                  </NavbarContent>
+                  </Link>
                 </DropdownItem>
                 <DropdownItem
                   color="danger"
@@ -205,11 +209,11 @@ export default function Header() {
                   className="mt-1 bg-blue-100"
                   textValue="actionauth"
                 >
-                  <NavbarContent className="font-semibold text-red-800 flex flex-row items-center justify-center">
-                    <button
-                      onClick={handleLogout}
-                      className="flex flex-row items-center gap-1"
-                    >
+                  <NavbarContent
+                    className="font-semibold text-red-800 flex flex-row items-center justify-center"
+                    onClick={handleLogout}
+                  >
+                    <button className="flex flex-row items-center gap-1">
                       <p>Keluar</p>
                       <LogoutIcon />
                     </button>
@@ -221,6 +225,66 @@ export default function Header() {
         ) : (
           <>
             <AuthForm />
+            <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="success"
+                  size="sm"
+                  src={GuestIcon.src}
+                />
+              </DropdownTrigger>
+              <div className="font-semibold flex flex-row items-center justify-center">
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem
+                    color="default"
+                    key="dashboard"
+                    textValue="Dashboard"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#"
+                    >
+                      <DashboardIcon color="action" />
+                      Dashboard
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem color="default" key="produk" textValue="produk">
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#"
+                    >
+                      <CategoryIcon color="action" />
+                      Produk
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem color="default" key="blog" textValue="blog">
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/blog"
+                    >
+                      <ArticleIcon color="action" />
+                      Blog
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem
+                    color="default"
+                    key="tentang"
+                    textValue="tentang"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#"
+                    >
+                      <InfoIcon color="action" />
+                      Tentang
+                    </Link>
+                  </DropdownItem>
+                </DropdownMenu>
+              </div>
+            </Dropdown>
           </>
         )}
       </div>

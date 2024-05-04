@@ -37,7 +37,7 @@ export default function GalleryInstagram() {
     fetchData();
   }, []);
 
-  const openModal = (post) => {
+  const openModal = (post: any) => {
     setSelectedPost(post);
     setIsModalOpen(true);
   };
@@ -156,17 +156,13 @@ export default function GalleryInstagram() {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={openInInstagram}>
+            <Button color="primary" variant="flat" onClick={openInInstagram}>
               <InstagramIcon />
               <p>Buka di Instagram</p>
             </Button>
             <Popover placement="left">
               <PopoverTrigger>
-                <Button
-                  className="text-white"
-                  color="success"
-                  onClick={copyPermalink}
-                >
+                <Button color="success" variant="flat" onClick={copyPermalink}>
                   <ShareIcon />
                   <p>Share</p>
                 </Button>
