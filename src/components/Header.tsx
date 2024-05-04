@@ -59,18 +59,20 @@ export default function Header() {
   return (
     <Navbar isBordered>
       <NavbarContent className="-ml-3">
-        <Image
-          width={100}
-          alt="Logo Next-Gen Hydroponics"
-          src={LogoNextGenHydroponics.src}
-        />
+        <Link href="/">
+          <Image
+            width={100}
+            alt="Logo Next-Gen Hydroponics"
+            src={LogoNextGenHydroponics.src}
+          />
+        </Link>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 font-medium">
         <NavbarItem>
           <Link
             color="foreground"
-            href="/#"
+            href="/dashboard"
             className="hover:text-green-800 transition-all ease-in-out duration-250"
           >
             Dashboard
@@ -163,7 +165,7 @@ export default function Header() {
                 >
                   <Link
                     className="flex flex-row items-center gap-1"
-                    href="/#"
+                    href="/dashboard"
                     color="foreground"
                   >
                     <DashboardIcon color="action" />
@@ -266,7 +268,7 @@ export default function Header() {
                   >
                     <Link
                       className="flex flex-row items-center gap-1"
-                      href="/#"
+                      href="/dashboard"
                       color="foreground"
                     >
                       <DashboardIcon color="action" />
