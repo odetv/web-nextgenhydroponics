@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import app from "../../firebaseConfig";
+import { app } from "../../firebaseConfig";
 import { getAuth, User } from "firebase/auth";
 
 export function useAuth() {

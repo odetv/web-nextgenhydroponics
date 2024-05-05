@@ -1,7 +1,7 @@
 import React, { Key } from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import app from "../../firebaseConfig";
+import { app, storage } from "../../firebaseConfig";
 import {
   getAuth,
   updateProfile,
@@ -31,6 +31,13 @@ import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export default function AuthenticationForm() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -38,6 +45,10 @@ export default function AuthenticationForm() {
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const [photoProfile, setPhotoProfile] = useState<File | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isPhotoSelected, setIsPhotoSelected] = useState(false);
   const [fullName, setdisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -105,10 +116,23 @@ export default function AuthenticationForm() {
           "Password harus minimal 8 karakter, mengandung huruf besar dan kecil, angka, serta simbol!"
         );
       }
+      if (!photoProfile) {
+        throw new Error("Foto profil harus diunggah!");
+      }
       await createUserWithEmailAndPassword(auth, email, password);
       const currentUser = auth.currentUser;
       if (currentUser) {
         await updateProfile(currentUser, { displayName: fullName });
+        if (photoProfile) {
+          const storageRef = ref(
+            storage,
+            `user/photoProfile/${currentUser.uid}`
+          );
+          await uploadBytes(storageRef, photoProfile);
+          const downloadURL = await getDownloadURL(storageRef);
+          setProfileImageUrl(downloadURL);
+          await updateProfile(currentUser, { photoURL: downloadURL });
+        }
       }
       router.refresh();
       setTimeout(() => {
@@ -143,6 +167,22 @@ export default function AuthenticationForm() {
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const handleProfileImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setPreviewUrl(reader.result as string);
+          setIsPhotoSelected(true);
+        }
+      };
+      reader.readAsDataURL(event.target.files[0]);
+      setPhotoProfile(event.target.files[0]);
+    }
   };
 
   return (
@@ -244,7 +284,7 @@ export default function AuthenticationForm() {
                         )}
                         <button
                           onClick={handleSignInWithEmailAndPassword}
-                          className="bg-emerald-700 w-full mx-auto rounded-lg py-2 text-white hover:bg-emerald-800 transition-all ease-in-out"
+                          className="bg-emerald-700 w-full mx-auto rounded-lg py-2 text-white hover:bg-emerald-800 transition-all ease-in-out font-semibold"
                         >
                           Masuk
                         </button>
@@ -355,16 +395,51 @@ export default function AuthenticationForm() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
 
-                      <div className="flex flex-col justify-center items-center rounded-md pt-6 pb-6 cursor-pointer outline-dashed outline-emerald-400 outline-2 outline-offset-2 m-1">
-                        <p className="text-center text-xs">
+                      <div className="flex flex-col justify-center items-center rounded-md pt-4 pb-4 cursor-pointer outline-dashed outline-gray-300 outline-2 outline-offset-2 m-1">
+                        <p
+                          className="text-center text-xs text-gray-600"
+                          style={{
+                            display: isPhotoSelected ? "none" : "inline-block",
+                          }}
+                        >
                           Upload Foto Profil
                         </p>
                         <input
                           id="photoProfile"
                           type="file"
-                          className="text-xs"
+                          className="text-xs text-gray-600"
+                          onChange={handleProfileImageChange}
+                          style={{
+                            display: isPhotoSelected ? "none" : "inline-block",
+                          }}
                         />
+                        {previewUrl && (
+                          <div className="relative">
+                            <Image
+                              src={previewUrl}
+                              alt="Preview Foto Profil"
+                              className="w-32 h-32 rounded-full object-cover mt-2"
+                            />
+                            <button
+                              className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 p-1 bg-white rounded-full text-red-500 hover:bg-red-100 hover:text-red-700 focus:outline-none"
+                              onClick={() => {
+                                setPreviewUrl(null);
+                                setPhotoProfile(null);
+                                setIsPhotoSelected(false);
+                                const fileInput = document.getElementById(
+                                  "photoProfile"
+                                ) as HTMLInputElement;
+                                if (fileInput) {
+                                  fileInput.value = "";
+                                }
+                              }}
+                            >
+                              <DeleteIcon />
+                            </button>
+                          </div>
+                        )}
                       </div>
+
                       <div className="flex flex-col gap-2">
                         {error && (
                           <p className="text-red-500 text-xs">{error}</p>
@@ -378,7 +453,7 @@ export default function AuthenticationForm() {
                               confirmPassword
                             );
                           }}
-                          className="bg-emerald-700 w-full mx-auto rounded-lg py-2 text-white hover:bg-emerald-800 transition-all ease-in-out"
+                          className="bg-emerald-700 w-full mx-auto rounded-lg py-2 text-white hover:bg-emerald-800 transition-all ease-in-out font-semibold"
                         >
                           Daftar
                         </button>
