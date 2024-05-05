@@ -1,4 +1,4 @@
-import React, { Key } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { app, storage } from "../../firebaseConfig";
@@ -11,6 +11,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   Link,
   Input,
@@ -26,37 +27,34 @@ import {
   Tab,
   Tooltip,
 } from "@nextui-org/react";
-import { Divider } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Divider } from "@mui/material";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
 
 export default function AuthenticationForm() {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selected, setSelected] = React.useState<string | number>("masuk");
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const [photoProfile, setPhotoProfile] = useState<File | null>(null);
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isPhotoSelected, setIsPhotoSelected] = useState(false);
+  const auth = getAuth(app);
+
   const [fullName, setdisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const auth = getAuth(app);
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
+  const [photoProfile, setPhotoProfile] = useState<File | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isPhotoSelected, setIsPhotoSelected] = useState(false);
+
+  const afterAuth = "/dashboard";
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -75,7 +73,7 @@ export default function AuthenticationForm() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      router.push("/dashboard");
+      router.push(afterAuth);
     } catch (error: any) {
       console.error("Error signing in with Google", error.message);
     }
@@ -86,7 +84,7 @@ export default function AuthenticationForm() {
       await signInWithEmailAndPassword(auth, email, password);
       router.refresh();
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push(afterAuth);
       }, 500);
     } catch (error: any) {
       console.error("Error signing in with email and password", error.message);
@@ -104,20 +102,24 @@ export default function AuthenticationForm() {
       if (!validateName(fullName)) {
         throw new Error("Nama tidak boleh mengandung karakter selain abjad!");
       }
-      validateNameAndEmail(fullName, email);
       if (!validateEmail(email)) {
-        throw new Error("Email tidak valid!");
+        throw new Error("Alamat Email tidak valid!");
+      }
+      if (!validatePassword(password)) {
+        throw new Error(
+          "Password minimal 8 karakter, mengandung huruf besar dan kecil, angka, serta simbol!"
+        );
+      }
+      if (!validateConfirmPassword(confirmPassword)) {
+        throw new Error(
+          "Password minimal 8 karakter, mengandung huruf besar dan kecil, angka, serta simbol!"
+        );
       }
       if (password !== confirmPassword) {
         throw new Error("Konfirmasi Password Tidak Cocok!");
       }
-      if (!validatePassword(password)) {
-        throw new Error(
-          "Password harus minimal 8 karakter, mengandung huruf besar dan kecil, angka, serta simbol!"
-        );
-      }
       if (!photoProfile) {
-        throw new Error("Foto profil harus diunggah!");
+        throw new Error("Foto profil tidak boleh kosong!");
       }
       await createUserWithEmailAndPassword(auth, email, password);
       const currentUser = auth.currentUser;
@@ -136,7 +138,7 @@ export default function AuthenticationForm() {
       }
       router.refresh();
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push(afterAuth);
       }, 500);
     } catch (error: any) {
       console.error("Error signing up with email and password", error.message);
@@ -144,44 +146,66 @@ export default function AuthenticationForm() {
     }
   };
 
+  const handleProfileImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      const selectedFile = event.target.files[0];
+      try {
+        validatePhoto(selectedFile);
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setPreviewUrl(reader.result as string);
+            setIsPhotoSelected(true);
+          }
+        };
+        reader.readAsDataURL(selectedFile);
+        setPhotoProfile(selectedFile);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    }
+  };
+
   const validateName = (name: string) => {
+    if (!name.trim()) {
+      throw new Error("Nama Lengkap tidak boleh kosong!");
+    }
     const nameRegex = /^[A-Za-z\s]+$/;
     return nameRegex.test(name);
   };
 
+  const validateEmail = (email: string) => {
+    if (!email.trim()) {
+      throw new Error("Alamat email tidak boleh kosong!");
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const validatePassword = (password: string) => {
+    if (!password.trim()) {
+      throw new Error("Password tidak boleh kosong!");
+    }
     const passwordRegex =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
     return passwordRegex.test(password);
   };
 
-  const validateNameAndEmail = (name: string, email: string) => {
-    if (!name.trim()) {
-      throw new Error("Nama lengkap harus diisi");
+  const validateConfirmPassword = (confirmPassword: string) => {
+    if (!confirmPassword.trim()) {
+      throw new Error("Konfirmasi Password tidak boleh kosong!");
     }
-    if (!email.trim()) {
-      throw new Error("Alamat email harus diisi");
-    }
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    return passwordRegex.test(confirmPassword);
   };
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const handleProfileImageChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setPreviewUrl(reader.result as string);
-          setIsPhotoSelected(true);
-        }
-      };
-      reader.readAsDataURL(event.target.files[0]);
-      setPhotoProfile(event.target.files[0]);
+  const validatePhoto = (file: File) => {
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      throw new Error("Harap unggah file gambar (png, jpeg, jpg)!");
     }
   };
 
