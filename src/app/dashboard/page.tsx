@@ -6,6 +6,7 @@ import { useAuth } from "@/middleware/AuthenticationProviders";
 import { Button, Input, Slider, Switch } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import Charts from "../../components/Charts";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -26,15 +27,18 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen gap-3">
+    <main className="flex flex-col justify-center items-center gap-3 pt-8 pb-8">
       {user ? (
         <>
           <div className="text-center p-4 gap-2">
-            <p className="text-3xl font-bold pb-2">
+            <p className="text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl font-bold pb-2">
               Selamat datang di Dashboard, {user ? user.displayName : ""}👋
             </p>
             <p>Jelajahi Sistem Monitoring dan Kontrol Next-Gen Hydroponics</p>
           </div>
+
+          <Charts />
+
           <div className="p-4 grid grid-cols-1 grid-rows-6 gap-6 sm:grid-cols-3 sm:grid-rows-2 sm:gap-6 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:grid-cols-3 lg:grid-rows-2 lg:gap-6 xl:grid-cols-3 xl:grid-rows-2 xl:gap-6">
             <div
               id="irigasi"
@@ -87,15 +91,18 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
-            <div id="suhu" className="bg-green-100 p-6 rounded-xl text-center">
+            <div
+              id="suhu"
+              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+            >
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol Suhu
               </p>
               <p className="text-sm">Kondisi suhu udara dan air hidroponik</p>
-              <div className="grid grid-rows-2 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
+              <div className="w-11/12 grid grid-rows-2 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
                 <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
-                    // isDisabled
+                    isDisabled
                     hideThumb={true}
                     label="Suhu Udara"
                     color="danger"
@@ -112,7 +119,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
-                    // isDisabled
+                    isDisabled
                     hideThumb={true}
                     label="Suhu Air"
                     color="primary"
@@ -133,6 +140,7 @@ export default function Dashboard() {
                   loading={loadingSuhu}
                   loadingIndicator="Proses..."
                   variant="text"
+                  className=""
                 >
                   <span>Segarkan</span>
                 </LoadingButton>
@@ -161,7 +169,7 @@ export default function Dashboard() {
                       {isSelectedNutrisi ? "Otomatis" : "Manual"}
                     </Switch>
                   </div>
-                  <div className="flex flex-row justify-center items-center gap-1 text-sm outline outline-green-300 p-1 rounded-sm">
+                  <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
                     <p>Nutrisi:</p>
                     <p>850</p>
                     <p>PPM</p>
@@ -187,27 +195,30 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
-            <div id="ph" className="bg-green-100 p-6 rounded-xl text-center">
+            <div
+              id="ph"
+              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+            >
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol pH Air
               </p>
               <p className="text-sm">Atur pH air secara manual atau otomatis</p>
-              <div className="grid grid-rows-2 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
+              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
                 <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
-                    // isDisabled
+                    isDisabled
                     hideThumb={true}
                     label="pH Air"
                     color="warning"
                     hideValue={true}
                     step={1}
-                    maxValue={100}
+                    maxValue={1000}
                     minValue={0}
                     defaultValue={75}
                   />
                   <div className="flex flex-row items-center justify-center">
                     <WaterDropIcon color="warning" />
-                    <p className="text-sm">36°C</p>
+                    <p className="text-sm">36 pH</p>
                   </div>
                 </div>
                 <LoadingButton
@@ -244,7 +255,7 @@ export default function Dashboard() {
                       {isSelectedLampu ? "Otomatis" : "Manual"}
                     </Switch>
                   </div>
-                  <div className="flex flex-row justify-center items-center gap-1 text-sm outline outline-green-300 p-1 rounded-sm">
+                  <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
                     <p>Kondisi:</p>
                     <p>Gelap</p>
                     <p>(Siang)</p>
@@ -286,10 +297,9 @@ export default function Dashboard() {
                       {isSelectedAI ? "AI" : "Manual"}
                     </Switch>
                   </div>
-                  <div className="flex flex-row justify-center items-center gap-1 text-sm outline outline-green-300 p-1 rounded-sm">
+                  <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
                     <p>Deteksi:</p>
                     <p>Ada Hama</p>
-                    <p>(Ulat)</p>
                   </div>
                 </div>
                 {isSelectedAI ? (
