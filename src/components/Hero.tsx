@@ -23,7 +23,7 @@ export default function Hero() {
               variant="flat"
               className="font-semibold text-emerald-600"
             >
-              Mulai
+              <a href="/dashboard">Mulai Jelajahi</a>
             </Button>
             <Button
               radius="sm"
@@ -31,7 +31,7 @@ export default function Hero() {
               className="font-semibold text-blue-500"
               variant="light"
             >
-              Overview
+              <a href="/#overview">Overview</a>
             </Button>
           </div>
         </div>
