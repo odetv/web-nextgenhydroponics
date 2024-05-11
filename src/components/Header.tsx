@@ -18,6 +18,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
+import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -59,7 +60,7 @@ export default function Header() {
   return (
     <Navbar isBordered>
       <NavbarContent className="-ml-3">
-        <Link href="/">
+        <Link href="/#">
           <Image
             width={100}
             alt="Logo Next-Gen Hydroponics"
@@ -69,42 +70,94 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 font-medium">
-        <NavbarItem>
-          <Link
-            color="foreground"
-            href="/dashboard"
-            className="hover:text-green-800 transition-all ease-in-out duration-250"
-          >
-            Dashboard
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            color="foreground"
-            href="/#"
-            className="hover:text-green-800 transition-all ease-in-out duration-250"
-          >
-            Produk
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            color="foreground"
-            href="/blog"
-            className="hover:text-green-800 transition-all ease-in-out duration-250"
-          >
-            Blog
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            color="foreground"
-            href="/#"
-            className="hover:text-green-800 transition-all ease-in-out duration-250"
-          >
-            Tentang
-          </Link>
-        </NavbarItem>
+        {user ? (
+          <>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Beranda
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/dashboard"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Dashboard
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#overview"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Overview
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/blog"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Blog
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Tentang
+              </Link>
+            </NavbarItem>
+          </>
+        ) : (
+          <>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Beranda
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#overview"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Overview
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/blog"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Blog
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link
+                color="foreground"
+                href="/#"
+                className="hover:text-green-800 transition-all ease-in-out duration-250"
+              >
+                Tentang
+              </Link>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
 
       <div className="items-center flex gap-4">
@@ -158,6 +211,16 @@ export default function Header() {
                     </div>
                   </div>
                 </DropdownItem>
+                <DropdownItem color="default" key="beranda" textValue="beranda">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/#"
+                    color="foreground"
+                  >
+                    <HomeIcon color="action" />
+                    Beranda
+                  </Link>
+                </DropdownItem>
                 <DropdownItem
                   color="default"
                   key="dashboard"
@@ -172,14 +235,19 @@ export default function Header() {
                     Dashboard
                   </Link>
                 </DropdownItem>
-                <DropdownItem color="default" key="produk" textValue="produk">
+
+                <DropdownItem
+                  color="default"
+                  key="overview"
+                  textValue="overview"
+                >
                   <Link
                     className="flex flex-row items-center gap-1"
-                    href="/#"
+                    href="/#overview"
                     color="foreground"
                   >
                     <CategoryIcon color="action" />
-                    Produk
+                    Overview
                   </Link>
                 </DropdownItem>
                 <DropdownItem color="default" key="blog" textValue="blog">
@@ -263,26 +331,30 @@ export default function Header() {
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                   <DropdownItem
                     color="default"
-                    key="dashboard"
-                    textValue="Dashboard"
+                    key="beranda"
+                    textValue="beranda"
                   >
-                    <Link
-                      className="flex flex-row items-center gap-1"
-                      href="/dashboard"
-                      color="foreground"
-                    >
-                      <DashboardIcon color="action" />
-                      Dashboard
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem color="default" key="produk" textValue="produk">
                     <Link
                       className="flex flex-row items-center gap-1"
                       href="/#"
                       color="foreground"
                     >
+                      <HomeIcon color="action" />
+                      Beranda
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem
+                    color="default"
+                    key="overview"
+                    textValue="overview"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#overview"
+                      color="foreground"
+                    >
                       <CategoryIcon color="action" />
-                      Produk
+                      Overview
                     </Link>
                   </DropdownItem>
                   <DropdownItem color="default" key="blog" textValue="blog">

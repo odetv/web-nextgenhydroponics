@@ -419,7 +419,7 @@ export default function AuthenticationForm() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
 
-                      <div className="flex flex-col justify-center items-center rounded-md pt-4 pb-4 cursor-pointer outline-dashed outline-gray-300 outline-2 outline-offset-2 m-1">
+                      <div className="flex flex-col justify-center items-center rounded-md pt-4 pb-4 cursor-pointer outline-dashed outline-gray-300 outline-2 outline-offset-2 m-1 bg-slate-100">
                         <p
                           className="text-center text-xs text-gray-600"
                           style={{
