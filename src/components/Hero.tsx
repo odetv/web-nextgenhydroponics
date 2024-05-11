@@ -10,7 +10,7 @@ export default function Hero() {
             Ciptakan Teknologi Pertanian Bersama{" "}
             <span className="text-emerald-600">Next-Gen Hydroponics</span>
           </p>
-          <p>
+          <p className="text-sm sm:text-base md:text-base lg:text-base xl:text-base">
             Integrating AI and IoT with Renewable Energy for Plants Going
             Forward. Langkah maju dalam meningkatkan produktivitas pertanian
             serta menjaga keberlanjutan lingkungan dengan Teknologi Internet of
