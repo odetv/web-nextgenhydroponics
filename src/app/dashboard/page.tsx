@@ -319,7 +319,7 @@ export default function Dashboard() {
         </>
       ) : (
         <Typography className="text-center p-4">
-          Anda tidak memiliki akses, silahkan hubungi admin!
+          Anda tidak memiliki akses, silahkan masuk/daftar terlebih dahulu!
         </Typography>
       )}
     </main>
