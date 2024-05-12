@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+  if (process.env.NEXT_PUBLIC_VERCEL_MAINTENANCE_MODE === "true") {
     return (
       <html lang="en">
         <body className={poppins.className}>
@@ -34,7 +34,7 @@ export default function RootLayout({
           </Providers>
         </body>
         <GoogleAnalytics
-          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ""}
+          gaId={process.env.NEXT_PUBLIC_VERCEL_GOOGLE_ANALYTICS || ""}
         />
       </html>
     );
@@ -49,7 +49,7 @@ export default function RootLayout({
           </Providers>
         </body>
         <GoogleAnalytics
-          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ""}
+          gaId={process.env.NEXT_PUBLIC_VERCEL_GOOGLE_ANALYTICS || ""}
         />
       </html>
     );
