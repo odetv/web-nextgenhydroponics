@@ -108,15 +108,6 @@ export default function Header() {
                 Blog
               </Link>
             </NavbarItem>
-            <NavbarItem>
-              <Link
-                color="foreground"
-                href="/#"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
-              >
-                Tentang
-              </Link>
-            </NavbarItem>
           </>
         ) : (
           <>
@@ -145,15 +136,6 @@ export default function Header() {
                 className="hover:text-green-800 transition-all ease-in-out duration-250"
               >
                 Blog
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link
-                color="foreground"
-                href="/#"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
-              >
-                Tentang
               </Link>
             </NavbarItem>
           </>
@@ -260,16 +242,6 @@ export default function Header() {
                     Blog
                   </Link>
                 </DropdownItem>
-                <DropdownItem color="default" key="tentang" textValue="tentang">
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/#"
-                    color="foreground"
-                  >
-                    <InfoIcon color="action" />
-                    Tentang
-                  </Link>
-                </DropdownItem>
                 <DropdownItem
                   color="default"
                   key="pengaturan"
@@ -365,20 +337,6 @@ export default function Header() {
                     >
                       <ArticleIcon color="action" />
                       Blog
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem
-                    color="default"
-                    key="tentang"
-                    textValue="tentang"
-                  >
-                    <Link
-                      className="flex flex-row items-center gap-1"
-                      href="/#"
-                      color="foreground"
-                    >
-                      <InfoIcon color="action" />
-                      Tentang
                     </Link>
                   </DropdownItem>
                 </DropdownMenu>

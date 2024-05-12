@@ -23,10 +23,15 @@ export default function Collaboration() {
       </div>
       <div>
         <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industrys standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+          Fakultas Teknik dan Kejuruan Universitas Pendidikan Ganesha melakukan
+          kerja sama kolaborasi bersama dengan PT. Dago Engineering, Bandung.
+          Sebagai bentuk penggunaan teknologi yang semakin canggih, MBKM ini
+          mengusung tema Smart Green Garden yang berfokus pada sektor pertanian
+          hidroponik dan sektor teknologi terkini yaitu Internet of Things
+          (IoT), Artificial Intelligence (AI), dan pemanfaatan Energi Terbarukan
+          dari sinar matahari menggunakan panel surya. Hasil akhir kegiatan ini
+          adalah sebuah inovasi hidroponik yang sudah terintegrasi teknologi
+          untuk menunjang kegiatan pertanian.
         </p>
       </div>
       <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
