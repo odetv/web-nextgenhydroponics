@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  if (process.env.MAINTENANCE_MODE === "true") {
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
     return (
       <html lang="en">
         <body className={poppins.className}>
