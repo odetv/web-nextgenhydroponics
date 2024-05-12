@@ -23,7 +23,7 @@ export default function GalleryInstagram() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `https://graph.instagram.com/me/media?fields=id,caption,media_url,thumbnail_url,timestamp,media_type,permalink&access_token=${process.env.NEXT_PUBLIC_VERCEL_INSTAGRAM_KEY}`;
+        const url = `https://graph.instagram.com/me/media?fields=id,caption,media_url,thumbnail_url,timestamp,media_type,permalink&access_token=${process.env.NEXT_PUBLIC_VERCEL_INSTAGRAM_KEY}`; // tokens developer facebook
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
