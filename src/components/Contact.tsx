@@ -1,5 +1,6 @@
-import HeroImage from "../assets/images/components/hero.jpg";
-import { Button, Card, CardFooter, Image } from "@nextui-org/react";
+import { Button, Skeleton, Stack } from "@mui/material";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 export default function Hero() {
   return (
@@ -20,25 +21,56 @@ export default function Hero() {
                 Dapatkan Informasi Lebih Lanjut Tentang Project Kami
               </p>
             </div>
+            <div className="flex flex-wrap justify-center items-center gap-1 sm:gap-2 md:gap-2 lg:gap-2 xl:gap-2">
+              <a
+                rel="noopener noreferrer"
+                href="https://instagram.com/nextgen.hydroponics"
+                target="_blank"
+                title="Instagram"
+                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
+              >
+                <Button
+                  className="lowercase"
+                  variant="outlined"
+                  color="info"
+                  startIcon={<InstagramIcon />}
+                >
+                  @nextgen.hydroponics
+                </Button>
+              </a>
+              <a
+                rel="noopener noreferrer"
+                href="mailto:research.nextgenhydroponics@gmail.com"
+                target="_blank"
+                title="Email"
+                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
+              >
+                <Button
+                  className="lowercase"
+                  variant="outlined"
+                  color="info"
+                  startIcon={<MailOutlineIcon />}
+                >
+                  research.nextgenhydroponics@gmail.com
+                </Button>
+              </a>
+            </div>
             <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
-              <p>[Form Kontak]</p>
+              <Stack spacing={1}>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                <Skeleton variant="rectangular" width={210} height={60} />
+                <Skeleton variant="rounded" width={210} height={60} />
+              </Stack>
             </div>
           </div>
         </div>
-        <Card isFooterBlurred radius="lg" className="border-none">
-          <div className="relative overflow-hidden rounded-inherit rounded-large">
-            <Image
-              className="transform hover:scale-110 transition-transform-opacity object-cover"
-              alt="Next-Gen Hydroponics"
-              src={HeroImage.src}
-            />
-          </div>
-          <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-            <p className="text-tiny text-white/80 p-2 text-center">
-              Tim Smart Green Garden
-            </p>
-          </CardFooter>
-        </Card>
+        <iframe
+          width="100%"
+          height="100%"
+          title="map"
+          className="rounded-lg"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.6861692693933!2d115.13055157575472!3d-8.133397481429773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd191df23585063%3A0xb4203c0eda012672!2sUndiksha%20Jinengdalem!5e0!3m2!1sid!2sid!4v1715692412864!5m2!1sid!2sid"
+        ></iframe>
       </div>
     </div>
   );

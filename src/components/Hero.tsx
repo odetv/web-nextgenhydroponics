@@ -4,7 +4,7 @@ import { Button, Card, CardFooter, Image } from "@nextui-org/react";
 export default function Hero() {
   return (
     <div>
-      <div className="mt-4 p-4 grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
+      <div className="p-4 grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
         <div className="flex flex-col gap-4">
           <p className="font-bold leading-tight text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl">
             Ciptakan Teknologi Pertanian Bersama{" "}

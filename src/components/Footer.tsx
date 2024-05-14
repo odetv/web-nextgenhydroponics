@@ -22,9 +22,9 @@ function Footer() {
                 Next-Gen Hydroponics
               </span>
               <p className="text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-                Website Tim Next-Gen Hydroponics Program Merdeka Belajar Kampus
-                Merdeka Riset Independen Smart Green Garden antara Dago
-                Engineering dengan Fakultas Teknik dan Kejuruan Undiksha.
+                Website Resmi Tim Next-Gen Hydroponics Program Merdeka Belajar
+                Kampus Merdeka Riset Independen Smart Green Garden antara PT.
+                Dago Engineering dengan Fakultas Teknik dan Kejuruan Undiksha.
               </p>
             </div>
           </div>
@@ -46,7 +46,7 @@ function Footer() {
           <div className="space-y-3">
             <div className="uppercase font-bold text-gray-50">Kontak</div>
             <div className="flex flex-col gap-1">
-              <a
+              {/* <a
                 rel="noopener noreferrer"
                 href="https://wa.me/6285739683673/"
                 target="_blank"
@@ -57,7 +57,7 @@ function Footer() {
                 <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
                   085739683673
                 </p>
-              </a>
+              </a> */}
               <a
                 rel="noopener noreferrer"
                 href="https://instagram.com/nextgen.hydroponics"
@@ -93,34 +93,25 @@ function Footer() {
                   href="/#"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
-                  Dashboard
+                  Beranda
                 </a>
               </li>
               <li key="produk">
                 <a
                   rel="noopener noreferrer"
-                  href="/#"
+                  href="/#overview"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
-                  Produk
+                  Overview
                 </a>
               </li>
               <li key="fitur">
                 <a
                   rel="noopener noreferrer"
-                  href="/#"
+                  href="/blog"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
-                  Fitur
-                </a>
-              </li>
-              <li key="tentang">
-                <a
-                  rel="noopener noreferrer"
-                  href="/#"
-                  className="hover:text-emerald-400 transition-all ease-in-out"
-                >
-                  Tentang
+                  Blog
                 </a>
               </li>
             </ul>

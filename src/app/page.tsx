@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen gap-16">
+    <main className="flex flex-col justify-center items-center min-h-screen gap-16 pb-16 pt-4 sm:pt-16 md:pt-16 lg:pt-16 xl:pt-16">
       <div id="">
         <Hero />
       </div>

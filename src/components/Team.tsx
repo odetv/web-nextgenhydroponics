@@ -1,14 +1,4 @@
-import {
-  Image,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Button,
-} from "@nextui-org/react";
-import LogoUndiksha from "@/assets/images/logo/LogoUndiksha.png";
-import LogoDagoEngineering from "@/assets/images/logo/LogoDagoEng.png";
-import LogoCGPDagoEng from "@/assets/images/logo/LogoCGPDagoEng.png";
-import LogoDelectra from "@/assets/images/logo/LogoDelectra.png";
+import { Skeleton, Stack } from "@mui/material";
 
 export default function Team() {
   return (
@@ -25,7 +15,11 @@ export default function Team() {
         </p>
       </div>
       <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
-        <p>[Foto Tim]</p>
+        <Stack spacing={1} direction="row">
+          <Skeleton variant="circular" width={64} height={64} />
+          <Skeleton variant="circular" width={64} height={64} />
+          <Skeleton variant="circular" width={64} height={64} />
+        </Stack>
       </div>
     </div>
   );
