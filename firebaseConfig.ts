@@ -44,14 +44,13 @@ const firebaseConfig = {
     "https://next-gen-hydroponics-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+const app = initializeApp(firebaseConfig);
+let analytics = null;
+
+if (typeof window !== "undefined") {
+  analytics = getAnalytics(app);
 }
 
-let analytics = null;
 if (typeof window !== "undefined" && app) {
   analytics = getAnalytics(app);
 }
