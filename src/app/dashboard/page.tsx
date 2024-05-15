@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import * as React from "react";
 import { Typography } from "@mui/material";
@@ -15,8 +14,10 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  Image,
   Chip,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -30,6 +31,11 @@ import {
   limitToLast,
 } from "firebase/database";
 import { useEffect, useState } from "react";
+import AuthenticationForm from "../../components/AuthenticationForm";
+import Image from "next/image";
+import MemoryIcon from "@mui/icons-material/Memory";
+import WifiIcon from "@mui/icons-material/Wifi";
+import SpeedIcon from "@mui/icons-material/Speed";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -77,7 +83,75 @@ export default function Dashboard() {
             <p className="text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl font-bold pb-2">
               Selamat datang di Dashboard, {user ? user.displayName : ""}👋
             </p>
-            <p>Jelajahi Sistem Monitoring dan Kontrol Next-Gen Hydroponics</p>
+            <p>Jelajahi Sistem Next-Gen Hydroponics</p>
+            <div className="mt-1 p-2 flex flex-wrap gap-3 justify-center items-center rounded-xl">
+              <Popover placement="bottom" showArrow={true}>
+                <PopoverTrigger>
+                  <Chip
+                    startContent={<MemoryIcon fontSize="small" />}
+                    variant="faded"
+                    color="primary"
+                    size="lg"
+                    className="cursor-pointer"
+                  >
+                    Mati
+                  </Chip>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="px-1 py-2">
+                    <div className="text-small font-bold">
+                      Mikrokontroller ESP32
+                    </div>
+                    <div className="text-tiny">Status: Mati</div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <Popover placement="bottom" showArrow={true}>
+                <PopoverTrigger>
+                  <Chip
+                    startContent={<SpeedIcon fontSize="small" />}
+                    variant="faded"
+                    color="primary"
+                    size="lg"
+                    className="cursor-pointer"
+                  >
+                    Bagus
+                  </Chip>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="px-1 py-2">
+                    <div className="text-small font-bold">
+                      Kondisi Mikrokontroller
+                    </div>
+                    <div className="text-tiny">Status: Bagus</div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <Popover placement="bottom" showArrow={true}>
+                <PopoverTrigger>
+                  <Chip
+                    startContent={<WifiIcon fontSize="small" />}
+                    variant="faded"
+                    color="primary"
+                    size="lg"
+                    className="cursor-pointer"
+                  >
+                    Terputus
+                  </Chip>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="px-1 py-2">
+                    <div className="text-small font-bold">
+                      Konektivitas Wifi Mikrokontroller
+                    </div>
+                    <div className="text-tiny">SSID: Smart Green Garden</div>
+                    <div className="text-tiny">Status: Terputus</div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
 
           <Charts />
@@ -347,8 +421,13 @@ export default function Dashboard() {
                 </div>
                 {isSelectedAI ? (
                   <div>
-                    <p className="text-sm pb-2">AI Pendeteksi Hama Aktif</p>
-                    <Button onPress={onOpen} size="sm" color="primary">
+                    <p className="text-sm pb-3">AI Pendeteksi Hama Aktif</p>
+                    <Button
+                      onPress={onOpen}
+                      size="sm"
+                      color="primary"
+                      variant="flat"
+                    >
                       Cek Kamera
                     </Button>
                   </div>
@@ -384,13 +463,15 @@ export default function Dashboard() {
                           Live
                         </Chip>
                         {imageUrl ? (
-                          <img
+                          <Image
+                            width={640}
+                            height={640}
                             src={imageUrl}
-                            alt="ESP32-CAM Preview"
-                            className="w-full h-full rounded-lg"
+                            alt="Preview ESP32-CAM"
+                            className="rounded-lg"
                           />
                         ) : (
-                          <p>Loading image...</p>
+                          <p>Mengolah gambar...</p>
                         )}
                       </div>
                     </ModalBody>
@@ -406,9 +487,12 @@ export default function Dashboard() {
           </div>
         </>
       ) : (
-        <Typography className="text-center p-4">
-          Anda tidak memiliki akses, silahkan masuk/daftar terlebih dahulu!
-        </Typography>
+        <div className="flex flex-col min-h-screen -mt-16 p-4 justify-center items-center gap-2">
+          <Typography className="text-center">
+            Anda tidak memiliki akses, silahkan masuk terlebih dahulu!
+          </Typography>
+          <AuthenticationForm />
+        </div>
       )}
     </main>
   );

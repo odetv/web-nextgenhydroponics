@@ -1,24 +1,20 @@
 import { Button, Skeleton, Stack } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import { Input, Textarea } from "@nextui-org/react";
 
 export default function Hero() {
   return (
     <div>
       <div className="pt-16 p-4 grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
         <div className="flex flex-col gap-4">
-          <div className="p-4 flex flex-col gap-2 justify-center items-center max-w-screen-xl">
+          <div className="flex flex-col gap-2 justify-center items-center max-w-screen-xl">
             <div>
               <p className="font-bold text-center text-emerald-600">Kontak</p>
             </div>
             <div>
               <p className="font-bold text-3xl text-center">
-                Ada sesuatu? Hubungi Kami
-              </p>
-            </div>
-            <div>
-              <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base">
-                Dapatkan Informasi Lebih Lanjut Tentang Project Kami
+                Informasi Lainnya? Hubungi Kami
               </p>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-1 sm:gap-2 md:gap-2 lg:gap-2 xl:gap-2">
@@ -55,12 +51,25 @@ export default function Hero() {
                 </Button>
               </a>
             </div>
-            <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
-              <Stack spacing={1}>
-                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                <Skeleton variant="rectangular" width={210} height={60} />
-                <Skeleton variant="rounded" width={210} height={60} />
-              </Stack>
+            <div>
+              <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base pt-3">
+                Atau Anda dapat mengisi form di bawah ini.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 w-full rounded-lg sm:w-4/5 md:w-4/5 lg:w-4/5 xl:w-4/5">
+              <Input isRequired variant="faded" type="text" label="Nama" />
+              <Input isRequired variant="faded" type="email" label="Email" />
+              <Textarea
+                isRequired
+                label="Pesan"
+                variant="faded"
+                classNames={{
+                  input: "resize-y min-h-[64px]",
+                }}
+              />
+              <Button color="info" variant="contained" className="rounded-lg">
+                Kirim
+              </Button>
             </div>
           </div>
         </div>

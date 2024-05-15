@@ -53,7 +53,7 @@ export default function Charts() {
       );
       setNutrisiValue(generateRandomValue(nutrisiMax));
       setPhAirValue(generateRandomValue(phAirMax));
-    }, 1000);
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 
