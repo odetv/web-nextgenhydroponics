@@ -51,10 +51,6 @@ if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
 }
 
-if (typeof window !== "undefined" && app) {
-  analytics = getAnalytics(app);
-}
-
 const storage = getStorage(app);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
