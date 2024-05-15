@@ -1,12 +1,35 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import * as React from "react";
 import { Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useAuth } from "@/middleware/AuthenticationProviders";
-import { Button, Input, Slider, Switch } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Slider,
+  Switch,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Image,
+  Chip,
+} from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import Charts from "../../components/Charts";
+import {
+  ref,
+  get,
+  getDatabase,
+  onValue,
+  query,
+  limitToLast,
+} from "firebase/database";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -18,6 +41,24 @@ export default function Dashboard() {
   const [isSelectedNutrisi, setIsSelectedNutrisi] = React.useState(true);
   const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const db = getDatabase();
+    const photosRef = ref(db, "photos");
+    const latestPhotoQuery = query(photosRef, limitToLast(1));
+
+    const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const base64String = childSnapshot.val().photo;
+        if (base64String) {
+          setImageUrl(`data:image/png;base64,${base64String}`);
+        }
+      });
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   function handleSuhu() {
     setLoadingSuhu(true);
@@ -25,6 +66,8 @@ export default function Dashboard() {
   function handlePH() {
     setLoadingPH(true);
   }
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <main className="flex flex-col justify-center items-center gap-3 pt-8 pb-8">
@@ -304,7 +347,10 @@ export default function Dashboard() {
                 </div>
                 {isSelectedAI ? (
                   <div>
-                    <p className="text-sm">AI Pendeteksi Hama Aktif</p>
+                    <p className="text-sm pb-2">AI Pendeteksi Hama Aktif</p>
+                    <Button onPress={onOpen} size="sm" color="primary">
+                      Cek Kamera
+                    </Button>
                   </div>
                 ) : (
                   <div className="flex flex-row justify-center items-center gap-6 text-sm ">
@@ -315,6 +361,48 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+            <Modal
+              isOpen={isOpen}
+              placement="center"
+              backdrop="blur"
+              onOpenChange={onOpenChange}
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      Preview ESP32-CAM
+                    </ModalHeader>
+                    <ModalBody>
+                      <div className="relative flex justify-center items-center">
+                        <Chip
+                          color="danger"
+                          variant="dot"
+                          size="sm"
+                          className="absolute top-4 right-4 z-10 bg-white"
+                        >
+                          Live
+                        </Chip>
+                        {imageUrl ? (
+                          <img
+                            src={imageUrl}
+                            alt="ESP32-CAM Preview"
+                            className="w-full h-full rounded-lg"
+                          />
+                        ) : (
+                          <p>Loading image...</p>
+                        )}
+                      </div>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" variant="light" onPress={onClose}>
+                        Tutup
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
           </div>
         </>
       ) : (

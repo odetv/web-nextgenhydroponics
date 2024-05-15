@@ -63,7 +63,7 @@ export default function Features() {
               Bertani Tanpa Takut Kotor dengan Next-Gen Hydroponics
             </p>
           </div>
-          <div className="mt-2 w-full sm:w-11/12 md:w-11/12 lg:w-11/12 xl:w-11/12 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6 text-sm bg-emerald-50 rounded-lg">
+          <div className="mt-2 w-full sm:w-11/12 md:w-11/12 lg:w-11/12 xl:w-11/12 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6 text-sm bg-emerald-50 p-2 rounded-lg">
             <Accordion isCompact>
               <AccordionItem
                 key="1"
