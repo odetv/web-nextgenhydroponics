@@ -454,22 +454,24 @@ export default function Dashboard() {
                     </ModalHeader>
                     <ModalBody>
                       <div className="relative flex justify-center items-center">
-                        <Chip
-                          color="danger"
-                          variant="dot"
-                          size="sm"
-                          className="absolute top-4 right-4 z-10 bg-white opacity-50"
-                        >
-                          Live
-                        </Chip>
                         {imageUrl ? (
-                          <Image
-                            width={640}
-                            height={640}
-                            src={imageUrl}
-                            alt="Preview ESP32-CAM"
-                            className="rounded-lg"
-                          />
+                          <>
+                            <Chip
+                              color="danger"
+                              variant="dot"
+                              size="sm"
+                              className="absolute top-4 right-4 z-10 bg-white opacity-50"
+                            >
+                              Live
+                            </Chip>
+                            <Image
+                              width={640}
+                              height={640}
+                              src={imageUrl}
+                              alt="Preview ESP32-CAM"
+                              className="rounded-lg"
+                            />
+                          </>
                         ) : (
                           <p>Mengolah gambar...</p>
                         )}
