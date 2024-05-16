@@ -26,7 +26,7 @@ export default function Hero() {
                 className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <Button
-                  className="lowercase"
+                  className="lowercase text-xs sm:text-sm"
                   variant="outlined"
                   color="info"
                   startIcon={<InstagramIcon />}
@@ -42,7 +42,7 @@ export default function Hero() {
                 className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
               >
                 <Button
-                  className="lowercase"
+                  className="lowercase text-xs sm:text-sm"
                   variant="outlined"
                   color="info"
                   startIcon={<MailOutlineIcon />}

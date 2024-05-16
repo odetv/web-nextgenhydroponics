@@ -58,7 +58,7 @@ export default function Charts() {
   }, []);
 
   return (
-    <div className="p-4 flex flex-col sm:flex-row justify-center items-center gap-10">
+    <div className="p-8 flex flex-col sm:flex-row justify-center items-center gap-10">
       <div className="">
         <LineChart
           width={400}
