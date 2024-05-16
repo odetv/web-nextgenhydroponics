@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const db = getDatabase();
-    const photosRef = ref(db, "esp32cam");
+    const photosRef = ref(db, "esp32cam"); // directory to store photos
     const latestPhotoQuery = query(photosRef, limitToLast(1));
 
     const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
