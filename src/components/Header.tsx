@@ -34,6 +34,8 @@ export default function Header() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
+  const afterOut = "/";
+
   useEffect(() => {
     const auth = getAuth(app);
     const unsubscribe = auth.onAuthStateChanged((userData) => {
@@ -50,7 +52,10 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/");
+      router.push(afterOut);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error: any) {
       console.error("Error signing out:", error.message);
     }

@@ -36,6 +36,7 @@ import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
 import WifiIcon from "@mui/icons-material/Wifi";
 import SpeedIcon from "@mui/icons-material/Speed";
+import RedIcon from "../../assets/images/components/red-circle.gif";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -445,6 +446,7 @@ export default function Dashboard() {
               placement="center"
               backdrop="blur"
               onOpenChange={onOpenChange}
+              size="xl"
             >
               <ModalContent>
                 {(onClose) => (
@@ -457,12 +459,20 @@ export default function Dashboard() {
                         {imageUrl ? (
                           <>
                             <Chip
+                              startContent={
+                                <Image
+                                  src={RedIcon}
+                                  alt="Red Icon"
+                                  width={8}
+                                  height={8}
+                                />
+                              }
                               color="danger"
                               variant="dot"
                               size="sm"
-                              className="absolute top-4 right-4 z-10 bg-white opacity-50"
+                              className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
                             >
-                              Live
+                              <p className="pl-1">Live</p>
                             </Chip>
                             <Image
                               width={640}
@@ -478,7 +488,7 @@ export default function Dashboard() {
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="light" onPress={onClose}>
+                      <Button color="danger" variant="flat" onPress={onClose}>
                         Tutup
                       </Button>
                     </ModalFooter>

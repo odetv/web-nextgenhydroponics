@@ -52,22 +52,26 @@ export default function Hero() {
               </a>
             </div>
             <div>
-              <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base pt-3">
+              <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base pt-2 pb-2">
                 Atau Anda dapat mengisi form di bawah ini.
               </p>
             </div>
             <div className="flex flex-col gap-2 w-full rounded-lg sm:w-4/5 md:w-4/5 lg:w-4/5 xl:w-4/5">
-              <Input isRequired variant="faded" type="text" label="Nama" />
-              <Input isRequired variant="faded" type="email" label="Email" />
+              <Input isRequired variant="bordered" type="text" label="Nama" />
+              <Input isRequired variant="bordered" type="email" label="Email" />
               <Textarea
                 isRequired
                 label="Pesan"
-                variant="faded"
+                variant="bordered"
                 classNames={{
                   input: "resize-y min-h-[64px]",
                 }}
               />
-              <Button color="info" variant="contained" className="rounded-lg">
+              <Button
+                color="info"
+                variant="contained"
+                className="rounded-lg shadow-none hover:shadow-none"
+              >
                 Kirim
               </Button>
             </div>
