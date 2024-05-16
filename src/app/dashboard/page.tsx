@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const db = getDatabase();
-    const photosRef = ref(db, "photos");
+    const photosRef = ref(db, "esp32cam");
     const latestPhotoQuery = query(photosRef, limitToLast(1));
 
     const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
@@ -458,7 +458,7 @@ export default function Dashboard() {
                           color="danger"
                           variant="dot"
                           size="sm"
-                          className="absolute top-4 right-4 z-10 bg-white"
+                          className="absolute top-4 right-4 z-10 bg-white opacity-50"
                         >
                           Live
                         </Chip>
