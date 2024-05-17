@@ -67,26 +67,25 @@ export default function Team() {
         </p>
       </div>
       <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
-        <div className="flex flex-wrap gap-4 sm:grid sm:grid-cols-7 sm:grid-rows-1 sm:gap-2 justify-center items-center">
+        <div className="grid grid-cols-2 gap-4 sm:grid sm:grid-cols-7 sm:grid-rows-1 sm:gap-2 justify-center">
           {dataTeam.map((item, index) => (
-            <>
-              <div className="flex flex-col justify-start items-center">
-                <Image
-                  key={index}
-                  className="pb-2"
-                  alt={item.name}
-                  src={item.photoTeamURL.toString()}
-                  width={96}
-                  height={96}
-                />
-                <p className="text-tiny text-black text-center">
-                  {item.status}
-                </p>
-                <p className="text-sm text-black text-center font-semibold">
-                  {item.name}
-                </p>
-              </div>
-            </>
+            <div
+              key={item.id}
+              className="flex flex-col justify-start items-center"
+            >
+              <Image
+                key={index}
+                className="pb-2"
+                alt={item.name}
+                src={item.photoTeamURL.toString()}
+                width={96}
+                height={96}
+              />
+              <p className="text-tiny text-black text-center">{item.status}</p>
+              <p className="text-sm text-black text-center font-semibold">
+                {item.name}
+              </p>
+            </div>
           ))}
         </div>
       </div>

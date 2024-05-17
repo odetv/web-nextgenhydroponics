@@ -12,7 +12,10 @@ import LogoDelectra from "@/assets/images/logo/LogoDelectra.png";
 
 export default function Collaboration() {
   return (
-    <div className="p-4 flex flex-col gap-2 justify-center items-center max-w-screen-xl">
+    <div
+      id="overview"
+      className="pt-16 p-4 flex flex-col gap-2 justify-center items-center max-w-screen-xl"
+    >
       <div>
         <p className="font-bold text-center text-emerald-600">Kolaborasi</p>
       </div>

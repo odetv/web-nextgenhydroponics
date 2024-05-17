@@ -30,26 +30,24 @@ const Feature9 =
 export default function Features() {
   return (
     <div>
-      <div className="pt-16 p-4 grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
-        <div className="flex flex-col gap-4">
-          <Card isFooterBlurred radius="lg" className="border-none">
-            <div className="relative overflow-hidden rounded-inherit rounded-large">
-              <Image
-                className="transform hover:scale-110 transition-transform-opacity object-cover pt-10 pb-10"
-                alt="Next-Gen Hydroponics"
-                src={FeaturesImage.src}
-                width={800}
-                height={400}
-              />
-            </div>
-            <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <p className="text-tiny text-black/80 p-2 text-center">
-                Penerapan Teknologi Bidang Pertanian
-              </p>
-            </CardFooter>
-          </Card>
-        </div>
-        <div className="p-4 flex flex-col gap-2 justify-center items-center max-w-screen-xl">
+      <div className="pt-16 p-4 sm:grid flex flex-col-reverse gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
+        <Card isFooterBlurred radius="lg" className="border-none">
+          <div className="relative overflow-hidden rounded-inherit rounded-large">
+            <Image
+              className="transform hover:scale-110 transition-transform-opacity object-cover pt-10 pb-10"
+              alt="Next-Gen Hydroponics"
+              src={FeaturesImage.src}
+              width={800}
+              height={400}
+            />
+          </div>
+          <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+            <p className="text-tiny text-black/80 p-2 text-center">
+              Penerapan Teknologi Bidang Pertanian
+            </p>
+          </CardFooter>
+        </Card>
+        <div className="p-4 flex flex-col gap-2 justify-center items-center">
           <div>
             <p className="font-bold text-center text-emerald-600">
               Produk Unggulan

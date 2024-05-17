@@ -90,7 +90,7 @@ function Footer() {
               <li key="dashboard">
                 <a
                   rel="noopener noreferrer"
-                  href="/#"
+                  href="/#beranda"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Beranda

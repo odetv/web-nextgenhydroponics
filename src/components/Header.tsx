@@ -64,7 +64,7 @@ export default function Header() {
   return (
     <Navbar isBordered>
       <NavbarContent className="-ml-3">
-        <Link href="/#">
+        <Link href="/#beranda">
           <Image
             width={100}
             alt="Logo Next-Gen Hydroponics"
@@ -79,7 +79,7 @@ export default function Header() {
             <NavbarItem>
               <Link
                 color="foreground"
-                href="/#"
+                href="/#beranda"
                 className="hover:text-green-800 transition-all ease-in-out duration-250"
               >
                 Beranda
@@ -118,7 +118,7 @@ export default function Header() {
             <NavbarItem>
               <Link
                 color="foreground"
-                href="/#"
+                href="/#beranda"
                 className="hover:text-green-800 transition-all ease-in-out duration-250"
               >
                 Beranda
@@ -200,7 +200,7 @@ export default function Header() {
                 <DropdownItem color="default" key="beranda" textValue="beranda">
                   <Link
                     className="flex flex-row items-center gap-1"
-                    href="/#"
+                    href="/#beranda"
                     color="foreground"
                   >
                     <HomeIcon color="action" />
@@ -312,7 +312,7 @@ export default function Header() {
                   >
                     <Link
                       className="flex flex-row items-center gap-1"
-                      href="/#"
+                      href="/#beranda"
                       color="foreground"
                     >
                       <HomeIcon color="action" />
