@@ -148,6 +148,10 @@ export default function Dashboard() {
                       Konektivitas Wifi Mikrokontroller
                     </div>
                     <div className="text-tiny">SSID: Smart Green Garden</div>
+                    <div className="text-tiny">
+                      IP Address:{" "}
+                      <a href="http://192.168.100.172">192.168.100.172</a>
+                    </div>
                     <div className="text-tiny">Status: Terputus</div>
                   </div>
                 </PopoverContent>

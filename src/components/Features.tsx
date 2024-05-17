@@ -1,4 +1,4 @@
-import HeroImage from "../assets/images/components/hero.jpg";
+import FeaturesImage from "../assets/images/components/features.png";
 import {
   Button,
   Card,
@@ -35,16 +35,16 @@ export default function Features() {
           <Card isFooterBlurred radius="lg" className="border-none">
             <div className="relative overflow-hidden rounded-inherit rounded-large">
               <Image
-                className="transform hover:scale-110 transition-transform-opacity object-cover"
+                className="transform hover:scale-110 transition-transform-opacity object-cover pt-10 pb-10"
                 alt="Next-Gen Hydroponics"
-                src={HeroImage.src}
+                src={FeaturesImage.src}
                 width={800}
                 height={400}
               />
             </div>
             <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <p className="text-tiny text-white/80 p-2 text-center">
-                Tim Smart Green Garden
+              <p className="text-tiny text-black/80 p-2 text-center">
+                Penerapan Teknologi Bidang Pertanian
               </p>
             </CardFooter>
           </Card>

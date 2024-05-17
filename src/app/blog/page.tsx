@@ -1,4 +1,4 @@
-import GalleryInstagram from "../../components/GalleryInstagram";
+import BlogGallery from "../../components/BlogGallery";
 
 export default function Blog() {
   return (
@@ -7,7 +7,7 @@ export default function Blog() {
         <h1 className="font-bold text-3xl">Publikasi Kegiatan</h1>
         <p>Ikuti Keseruan Kegiatan Kami</p>
       </div>
-      <GalleryInstagram />
+      <BlogGallery />
     </div>
   );
 }
