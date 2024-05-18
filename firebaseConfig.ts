@@ -6,15 +6,14 @@ import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAcFafTyv0cWvjROU19MsXORdfsjPDixJI",
-  authDomain: "next-gen-hydroponics.firebaseapp.com",
-  projectId: "next-gen-hydroponics",
-  storageBucket: "next-gen-hydroponics.appspot.com",
-  messagingSenderId: "198680950116",
-  appId: "1:198680950116:web:f228d0a172d1ef6b34b671",
-  measurementId: "G-N8EJ00BKYL",
-  databaseURL:
-    "https://next-gen-hydroponics-default-rtdb.asia-southeast1.firebasedatabase.app",
+  apiKey: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_APIKEY}`,
+  authDomain: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_AUTHDOMAIN}`,
+  projectId: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_PROJECTID}`,
+  storageBucket: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_STORAGEBUCKET}`,
+  messagingSenderId: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_MESSAGINGSENDERID}`,
+  appId: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_APPID}`,
+  measurementId: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_MEASUREMENTID}`,
+  databaseURL: `${process.env.NEXT_PUBLIC_VERCEL_FIREBASE_DATABASEURL}`,
 };
 
 const app = initializeApp(firebaseConfig);
