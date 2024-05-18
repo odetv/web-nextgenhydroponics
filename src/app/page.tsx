@@ -8,7 +8,10 @@ import Contact from "@/components/Contact";
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen pb-16 pt-4 sm:pt-16">
+    <main
+      id="beranda"
+      className="flex flex-col justify-center items-center min-h-screen pb-16 pt-4 sm:pt-16"
+    >
       <Hero />
       <Collaboration />
       <Team />

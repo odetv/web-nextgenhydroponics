@@ -1,8 +1,9 @@
 import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
-import { Image, Link } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Link from "next/link";
 
 function Footer() {
   return (
@@ -46,18 +47,6 @@ function Footer() {
           <div className="space-y-3">
             <div className="uppercase font-bold text-gray-50">Kontak</div>
             <div className="flex flex-col gap-1">
-              {/* <a
-                rel="noopener noreferrer"
-                href="https://wa.me/6285739683673/"
-                target="_blank"
-                title="WhatsApp"
-                className="flex items-center py-0.5 hover:text-emerald-400 transition-all ease-in-out"
-              >
-                <WhatsAppIcon />
-                <p className="pl-2 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
-                  085739683673
-                </p>
-              </a> */}
               <a
                 rel="noopener noreferrer"
                 href="https://instagram.com/nextgen.hydroponics"
@@ -88,31 +77,31 @@ function Footer() {
             <h3 className="tracki uppercase font-bold text-gray-50">HALAMAN</h3>
             <ul className="space-y-1 text-tiny sm:text-sm md:text-sm lg:text-sm xl:text-sm">
               <li key="dashboard">
-                <a
+                <Link
                   rel="noopener noreferrer"
                   href="/#beranda"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Beranda
-                </a>
+                </Link>
               </li>
               <li key="produk">
-                <a
+                <Link
                   rel="noopener noreferrer"
                   href="/#overview"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Overview
-                </a>
+                </Link>
               </li>
               <li key="fitur">
-                <a
+                <Link
                   rel="noopener noreferrer"
                   href="/blog"
                   className="hover:text-emerald-400 transition-all ease-in-out"
                 >
                   Blog
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

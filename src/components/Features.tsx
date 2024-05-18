@@ -30,11 +30,11 @@ const Feature9 =
 export default function Features() {
   return (
     <div>
-      <div className="pt-16 p-4 sm:grid flex flex-col-reverse gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
+      <div className="pt-16 p-4 sm:grid flex flex-col-reverse gap-8 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
         <Card isFooterBlurred radius="lg" className="border-none">
           <div className="relative overflow-hidden rounded-inherit rounded-large">
             <Image
-              className="transform hover:scale-110 transition-transform-opacity object-cover pt-10 pb-10"
+              className="transform hover:scale-110 transition-transform-opacity object-cover pt-4 pb-10"
               alt="Next-Gen Hydroponics"
               src={FeaturesImage.src}
               width={800}
@@ -47,7 +47,7 @@ export default function Features() {
             </p>
           </CardFooter>
         </Card>
-        <div className="p-4 flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col gap-2 justify-center items-center">
           <div>
             <p className="font-bold text-center text-emerald-600">
               Produk Unggulan
@@ -63,7 +63,7 @@ export default function Features() {
               Bertani Tanpa Takut Kotor dengan Next-Gen Hydroponics
             </p>
           </div>
-          <div className="mt-2 w-full sm:w-11/12 md:w-11/12 lg:w-11/12 xl:w-11/12 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6 text-sm bg-emerald-50 p-2 rounded-lg">
+          <div className="mt-2 sm:w-full w-11/12 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6 text-sm bg-emerald-50 rounded-lg">
             <Accordion isCompact>
               <AccordionItem
                 key="1"
