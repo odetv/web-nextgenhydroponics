@@ -9,23 +9,23 @@ import {
 } from "@nextui-org/react";
 
 const Feature1 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Pada hidroponik ini menerapkan sistem IoT sebagai kontrol monitoring dari beberapa sensor atau modul menggunakan ESP32. Dan implementasi AI untuk deteksi hama pada tanaman menggunakan ESP32-CAM yang terpisah tetapi tetap parrent atau induk nya ada pada ESP32.";
 const Feature2 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Sistem pengairan otomatis pada hidroponik menggunakan pompa air yang akan diatur kondisi mengalir atau tidaknya tergantung dengan kondisi suhu air dan juga interval waktu idealnya air mengalir pada sistem DFT.";
 const Feature3 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Melihat dan mengontrol kondisi suhu air di sistem hidroponik. Jika suhu pada air terlalu panas, maka secara otomatis pompa air irigasi hidroponik akan dihidupkan untuk memutar air dengan tujuan agar dapat mengurangi panas air yang ada pada pipa hidroponik.";
 const Feature4 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Melihat dan mengontrol nutrisi pada hidroponik yang diukur melalui sensor TDS pada tandon air pencampuran hidroponik secara otomatis (Jika nilai saat ini kurang dari nilai yang telah di tetapkan, maka akan disesuaikan secara otomatis menggunakan bantuan dosing pump untuk aliran larutan nutrisi ke box pencampuran agar dapat mencapai angka yang telah ditetapkan).";
 const Feature5 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Melihat dan mengontrol kondisi pH air pada hidroponik yang diukur melalui sensor pH pada tandon air pencampuran hidroponik secara otomatis (Jika nilai saat ini kurang dari nilai yang telah di tetapkan, maka akan disesuaikan secara otomatis menggunakan bantuan dosing pump untuk aliran larutan ke box pencampuran agar dapat mencapai angka yang telah ditetapkan).";
 const Feature6 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Membuat sistem penerangan pada tanaman secara otomatis jika kondisi gelap atau kurang cahaya dan pada saat malam hari yang gelap, sehingga tanaman akan tetap mendapat penyinaran yang tercukupi.";
 const Feature7 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Mendeteksi hama ulat yang terdapat pada tanaman dan dapat di kontrol menggunakan AI. Jika terdapat hama yang terdeteksi maka akan ada aksi penyemprotan pestisida organik pada tanaman dengan tujuan dapat mengusir dan mematikan hama tersebut. Selain itu, pada aplikasi mobile dan web juga akan ada notifikasi bahwa ada hama yang mengganggu tanaman.";
 const Feature8 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Mengolah semua data yang dihasilkan dari input/output sensor atau modul yang digunakan untuk disimpan didalam database dan menjadi pusat data untuk kebutuhan pengaplikasian di beberapa platform seperti aplikasi web dan mobile.";
 const Feature9 =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  "Menghasilkan aplikasi website dan mobile yang dapat diakses oleh semua pengguna baik yang terdaftar pada sistem maupun sebagai guest atau hanya pengunjung. Rencana kedepannya yaitu pengguna guest hanya dapat memonitoring saja. Untuk pengguna yang telah terdaftar atau sudah memiliki akun maka dapat melakukan monitoring dan kontrol terhadap sistem. Hal ini kami lakukan untuk menjaga keamanan dan terbentuknya sistem yang aman kedepannya.";
 
 export default function Features() {
   return (
