@@ -8,13 +8,15 @@ import PhotoWaradiana from "../assets/images/components/teams/waradiana.png";
 import PhotoMandiasa from "../assets/images/components/teams/mandiasa.png";
 
 export default function Team() {
-  const dataTeam = [
+  const dataKetua = [
     {
       id: "1",
       name: "I Gede Gelgel Abdiutama",
       status: "Ketua Tim",
       photoTeamURL: PhotoGelgel.src,
     },
+  ];
+  const dataTeam = [
     {
       id: "2",
       name: "Gede Bakti Pratama Putra",
@@ -56,18 +58,41 @@ export default function Team() {
   return (
     <div className="pt-16 p-4 flex flex-col gap-2 justify-center items-center max-w-screen-xl">
       <div>
-        <p className="font-bold text-center text-emerald-600">Tim Kerja</p>
-      </div>
-      <div>
-        <p className="font-bold text-3xl text-center">Next-Gen Hydroponics</p>
-      </div>
-      <div>
-        <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base">
-          Kenali Kami dan Mulailah Perjalananmu Bersama Kami
-        </p>
+        <div>
+          <p className="font-bold text-center text-emerald-600">Tim Kerja</p>
+        </div>
+        <div>
+          <p className="font-bold text-3xl text-center">Next-Gen Hydroponics</p>
+        </div>
+        <div>
+          <p className="text-center text-sm sm:text-base md:text-base lg:text-base xl:text-base">
+            Kenali Kami dan Mulailah Perjalananmu Bersama Kami
+          </p>
+        </div>
       </div>
       <div className="mt-2 flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-6">
-        <div className="grid grid-cols-2 gap-4 sm:grid sm:grid-cols-7 sm:grid-rows-1 sm:gap-2 justify-center">
+        <div className="flex flex-col gap-3 justify-center">
+          {dataKetua.map((item, index) => (
+            <div
+              key={item.id}
+              className="flex flex-col justify-start items-center"
+            >
+              <Image
+                key={index}
+                className="pb-2"
+                alt={item.name}
+                src={item.photoTeamURL.toString()}
+                width={96}
+                height={96}
+              />
+              <p className="text-tiny text-black text-center">{item.status}</p>
+              <p className="text-sm text-black text-center font-semibold">
+                {item.name}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid sm:grid-cols-6 sm:grid-rows-1 sm:gap-2 justify-center">
           {dataTeam.map((item, index) => (
             <div
               key={item.id}
