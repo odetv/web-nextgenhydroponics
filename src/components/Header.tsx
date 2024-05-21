@@ -33,7 +33,7 @@ export default function Header() {
   const auth = getAuth(app);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-  const [activeMenu, setActiveMenu] = useState<string>("/#beranda");
+  const [activeMenu, setActiveMenu] = useState<string>("");
 
   const afterOut = "/";
 
