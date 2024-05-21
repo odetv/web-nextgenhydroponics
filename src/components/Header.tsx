@@ -33,7 +33,7 @@ export default function Header() {
   const auth = getAuth(app);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-  const [activeMenu, setActiveMenu] = useState<string>("");
+  const [activeMenu, setActiveMenu] = useState<string>("/#beranda");
 
   const afterOut = "/";
 
@@ -69,7 +69,7 @@ export default function Header() {
   return (
     <Navbar isBordered>
       <NavbarContent className="-ml-3">
-        <Link href="/#beranda">
+        <Link href="/">
           <Image
             width={100}
             alt="Logo Next-Gen Hydroponics"
