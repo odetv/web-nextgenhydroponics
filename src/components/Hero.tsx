@@ -1,17 +1,28 @@
 import Link from "next/link";
 import HeroImage from "../assets/images/components/hero.jpg";
 import { Button, Card, CardFooter, Image } from "@nextui-org/react";
+import { TypeAnimation } from "react-type-animation";
 
 export default function Hero() {
   return (
     <div>
       <div className="p-4 grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-2 lg:grid-rows-1 xl:grid-cols-2 xl:grid-rows-1 justify-center items-center max-w-screen-xl">
-        <div className="flex flex-col gap-4">
-          <p className="font-bold leading-tight text-3xl sm:text-5xl">
-            Pertanian Canggih{" "}
-            <span className="text-emerald-600">Next-Gen Hydroponics</span>
+        <div className="flex flex-col">
+          <p className="font-bold leading-tight text-3xl sm:text-5xl pb-2">
+            Pertanian{" "}
+            <TypeAnimation
+              sequence={["Canggih", 2000, "Cerdas", 2000, "Keren", 2000]}
+              wrapper="span"
+              speed={40}
+              cursor={true}
+              repeat={Infinity}
+              className="bg-blue-200 rounded-lg"
+            />
           </p>
-          <p className="text-sm sm:text-base">
+          <p className="text-emerald-600 font-bold leading-tight text-3xl sm:text-5xl pb-4">
+            Next-Gen Hydroponics
+          </p>
+          <p className="text-sm sm:text-base pb-4">
             Langkah maju dalam meningkatkan produktivitas pertanian serta
             menjaga keberlanjutan lingkungan dengan Teknologi Internet of Things
             dan Artificial Intelligence.

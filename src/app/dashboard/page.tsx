@@ -221,7 +221,7 @@ export default function Dashboard() {
                 Monitoring dan Kontrol Suhu
               </p>
               <p className="text-sm">Kondisi suhu udara dan air hidroponik</p>
-              <div className="w-11/12 grid grid-rows-2 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
+              <div className="w-11/12 grid grid-rows-2 grid-cols-1 justify-center items-center text-sm pt-4">
                 <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
                     isDisabled
@@ -239,33 +239,35 @@ export default function Dashboard() {
                     <p className="text-sm">36°C</p>
                   </div>
                 </div>
-                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
-                  <Slider
-                    isDisabled
-                    hideThumb={true}
-                    label="Suhu Air"
-                    color="primary"
-                    hideValue={true}
-                    step={1}
-                    maxValue={100}
-                    minValue={0}
-                    defaultValue={50}
-                  />
-                  <div className="flex flex-row items-center justify-center">
-                    <ThermostatIcon color="primary" />
-                    <p className="text-sm">32°C</p>
+                <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
+                  <div className="flex flex-row gap-2 justify-start items-center">
+                    <Slider
+                      isDisabled
+                      hideThumb={true}
+                      label="Suhu Air"
+                      color="primary"
+                      hideValue={true}
+                      step={1}
+                      maxValue={100}
+                      minValue={0}
+                      defaultValue={50}
+                    />
+                    <div className="flex flex-row items-center justify-center">
+                      <ThermostatIcon color="primary" />
+                      <p className="text-sm">32°C</p>
+                    </div>
                   </div>
+                  <LoadingButton
+                    size="small"
+                    onClick={handleSuhu}
+                    loading={loadingSuhu}
+                    loadingIndicator="Proses..."
+                    variant="text"
+                    className=""
+                  >
+                    <span>Segarkan</span>
+                  </LoadingButton>
                 </div>
-                <LoadingButton
-                  size="small"
-                  onClick={handleSuhu}
-                  loading={loadingSuhu}
-                  loadingIndicator="Proses..."
-                  variant="text"
-                  className=""
-                >
-                  <span>Segarkan</span>
-                </LoadingButton>
               </div>
             </div>
             <div
@@ -326,32 +328,34 @@ export default function Dashboard() {
               </p>
               <p className="text-sm">Atur pH air secara manual atau otomatis</p>
               <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
-                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
-                  <Slider
-                    isDisabled
-                    hideThumb={true}
-                    label="pH Air"
-                    color="warning"
-                    hideValue={true}
-                    step={1}
-                    maxValue={1000}
-                    minValue={0}
-                    defaultValue={75}
-                  />
-                  <div className="flex flex-row items-center justify-center">
-                    <WaterDropIcon color="warning" />
-                    <p className="text-sm">36 pH</p>
+                <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
+                  <div className="flex flex-row gap-2 justify-start items-center">
+                    <Slider
+                      isDisabled
+                      hideThumb={true}
+                      label="pH Air"
+                      color="warning"
+                      hideValue={true}
+                      step={1}
+                      maxValue={1000}
+                      minValue={0}
+                      defaultValue={75}
+                    />
+                    <div className="flex flex-row items-center justify-center">
+                      <WaterDropIcon color="warning" />
+                      <p className="text-sm">36 pH</p>
+                    </div>
                   </div>
+                  <LoadingButton
+                    size="small"
+                    onClick={handlePH}
+                    loading={loadingPH}
+                    loadingIndicator="Proses..."
+                    variant="text"
+                  >
+                    <span>Stabilkan</span>
+                  </LoadingButton>
                 </div>
-                <LoadingButton
-                  size="small"
-                  onClick={handlePH}
-                  loading={loadingPH}
-                  loadingIndicator="Proses..."
-                  variant="text"
-                >
-                  <span>Stabilkan</span>
-                </LoadingButton>
               </div>
             </div>
             <div
@@ -379,8 +383,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
                     <p>Kondisi:</p>
-                    <p>Gelap</p>
-                    <p>(Siang)</p>
+                    {isSelectedLampu ? <p>Gelap</p> : <p>-</p>}
                   </div>
                 </div>
                 {isSelectedLampu ? (
@@ -420,28 +423,45 @@ export default function Dashboard() {
                     </Switch>
                   </div>
                   <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
-                    <p>Deteksi:</p>
-                    <p>Ada Hama</p>
+                    <p>Status:</p>
+                    {isSelectedAI ? <p>Terdeteksi</p> : <p>-</p>}
                   </div>
                 </div>
                 {isSelectedAI ? (
                   <div>
-                    <p className="text-sm pb-3">AI Pendeteksi Hama Aktif</p>
+                    <p className="text-sm pb-3">
+                      Model AI Pendeteksi Hama Aktif
+                    </p>
                     <Button
                       onPress={onOpen}
                       size="sm"
                       color="primary"
                       variant="flat"
                     >
-                      Cek Kamera
+                      Pantau Hama
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-center items-center gap-6 text-sm ">
-                    <Switch size="sm" color="primary">
-                      Pestisida
-                    </Switch>
-                  </div>
+                  <>
+                    <div className="flex flex-col justify-center items-center text-sm">
+                      <p className="text-sm pb-3">
+                        Model AI Pendeteksi Hama Tidak Aktif
+                      </p>
+                      <Switch size="sm" color="primary" className="pb-3">
+                        Pestisida
+                      </Switch>
+                    </div>
+                    <div>
+                      <Button
+                        onPress={onOpen}
+                        size="sm"
+                        color="primary"
+                        variant="flat"
+                      >
+                        Cek Kamera
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

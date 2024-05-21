@@ -58,7 +58,7 @@ export default function Charts() {
   }, []);
 
   return (
-    <div className="p-8 flex flex-col sm:flex-row justify-center items-center gap-10">
+    <div className="pt-4 pb-4 flex flex-col sm:flex-row justify-center items-center gap-10">
       <div className="">
         <LineChart
           width={400}
@@ -74,7 +74,7 @@ export default function Charts() {
       </div>
       <div className="grid grid-cols-2 grid-rows-1 gap-10 text-center">
         <div>
-          <p className="text-sm">Grafik Nutrisi</p>
+          <p className="text-sm">Kondisi Nutrisi</p>
           <Gauge
             startAngle={-110}
             endAngle={110}
@@ -95,7 +95,7 @@ export default function Charts() {
           />
         </div>
         <div>
-          <p className="text-sm">Grafik pH Air</p>
+          <p className="text-sm">Kondisi pH Air</p>
           <Gauge
             startAngle={-110}
             endAngle={110}
