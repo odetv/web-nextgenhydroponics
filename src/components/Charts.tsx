@@ -4,18 +4,18 @@ import React, { useState, useEffect } from "react";
 
 export default function Charts() {
   const generateRandomValue = (max: number) => Math.floor(Math.random() * max);
-  const [uData, setUData] = useState(
-    Array.from({ length: 24 }, () => Math.floor(Math.random() * 100))
-  );
-  const [aData, setAData] = useState(
-    Array.from({ length: 24 }, () => Math.floor(Math.random() * 100))
-  );
+
+  const [uData, setUData] = useState(generateSmoothData(24, 100));
+  const [aData, setAData] = useState(generateSmoothData(24, 100));
+
   const nutrisiMax = 10;
   const phAirMax = 1000;
+
   const [nutrisiValue, setNutrisiValue] = useState(
     generateRandomValue(nutrisiMax)
   );
   const [phAirValue, setPhAirValue] = useState(generateRandomValue(phAirMax));
+
   const xLabels = [
     "12AM",
     "1AM",
@@ -43,17 +43,41 @@ export default function Charts() {
     "11PM",
   ];
 
+  function generateSmoothData(length: number, max: number) {
+    const data = [];
+    let currentValue = generateRandomValue(max);
+    for (let i = 0; i < length; i++) {
+      const change = (Math.random() - 0.5) * 10; // Small random change
+      currentValue = Math.min(max, Math.max(0, currentValue + change)); // Keep within bounds
+      data.push(currentValue);
+    }
+    return data;
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setUData(
-        Array.from({ length: 24 }, () => Math.floor(Math.random() * 100))
-      );
-      setAData(
-        Array.from({ length: 24 }, () => Math.floor(Math.random() * 100))
-      );
+      setUData((prevData) => {
+        const newData = prevData.slice(1);
+        const lastValue = newData[newData.length - 1];
+        const change = (Math.random() - 0.5) * 10;
+        const newValue = Math.min(100, Math.max(0, lastValue + change));
+        newData.push(newValue);
+        return newData;
+      });
+
+      setAData((prevData) => {
+        const newData = prevData.slice(1);
+        const lastValue = newData[newData.length - 1];
+        const change = (Math.random() - 0.5) * 10;
+        const newValue = Math.min(100, Math.max(0, lastValue + change));
+        newData.push(newValue);
+        return newData;
+      });
+
       setNutrisiValue(generateRandomValue(nutrisiMax));
       setPhAirValue(generateRandomValue(phAirMax));
     }, 2500);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -64,8 +88,18 @@ export default function Charts() {
           width={400}
           height={300}
           series={[
-            { data: aData, label: "Suhu Udara", yAxisKey: "leftAxisId" },
-            { data: uData, label: "Suhu Air", yAxisKey: "rightAxisId" },
+            {
+              data: aData,
+              // area: true,
+              label: "Suhu Udara",
+              yAxisKey: "leftAxisId",
+            },
+            {
+              data: uData,
+              // area: true,
+              label: "Suhu Air",
+              yAxisKey: "rightAxisId",
+            },
           ]}
           xAxis={[{ scaleType: "point", data: xLabels }]}
           yAxis={[{ id: "leftAxisId" }, { id: "rightAxisId" }]}
