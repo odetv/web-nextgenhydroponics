@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { app, database } from "../../firebaseConfig";
 import { getAuth, User } from "firebase/auth";
-import { ref, onDisconnect, set, update } from "firebase/database";
+import { ref, set, onDisconnect, update, get } from "firebase/database";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -9,18 +9,33 @@ export function useAuth() {
   useEffect(() => {
     const auth = getAuth(app);
 
-    const handleUserStatus = (userData: User | null) => {
+    const handleUserStatus = async (userData: User | null) => {
       if (userData) {
         setUser(userData);
         const userStatusRef = ref(database, `users/${userData.uid}`);
-        set(userStatusRef, {
-          uid: userData.uid,
-          displayName: userData.displayName,
-          email: userData.email,
-          isActive: true,
-        });
+        const snapshot = await get(userStatusRef);
+        const userExists = snapshot.exists();
+
+        if (!userExists) {
+          set(userStatusRef, {
+            uid: userData.uid,
+            displayName: userData.displayName,
+            email: userData.email,
+            isActive: true,
+            lastLogin: Date.now(),
+            loginTime: Date.now(), // Tambahkan ini untuk mencatat waktu login
+          });
+        } else {
+          update(userStatusRef, {
+            isActive: true,
+            lastLogin: snapshot.val().lastLogin || Date.now(),
+            loginTime: Date.now(), // Update waktu login setiap kali pengguna login
+          });
+        }
+
         onDisconnect(userStatusRef).update({
           isActive: false,
+          loginTime: null, // Reset waktu login saat pengguna terputus
         });
       } else {
         setUser(null);

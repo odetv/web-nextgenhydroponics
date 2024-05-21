@@ -18,8 +18,15 @@ import {
 export default function Admin() {
   const user = useAuth();
   const [activeUsers, setActiveUsers] = useState<
-    { uid: string; displayName: string; email: string }[]
+    {
+      uid: string;
+      displayName: string;
+      email: string;
+      lastLogin: number;
+      loginTime: number;
+    }[]
   >([]);
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
     const usersRef = ref(database, "users");
@@ -28,12 +35,28 @@ export default function Admin() {
       const usersData = snapshot.val() || {};
       const activeUsersList = Object.values(usersData).filter(
         (user: any) => user.isActive
-      ) as { uid: string; displayName: string; email: string }[];
+      ) as {
+        uid: string;
+        displayName: string;
+        email: string;
+        lastLogin: number;
+        loginTime: number;
+      }[];
       setActiveUsers(activeUsersList);
     });
 
     return () => {
       unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
     };
   }, []);
 
@@ -46,6 +69,18 @@ export default function Admin() {
     const end = start + rowsPerPage;
     return activeUsers.slice(start, end);
   }, [page, activeUsers]);
+
+  const calculateActiveDuration = (loginTime: number) => {
+    if (!loginTime) return "N/A";
+
+    const duration = currentTime - loginTime;
+
+    const seconds = Math.floor((duration / 1000) % 60);
+    const minutes = Math.floor((duration / (1000 * 60)) % 60);
+    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    return `${hours} jam ${minutes} menit ${seconds} detik`;
+  };
 
   return (
     <main className="-mt-12 flex flex-col justify-center min-h-screen gap-3 p-4">
@@ -66,6 +101,7 @@ export default function Admin() {
                 <TableColumn>NO</TableColumn>
                 <TableColumn>NAMA</TableColumn>
                 <TableColumn>EMAIL</TableColumn>
+                <TableColumn>DURASI AKTIF</TableColumn>
                 <TableColumn>STATUS</TableColumn>
               </TableHeader>
               <TableBody emptyContent={"Tidak ada pengguna aktif."}>
@@ -76,6 +112,9 @@ export default function Admin() {
                     </TableCell>
                     <TableCell>{activeUser.displayName}</TableCell>
                     <TableCell>{activeUser.email}</TableCell>
+                    <TableCell>
+                      {calculateActiveDuration(activeUser.loginTime)}
+                    </TableCell>
                     <TableCell>
                       {user?.uid === activeUser.uid ? "Saya" : "-"}
                     </TableCell>
