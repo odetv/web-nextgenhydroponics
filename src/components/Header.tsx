@@ -33,6 +33,7 @@ export default function Header() {
   const auth = getAuth(app);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const [activeMenu, setActiveMenu] = useState<string>("");
 
   const afterOut = "/";
 
@@ -61,6 +62,10 @@ export default function Header() {
     }
   };
 
+  const handleMenuClick = (menu: string) => {
+    setActiveMenu(menu);
+  };
+
   return (
     <Navbar isBordered>
       <NavbarContent className="-ml-3">
@@ -80,7 +85,12 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/#beranda"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/#beranda"
+                    ? "text-green-800 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleMenuClick("/#beranda")}
               >
                 Beranda
               </Link>
@@ -89,7 +99,12 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/dashboard"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/dashboard"
+                    ? "text-green-800 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleMenuClick("/dashboard")}
               >
                 Dashboard
               </Link>
@@ -98,7 +113,12 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/#overview"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/#overview"
+                    ? "text-green-800 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleMenuClick("/#overview")}
               >
                 Overview
               </Link>
@@ -107,7 +127,10 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/blog"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/blog" ? "text-green-800 font-semibold" : ""
+                }`}
+                onClick={() => handleMenuClick("/blog")}
               >
                 Blog
               </Link>
@@ -119,7 +142,12 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/#beranda"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/#beranda"
+                    ? "text-green-800 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleMenuClick("/#beranda")}
               >
                 Beranda
               </Link>
@@ -128,7 +156,12 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/#overview"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/#overview"
+                    ? "text-green-800 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleMenuClick("/#overview")}
               >
                 Overview
               </Link>
@@ -137,7 +170,10 @@ export default function Header() {
               <Link
                 color="foreground"
                 href="/blog"
-                className="hover:text-green-800 transition-all ease-in-out duration-250"
+                className={`hover:text-green-800 transition-all ease-in-out duration-250 ${
+                  activeMenu === "/blog" ? "text-green-800 font-semibold" : ""
+                }`}
+                onClick={() => handleMenuClick("/blog")}
               >
                 Blog
               </Link>
@@ -202,6 +238,7 @@ export default function Header() {
                     className="flex flex-row items-center gap-1"
                     href="/#beranda"
                     color="foreground"
+                    onClick={() => handleMenuClick("/#beranda")}
                   >
                     <HomeIcon color="action" />
                     Beranda
@@ -216,6 +253,7 @@ export default function Header() {
                     className="flex flex-row items-center gap-1"
                     href="/dashboard"
                     color="foreground"
+                    onClick={() => handleMenuClick("/dashboard")}
                   >
                     <DashboardIcon color="action" />
                     Dashboard
@@ -231,6 +269,7 @@ export default function Header() {
                     className="flex flex-row items-center gap-1"
                     href="/#overview"
                     color="foreground"
+                    onClick={() => handleMenuClick("/#overview")}
                   >
                     <CategoryIcon color="action" />
                     Overview
@@ -241,6 +280,7 @@ export default function Header() {
                     className="flex flex-row items-center gap-1"
                     href="/blog"
                     color="foreground"
+                    onClick={() => handleMenuClick("/blog")}
                   >
                     <ArticleIcon color="action" />
                     Blog
@@ -314,6 +354,7 @@ export default function Header() {
                       className="flex flex-row items-center gap-1"
                       href="/#beranda"
                       color="foreground"
+                      onClick={() => handleMenuClick("/#beranda")}
                     >
                       <HomeIcon color="action" />
                       Beranda
@@ -328,6 +369,7 @@ export default function Header() {
                       className="flex flex-row items-center gap-1"
                       href="/#overview"
                       color="foreground"
+                      onClick={() => handleMenuClick("/#overview")}
                     >
                       <CategoryIcon color="action" />
                       Overview
@@ -338,6 +380,7 @@ export default function Header() {
                       className="flex flex-row items-center gap-1"
                       href="/blog"
                       color="foreground"
+                      onClick={() => handleMenuClick("/blog")}
                     >
                       <ArticleIcon color="action" />
                       Blog
