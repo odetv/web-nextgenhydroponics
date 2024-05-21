@@ -23,19 +23,22 @@ export function useAuth() {
             email: userData.email,
             isActive: true,
             lastLogin: Date.now(),
-            loginTime: Date.now(), // Tambahkan ini untuk mencatat waktu login
+            loginTime: Date.now(),
           });
         } else {
           update(userStatusRef, {
+            uid: userData.uid,
+            displayName: userData.displayName,
+            email: userData.email,
             isActive: true,
             lastLogin: snapshot.val().lastLogin || Date.now(),
-            loginTime: Date.now(), // Update waktu login setiap kali pengguna login
+            loginTime: Date.now(),
           });
         }
 
         onDisconnect(userStatusRef).update({
           isActive: false,
-          loginTime: null, // Reset waktu login saat pengguna terputus
+          loginTime: null,
         });
       } else {
         setUser(null);
