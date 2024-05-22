@@ -1,10 +1,10 @@
 import {
-  Image,
   Popover,
   PopoverTrigger,
   PopoverContent,
   Button,
 } from "@nextui-org/react";
+import Image from "next/image";
 import LogoUndiksha from "@/assets/images/logo/LogoUndiksha.png";
 import LogoDagoEngineering from "@/assets/images/logo/LogoDagoEng.png";
 import LogoCGPDagoEng from "@/assets/images/logo/LogoCGPDagoEng.png";
@@ -41,8 +41,9 @@ export default function Collaboration() {
             <PopoverTrigger>
               <div>
                 <Image
-                  width={80}
-                  className="transform hover:scale-105 transition-transform-opacity object-cover"
+                  width={72}
+                  height={72}
+                  className="transform hover:scale-105 transition-transform-opacity object-cover w-[72px] h-[72px]"
                   alt="Undiksha"
                   src={LogoUndiksha.src}
                 />
@@ -70,7 +71,8 @@ export default function Collaboration() {
               <div>
                 <Image
                   width={172}
-                  className="transform hover:scale-105 transition-transform-opacity object-cover"
+                  height={172}
+                  className="transform hover:scale-105 transition-transform-opacity object-cover w-auto h-[80px]"
                   alt="PT. Dago Engineering"
                   src={LogoDagoEngineering.src}
                 />
@@ -100,6 +102,7 @@ export default function Collaboration() {
               <div>
                 <Image
                   width={162}
+                  height={162}
                   className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="Clean & Green Power"
                   src={LogoCGPDagoEng.src}
@@ -128,6 +131,7 @@ export default function Collaboration() {
               <div>
                 <Image
                   width={238}
+                  height={238}
                   className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="Delectra"
                   src={LogoDelectra.src}

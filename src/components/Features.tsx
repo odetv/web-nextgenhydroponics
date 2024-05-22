@@ -3,10 +3,10 @@ import {
   Button,
   Card,
   CardFooter,
-  Image,
   Accordion,
   AccordionItem,
 } from "@nextui-org/react";
+import Image from "next/image";
 
 const Feature1 =
   "Pada hidroponik ini menerapkan sistem IoT sebagai kontrol monitoring dari beberapa sensor atau modul menggunakan ESP32. Dan implementasi AI untuk deteksi hama pada tanaman menggunakan ESP32-CAM yang terpisah tetapi tetap parrent atau induk nya ada pada ESP32.";

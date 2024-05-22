@@ -13,10 +13,10 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-  Image,
   NavbarContent,
   Tooltip,
 } from "@nextui-org/react";
+import Image from "next/image";
 import { SearchIcon } from "./SearchIcon";
 import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -72,6 +72,7 @@ export default function Header() {
         <Link href="/">
           <Image
             width={100}
+            height={100}
             alt="Logo Next-Gen Hydroponics"
             src={LogoNextGenHydroponics.src}
           />

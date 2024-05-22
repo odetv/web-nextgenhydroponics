@@ -1,4 +1,4 @@
-import { Image } from "@nextui-org/react";
+import Image from "next/image";
 import PhotoGelgel from "../assets/images/components/teams/gelgel.png";
 import PhotoBakti from "../assets/images/components/teams/bakti.png";
 import PhotoDiani from "../assets/images/components/teams/diani.png";

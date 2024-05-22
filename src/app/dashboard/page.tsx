@@ -37,6 +37,7 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import WifiIcon from "@mui/icons-material/Wifi";
 import SpeedIcon from "@mui/icons-material/Speed";
 import RedIcon from "../../assets/images/components/red-circle.gif";
+import useStatusEsp from "../../middleware/DataEsp32Provider";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -76,6 +77,8 @@ export default function Dashboard() {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const status = useStatusEsp();
+
   return (
     <main className="flex flex-col justify-center items-center gap-3 pt-8 pb-8">
       {user ? (
@@ -95,7 +98,7 @@ export default function Dashboard() {
                     size="lg"
                     className="cursor-pointer"
                   >
-                    Mati
+                    {status === "hidup" ? "Hidup" : "Mati"}
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>

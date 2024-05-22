@@ -1,7 +1,8 @@
 import Link from "next/link";
 import HeroImage from "../assets/images/components/hero.jpg";
-import { Button, Card, CardFooter, Image } from "@nextui-org/react";
+import { Button, Card, CardFooter } from "@nextui-org/react";
 import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
 
 export default function Hero() {
   return (
