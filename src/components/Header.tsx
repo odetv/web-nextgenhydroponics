@@ -73,6 +73,7 @@ export default function Header() {
           <Image
             width={100}
             height={100}
+            style={{ height: "auto", width: 100 }}
             alt="Logo Next-Gen Hydroponics"
             src={LogoNextGenHydroponics.src}
           />

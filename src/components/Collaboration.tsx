@@ -41,11 +41,13 @@ export default function Collaboration() {
             <PopoverTrigger>
               <div>
                 <Image
-                  width={72}
-                  height={72}
-                  className="transform hover:scale-105 transition-transform-opacity object-cover w-[72px] h-[72px]"
+                  width={80}
+                  height={80}
+                  style={{ height: "auto", width: 72 }}
+                  className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="Undiksha"
                   src={LogoUndiksha.src}
+                  priority={true}
                 />
               </div>
             </PopoverTrigger>
@@ -72,9 +74,11 @@ export default function Collaboration() {
                 <Image
                   width={172}
                   height={172}
-                  className="transform hover:scale-105 transition-transform-opacity object-cover w-auto h-[80px]"
+                  style={{ height: "auto", width: 172 }}
+                  className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="PT. Dago Engineering"
                   src={LogoDagoEngineering.src}
+                  priority={true}
                 />
               </div>
             </PopoverTrigger>
@@ -103,9 +107,11 @@ export default function Collaboration() {
                 <Image
                   width={162}
                   height={162}
+                  style={{ height: "auto", width: 162 }}
                   className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="Clean & Green Power"
                   src={LogoCGPDagoEng.src}
+                  priority={true}
                 />
               </div>
             </PopoverTrigger>
@@ -132,9 +138,11 @@ export default function Collaboration() {
                 <Image
                   width={238}
                   height={238}
+                  style={{ height: "auto", width: 238 }}
                   className="transform hover:scale-105 transition-transform-opacity object-cover"
                   alt="Delectra"
                   src={LogoDelectra.src}
+                  priority={true}
                 />
               </div>
             </PopoverTrigger>
