@@ -58,7 +58,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user) {
-      if (user.role === "member") {
+      if (user.role === "admin" && "member") {
         setIsAuthorized(true);
       }
       setIsCheckingAuth(false);
