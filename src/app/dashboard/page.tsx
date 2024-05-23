@@ -38,9 +38,14 @@ import WifiIcon from "@mui/icons-material/Wifi";
 import SpeedIcon from "@mui/icons-material/Speed";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import useStatusEsp from "../../middleware/DataEsp32Provider";
+import AlertCheckAuth from "@/components/AlertCheckAuth";
+import AlertLoginGuest from "@/components/AlertLoginGuest";
+import AlertAuthorizedMember from "@/components/AlertAuthorizedMember";
 
 export default function Dashboard() {
   const user = useAuth();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [loadingSuhu, setLoadingSuhu] = React.useState(false);
   const [loadingPH, setLoadingPH] = React.useState(false);
   const [isSelectedNFTDFT, setIsSelectedNFTDFT] = React.useState(true);
@@ -50,6 +55,17 @@ export default function Dashboard() {
   const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
   const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      if (user.role === "member") {
+        setIsAuthorized(true);
+      }
+      setIsCheckingAuth(false);
+    } else {
+      setIsCheckingAuth(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     const db = getDatabase();
@@ -78,6 +94,18 @@ export default function Dashboard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const status = useStatusEsp();
+
+  if (isCheckingAuth) {
+    return <AlertCheckAuth />;
+  }
+
+  if (!user) {
+    return <AlertLoginGuest />;
+  }
+
+  if (!isAuthorized) {
+    return <AlertAuthorizedMember />;
+  }
 
   return (
     <main className="flex flex-col justify-center items-center gap-3 pt-8 pb-8">

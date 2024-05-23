@@ -1,5 +1,5 @@
 import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
-import { Image } from "@nextui-org/react";
+import Image from "next/image";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -14,7 +14,9 @@ function Footer() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-center w-32 h-32 rounded-full bg-white">
                 <Image
-                  className="h-14 w-auto"
+                  width={100}
+                  height={100}
+                  style={{ height: "auto", width: "auto" }}
                   src={LogoNextGenHydroponics.src}
                   alt=""
                 />

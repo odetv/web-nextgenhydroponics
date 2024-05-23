@@ -3,40 +3,59 @@ import { app, database } from "../../firebaseConfig";
 import { getAuth, User } from "firebase/auth";
 import { ref, set, onDisconnect, update, get } from "firebase/database";
 
+interface ExtendedUser extends User {
+  role?: string;
+  lastLogin?: number;
+  loginTime?: number;
+}
+
+const ADMIN_EMAILS =
+  process.env.NEXT_PUBLIC_VERCEL_ADMIN_EMAILS?.split(",") ?? [];
+
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ExtendedUser | null>(null);
 
   useEffect(() => {
     const auth = getAuth(app);
 
     const handleUserStatus = async (userData: User | null) => {
       if (userData) {
-        setUser(userData);
-        const userStatusRef = ref(database, `users/${userData.uid}`);
-        const snapshot = await get(userStatusRef);
+        const userRef = ref(database, `users/${userData.uid}`);
+        const snapshot = await get(userRef);
         const userExists = snapshot.exists();
-
+        let userRole = snapshot.val().role || "registered";
+        if (ADMIN_EMAILS.includes(userData.email ?? "")) {
+          userRole = "admin";
+        }
         if (!userExists) {
-          set(userStatusRef, {
+          set(userRef, {
             uid: userData.uid,
             displayName: userData.displayName,
             email: userData.email,
+            role: userRole,
             isActive: true,
             lastLogin: Date.now(),
             loginTime: Date.now(),
           });
         } else {
-          update(userStatusRef, {
+          update(userRef, {
             uid: userData.uid,
             displayName: userData.displayName,
             email: userData.email,
+            role: userRole,
             isActive: true,
             lastLogin: snapshot.val().lastLogin || Date.now(),
             loginTime: Date.now(),
           });
         }
 
-        onDisconnect(userStatusRef).update({
+        const extendedUser = {
+          ...userData,
+          role: userRole,
+        };
+        setUser(extendedUser);
+
+        onDisconnect(userRef).update({
           isActive: false,
           loginTime: null,
         });
@@ -54,56 +73,3 @@ export function useAuth() {
 
   return user;
 }
-
-// import { useState, useEffect } from "react";
-// import { app } from "../../firebaseConfig";
-// import { getAuth, User } from "firebase/auth";
-
-// export function useAuth() {
-//   const [user, setUser] = useState<User | null>(null);
-
-//   useEffect(() => {
-//     const auth = getAuth(app);
-//     const unsubscribe = auth.onAuthStateChanged((userData) => {
-//       if (userData) {
-//         setUser(userData);
-//       } else {
-//         setUser(null);
-//       }
-//     });
-
-//     return () => unsubscribe();
-//   }, []);
-
-//   return user;
-// }
-
-// import { useState, useEffect } from "react";
-// import { app } from "../../firebaseConfig";
-// import { getAuth, User } from "firebase/auth";
-
-// const allowedEmails = ["testing@gmail.com"];
-
-// export function useAuth() {
-//   const [user, setUser] = useState<User | null>(null);
-
-//   useEffect(() => {
-//     const auth = getAuth(app);
-//     const unsubscribe = auth.onAuthStateChanged((userData) => {
-//       if (userData) {
-//         const userEmail = userData.email;
-//         if (userEmail && allowedEmails.includes(userEmail)) {
-//           setUser(userData);
-//         } else {
-//           setUser(null);
-//         }
-//       } else {
-//         setUser(null);
-//       }
-//     });
-
-//     return () => unsubscribe();
-//   }, []);
-
-//   return user;
-// }
