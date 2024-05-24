@@ -8,8 +8,8 @@ export default function Charts() {
   const [uData, setUData] = useState(generateSmoothData(24, 100));
   const [aData, setAData] = useState(generateSmoothData(24, 100));
 
-  const nutrisiMax = 10;
-  const phAirMax = 1000;
+  const nutrisiMax = 1000;
+  const phAirMax = 10;
 
   const [nutrisiValue, setNutrisiValue] = useState(
     generateRandomValue(nutrisiMax)
@@ -116,12 +116,13 @@ export default function Charts() {
             height={100}
             value={nutrisiValue}
             valueMin={0}
-            valueMax={10}
+            valueMax={1000}
             sx={(theme) => ({
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: "#52b202",
               },
               [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 11,
                 transform: "translate(0px, 0px)",
               },
             })}
@@ -137,10 +138,9 @@ export default function Charts() {
             height={100}
             value={phAirValue}
             valueMin={0}
-            valueMax={1000}
+            valueMax={10}
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 11,
                 transform: "translate(0px, 0px)",
               },
             })}

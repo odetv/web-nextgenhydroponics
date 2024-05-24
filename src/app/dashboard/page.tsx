@@ -21,7 +21,6 @@ import {
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import Charts from "../../components/Charts";
 import {
   ref,
   get,
@@ -41,6 +40,10 @@ import useStatusEsp from "../../middleware/DataEsp32Provider";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
 import AlertLoginGuest from "@/components/AlertLoginGuest";
 import AlertAuthorizedMember from "@/components/AlertAuthorizedMember";
+import LineChartSuhuAir from "@/components/LineChartSuhuAir";
+import LineChartSuhuUdara from "@/components/LineChartSuhuUdara";
+import SpedoNutrisi from "@/components/SpedoNutrisi";
+import SpedoPH from "@/components/SpedoPH";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -190,7 +193,16 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <Charts />
+          <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-row justify-center items-center gap-4 -mb-6">
+              <SpedoNutrisi />
+              <SpedoPH />
+            </div>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
+              <LineChartSuhuAir />
+              <LineChartSuhuUdara />
+            </div>
+          </div>
 
           <div className="p-4 grid grid-cols-1 grid-rows-6 gap-6 sm:grid-cols-3 sm:grid-rows-2 sm:gap-6 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:grid-cols-3 lg:grid-rows-2 lg:gap-6 xl:grid-cols-3 xl:grid-rows-2 xl:gap-6">
             <div
