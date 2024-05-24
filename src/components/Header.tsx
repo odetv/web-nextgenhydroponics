@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
 import ArticleIcon from "@mui/icons-material/Article";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -235,6 +236,7 @@ export default function Header() {
                     </div>
                   </div>
                 </DropdownItem>
+
                 <DropdownItem color="default" key="beranda" textValue="beranda">
                   <Link
                     className="flex flex-row items-center gap-1"
@@ -288,6 +290,19 @@ export default function Header() {
                     Blog
                   </Link>
                 </DropdownItem>
+
+                <DropdownItem color="default" key="admin" textValue="admin">
+                  <Link
+                    className="flex flex-row items-center gap-1"
+                    href="/admin"
+                    color="foreground"
+                    onClick={() => handleMenuClick("/admin")}
+                  >
+                    <AdminPanelSettingsIcon color="action" />
+                    Admin Panel
+                  </Link>
+                </DropdownItem>
+
                 <DropdownItem
                   color="default"
                   key="pengaturan"
