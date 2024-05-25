@@ -566,7 +566,7 @@ export default function Dashboard() {
           </div>
         </>
       ) : (
-        <div className="flex flex-col min-h-screen -mt-16 p-4 justify-center items-center gap-2">
+        <div className="flex flex-col min-h-screen p-4 justify-center items-center gap-2">
           <Typography className="text-center">
             Anda tidak memiliki akses, silahkan masuk terlebih dahulu!
           </Typography>

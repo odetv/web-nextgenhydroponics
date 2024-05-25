@@ -22,6 +22,16 @@ export default function Admin() {
   const user = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [users, setUsers] = useState<
+    {
+      uid: string;
+      displayName: string;
+      email: string;
+      role: string;
+      lastLogin: number;
+      loginTime: number;
+    }[]
+  >([]);
   const [activeUsers, setActiveUsers] = useState<
     {
       uid: string;
@@ -55,16 +65,52 @@ export default function Admin() {
 
     const unsubscribe = onValue(usersRef, (snapshot) => {
       const usersData = snapshot.val() || {};
-      const activeUsersList = Object.values(usersData).filter(
-        (user: any) => user.isActive
-      ) as {
-        uid: string;
-        displayName: string;
-        email: string;
-        role: string;
-        lastLogin: number;
-        loginTime: number;
-      }[];
+      const usersList = Object.values(usersData).map((user) => {
+        const typedUser = user as {
+          uid: string;
+          displayName: string;
+          email: string;
+          role: string;
+          lastLogin: number;
+          loginTime: number;
+        };
+        return {
+          ...typedUser,
+          role:
+            typedUser.role ||
+            process.env.NEXT_PUBLIC_VERCEL_DEFAULT_USER_ROLE ||
+            "",
+        };
+      });
+      setUsers(usersList);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const usersRef = ref(database, "users");
+
+    const unsubscribe = onValue(usersRef, (snapshot) => {
+      const usersData = snapshot.val() || {};
+      const activeUsersList = Object.values(usersData)
+        .filter((user: any) => user.isActive)
+        .map((user) => {
+          const typedUser = user as {
+            uid: string;
+            displayName: string;
+            email: string;
+            role: string;
+            lastLogin: number;
+            loginTime: number;
+          };
+          return {
+            ...typedUser,
+            role: typedUser.role || "registered",
+          };
+        });
       setActiveUsers(activeUsersList);
     });
 
@@ -83,15 +129,25 @@ export default function Admin() {
     };
   }, []);
 
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 4;
-  const pages = Math.ceil(activeUsers.length / rowsPerPage);
+  const [pageListUser, setPageListUser] = useState(1);
+  const rowsPerPageListUser = 5;
+  const pagesListUser = Math.ceil(users.length / rowsPerPageListUser);
+  const paginatedListUser = React.useMemo(() => {
+    const start = (pageListUser - 1) * rowsPerPageListUser;
+    const end = start + rowsPerPageListUser;
+    return users.slice(start, end);
+  }, [pageListUser, users]);
 
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
+  const [pageListUserActive, setPageListUserActive] = useState(1);
+  const rowsPerPageListUserActive = 5;
+  const pagesListUserActive = Math.ceil(
+    activeUsers.length / rowsPerPageListUserActive
+  );
+  const paginatedListUserActive = React.useMemo(() => {
+    const start = (pageListUserActive - 1) * rowsPerPageListUserActive;
+    const end = start + rowsPerPageListUserActive;
     return activeUsers.slice(start, end);
-  }, [page, activeUsers]);
+  }, [pageListUserActive, activeUsers]);
 
   const calculateActiveDuration = (loginTime: number) => {
     if (!loginTime) return "N/A";
@@ -118,18 +174,70 @@ export default function Admin() {
   }
 
   return (
-    <main className="-mt-12 flex flex-col justify-center min-h-screen gap-3 p-4">
+    <main className="flex flex-col justify-center w-full min-h-screen gap-3 p-4">
       <>
         <p className="text-center text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl font-bold pb-2">
           Selamat datang di Admin Panel, {user.displayName}👋
         </p>
-        <div className="flex flex-col justify-center items-center gap-2">
+        <div className="flex flex-col justify-center items-center gap-2 w-full sm:w-10/12 mx-auto text-sm outline outline-2 outline-emerald-200 rounded-lg mt-2">
+          <Table
+            aria-label="Daftar Pengguna Next-Gen Hydroponics"
+            radius="none"
+            topContent="Daftar Pengguna Next-Gen Hydroponics:"
+            color="default"
+            className="overflow-auto rounded-lg"
+          >
+            <TableHeader>
+              <TableColumn>NO</TableColumn>
+              <TableColumn>NAMA</TableColumn>
+              <TableColumn>EMAIL</TableColumn>
+              <TableColumn>ROLE</TableColumn>
+            </TableHeader>
+            <TableBody emptyContent={"Tidak ada pengguna."}>
+              {paginatedListUser.map((user, index) => (
+                <TableRow key={user.uid}>
+                  <TableCell>
+                    {(pageListUser - 1) * rowsPerPageListUser + index + 1}
+                  </TableCell>
+                  <TableCell>{user.displayName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <Select
+                      size="small"
+                      value={user.role}
+                      onChange={(e) =>
+                        handleChangeRole(user.uid, e.target.value as string)
+                      }
+                    >
+                      <MenuItem value="admin">Admin</MenuItem>
+                      <MenuItem value="member">Member</MenuItem>
+                      <MenuItem value="registered">Registered</MenuItem>
+                    </Select>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div className="flex w-full justify-center mb-4">
+            <Pagination
+              isCompact
+              size="sm"
+              showControls
+              color="success"
+              variant="flat"
+              page={pageListUser}
+              total={pagesListUser}
+              onChange={(pageListUser) => setPageListUser(pageListUser)}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-2 w-full sm:w-10/12 mx-auto text-sm outline outline-2 outline-emerald-200 rounded-lg mt-2">
           <Table
             aria-label="Daftar Pengguna Aktif"
             radius="none"
             topContent="Daftar Pengguna Aktif:"
             color="default"
-            className="w-full sm:w-10/12 overflow-auto text-sm outline outline-2 outline-emerald-200 rounded-lg"
+            className="overflow-auto rounded-lg"
           >
             <TableHeader>
               <TableColumn>NO</TableColumn>
@@ -137,54 +245,44 @@ export default function Admin() {
               <TableColumn>EMAIL</TableColumn>
               <TableColumn>ROLE</TableColumn>
               <TableColumn>DURASI AKTIF</TableColumn>
-              <TableColumn>STATUS</TableColumn>
             </TableHeader>
             <TableBody emptyContent={"Tidak ada pengguna aktif."}>
-              {items.map((activeUser, index) => (
+              {paginatedListUserActive.map((activeUser, index) => (
                 <TableRow key={activeUser.uid}>
-                  <TableCell>{(page - 1) * rowsPerPage + index + 1}</TableCell>
-                  <TableCell>{activeUser.displayName}</TableCell>
+                  <TableCell>
+                    {(pageListUserActive - 1) * rowsPerPageListUserActive +
+                      index +
+                      1}
+                  </TableCell>
+                  <TableCell>
+                    {activeUser.displayName}
+                    {user?.uid === activeUser.uid ? " (Saya)" : null}
+                  </TableCell>
                   <TableCell>{activeUser.email}</TableCell>
                   <TableCell>
-                    {user?.uid === activeUser.uid ? (
-                      <p className="capitalize">{activeUser.role}</p>
-                    ) : (
-                      <div>
-                        <Select
-                          size="small"
-                          value={activeUser.role}
-                          onChange={(e) =>
-                            handleChangeRole(activeUser.uid, e.target.value)
-                          }
-                        >
-                          <MenuItem value="admin">Admin</MenuItem>
-                          <MenuItem value="member">Member</MenuItem>
-                          <MenuItem value="registered">Registered</MenuItem>
-                        </Select>
-                      </div>
-                    )}
+                    <p className="capitalize">{activeUser.role}</p>
                   </TableCell>
                   <TableCell>
                     {calculateActiveDuration(activeUser.loginTime)}
-                  </TableCell>
-                  <TableCell>
-                    {user?.uid === activeUser.uid ? "Saya" : "-"}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          {/* <div className="flex w-full justify-center mt-4">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
-              />
-            </div> */}
+          <div className="flex w-full justify-center mb-4">
+            <Pagination
+              isCompact
+              showControls
+              color="success"
+              variant="flat"
+              size="sm"
+              page={pageListUserActive}
+              total={pagesListUserActive}
+              onChange={(pageListUserActive) =>
+                setPageListUserActive(pageListUserActive)
+              }
+            />
+          </div>
         </div>
       </>
     </main>
