@@ -84,7 +84,7 @@ export default function GalleryInstagram() {
   return (
     <>
       {posts.length === 0 ? (
-        <div className="flex min-h-screen mx-auto -mt-36">
+        <div className="flex min-h-screen mx-auto -mt-44">
           <Spinner label="Mengolah Blog..." color="success" />
         </div>
       ) : (
