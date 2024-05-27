@@ -35,7 +35,7 @@ export default function Features() {
           <div className="relative overflow-hidden rounded-inherit rounded-large">
             <Image
               className="transform hover:scale-110 transition-transform-opacity object-cover pt-4 pb-10"
-              alt="Next-Gen Hydroponics"
+              alt="Produk Unggulan Next-Gen Hydroponics"
               src={FeaturesImage.src}
               width={800}
               height={400}

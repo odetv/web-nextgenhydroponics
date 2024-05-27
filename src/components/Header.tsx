@@ -216,6 +216,7 @@ export default function Header() {
                 className="transition-transform"
                 color="success"
                 size="sm"
+                alt={user?.displayName || ""}
                 src={user?.photoURL || GuestIcon.src}
               />
             </DropdownTrigger>
@@ -357,6 +358,7 @@ export default function Header() {
                   className="transition-transform"
                   color="success"
                   size="sm"
+                  alt="Guest"
                   src={GuestIcon.src}
                 />
               </DropdownTrigger>

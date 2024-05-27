@@ -1,8 +1,14 @@
 import Link from "next/link";
-import HeroImage from "../assets/images/components/hero.jpg";
+import HeroImage1 from "../assets/images/components/hero/hero1.jpg";
+import HeroImage2 from "../assets/images/components/hero/hero2.jpg";
+import HeroImage3 from "../assets/images/components/hero/hero3.jpg";
+import HeroImage4 from "../assets/images/components/hero/hero4.jpg";
+import HeroImage5 from "../assets/images/components/hero/hero5.jpg";
 import { Button, Card, CardFooter } from "@nextui-org/react";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function Hero() {
   return (
@@ -49,14 +55,57 @@ export default function Hero() {
         </div>
         <Card isFooterBlurred radius="lg" className="border-none">
           <div className="relative overflow-hidden rounded-inherit rounded-large">
-            <Image
-              className="transform hover:scale-110 transition-transform-opacity object-cover"
-              alt="Next-Gen Hydroponics"
-              src={HeroImage.src}
-              width={800}
-              height={400}
-              priority={true}
-            />
+            <Carousel
+              autoPlay
+              interval={3000}
+              infiniteLoop={true}
+              showThumbs={false}
+              showStatus={false}
+              showIndicators={true}
+              showArrows={true}
+              swipeable={true}
+            >
+              <Image
+                className="transform hover:scale-110 transition-transform-opacity object-cover w-full h-full"
+                alt="Hero Next-Gen Hydroponics 1"
+                src={HeroImage1.src}
+                width={800}
+                height={400}
+                priority={true}
+              />
+              <Image
+                className="transform hover:scale-110 transition-transform-opacity object-cover w-full h-full"
+                alt="Hero Next-Gen Hydroponics 2"
+                src={HeroImage2.src}
+                width={800}
+                height={400}
+                priority={true}
+              />
+              <Image
+                className="transform hover:scale-110 transition-transform-opacity object-cover w-full h-full"
+                alt="Hero Next-Gen Hydroponics 3"
+                src={HeroImage3.src}
+                width={800}
+                height={400}
+                priority={true}
+              />
+              <Image
+                className="transform hover:scale-110 transition-transform-opacity object-cover w-full h-full"
+                alt="Hero Next-Gen Hydroponics 4"
+                src={HeroImage4.src}
+                width={800}
+                height={400}
+                priority={true}
+              />
+              <Image
+                className="transform hover:scale-110 transition-transform-opacity object-cover w-full h-full"
+                alt="Hero Next-Gen Hydroponics 5"
+                src={HeroImage5.src}
+                width={800}
+                height={400}
+                priority={true}
+              />
+            </Carousel>
           </div>
           <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
             <p className="text-tiny text-white/80 p-2 text-center">

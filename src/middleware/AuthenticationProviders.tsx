@@ -23,7 +23,6 @@ export function useAuth() {
         const userRef = ref(database, `users/${userData.uid}`);
         const snapshot = await get(userRef);
         const userExists = snapshot.exists();
-        console.log("User exists:", userExists);
 
         let userRole = "registered";
         if (userExists) {
