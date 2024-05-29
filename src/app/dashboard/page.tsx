@@ -44,6 +44,7 @@ import LineChartSuhuAir from "@/components/LineChartSuhuAir";
 import LineChartSuhuUdara from "@/components/LineChartSuhuUdara";
 import SpedoNutrisi from "@/components/SpedoNutrisi";
 import SpedoPH from "@/components/SpedoPH";
+import ListTanaman from "@/components/ListTanaman";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -201,6 +202,9 @@ export default function Dashboard() {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
               <LineChartSuhuAir />
               <LineChartSuhuUdara />
+            </div>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
+              <ListTanaman />
             </div>
           </div>
 
