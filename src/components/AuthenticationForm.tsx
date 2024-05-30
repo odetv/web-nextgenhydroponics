@@ -54,7 +54,13 @@ export default function AuthenticationForm() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isPhotoSelected, setIsPhotoSelected] = useState(false);
 
-  const afterAuth = "/dashboard";
+  // const afterAuth = "/dashboard";
+  const ADMIN_EMAILS =
+    process.env.NEXT_PUBLIC_VERCEL_ADMIN_EMAILS?.split(",") ?? [];
+
+  const isAdmin = (email: string | null): boolean => {
+    return email ? ADMIN_EMAILS.includes(email) : false;
+  };
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -72,8 +78,15 @@ export default function AuthenticationForm() {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      router.push(afterAuth);
+      // await signInWithPopup(auth, provider);
+      // router.push(afterAuth);
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        const destination = isAdmin(result.user.email)
+          ? "/admin"
+          : "/dashboard";
+        router.push(destination);
+      }
     } catch (error: any) {
       console.error("Error signing in with Google", error.message);
     }
@@ -81,11 +94,21 @@ export default function AuthenticationForm() {
 
   const handleSignInWithEmailAndPassword = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.refresh();
-      setTimeout(() => {
-        router.push(afterAuth);
-      }, 500);
+      // await signInWithEmailAndPassword(auth, email, password);
+      // router.refresh();
+      // setTimeout(() => {
+      //   router.push(afterAuth);
+      // }, 500);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      if (result.user) {
+        const destination = isAdmin(result.user.email)
+          ? "/admin"
+          : "/dashboard";
+        router.refresh();
+        setTimeout(() => {
+          router.push(destination);
+        }, 500);
+      }
     } catch (error: any) {
       console.error("Error signing in with email and password", error.message);
       setError("Email atau password salah. Silakan coba lagi!");
@@ -136,10 +159,27 @@ export default function AuthenticationForm() {
           await updateProfile(currentUser, { photoURL: downloadURL });
         }
       }
-      router.refresh();
-      setTimeout(() => {
-        router.push(afterAuth);
-      }, 500);
+      // router.refresh();
+      // setTimeout(() => {
+      //   router.push(afterAuth);
+      // }, 500);
+
+      if (currentUser && currentUser.email) {
+        const destination = isAdmin(currentUser.email)
+          ? "/admin"
+          : "/dashboard";
+        router.refresh();
+        setTimeout(() => {
+          router.push(destination);
+        }, 500);
+      } else {
+        setError("Tidak dapat mendapatkan email pengguna.");
+      }
+      // const destination = isAdmin(currentUser.email) ? "/admin" : "/dashboard";
+      // router.refresh();
+      // setTimeout(() => {
+      //   router.push(destination);
+      // }, 500);
     } catch (error: any) {
       console.error("Error signing up with email and password", error.message);
       setError(error.message);

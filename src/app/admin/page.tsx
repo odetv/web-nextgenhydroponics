@@ -13,10 +13,12 @@ import {
   TableRow,
   TableCell,
   Pagination,
+  Input,
 } from "@nextui-org/react";
 import AlertLoginGuest from "@/components/AlertLoginGuest";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
 import AlertAuthorizedAdmin from "@/components/AlertAuthorizedAdmin";
+import { SearchIcon } from "@/components/SearchIcon";
 
 export default function Admin() {
   const user = useAuth();
@@ -43,6 +45,7 @@ export default function Admin() {
     }[]
   >([]);
   const [currentTime, setCurrentTime] = useState(Date.now());
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -133,10 +136,19 @@ export default function Admin() {
   const rowsPerPageListUser = 5;
   const pagesListUser = Math.ceil(users.length / rowsPerPageListUser);
   const paginatedListUser = React.useMemo(() => {
+    // const start = (pageListUser - 1) * rowsPerPageListUser;
+    // const end = start + rowsPerPageListUser;
+    // return users.slice(start, end);
+    const filteredUsers = users.filter(
+      (user) =>
+        user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     const start = (pageListUser - 1) * rowsPerPageListUser;
     const end = start + rowsPerPageListUser;
-    return users.slice(start, end);
-  }, [pageListUser, users]);
+    return filteredUsers.slice(start, end);
+    // }, [pageListUser, users]);
+  }, [pageListUser, users, searchQuery]);
 
   const [pageListUserActive, setPageListUserActive] = useState(1);
   const rowsPerPageListUserActive = 5;
@@ -181,9 +193,29 @@ export default function Admin() {
         </p>
         <div className="flex flex-col justify-center items-center gap-2 w-full sm:w-10/12 mx-auto text-sm outline outline-2 outline-emerald-200 rounded-lg mt-2">
           <Table
-            aria-label="Daftar Pengguna Next-Gen Hydroponics"
+            aria-label="Daftar Pengguna"
             radius="none"
-            topContent="Daftar Pengguna Next-Gen Hydroponics:"
+            topContent={
+              <div className="flex flex-row justify-between items-center">
+                <p>Daftar Pengguna:</p>
+                <Input
+                  classNames={{
+                    base: "max-w-[10rem] h-10",
+                    mainWrapper: "h-full",
+                    input: "text-small",
+                    inputWrapper:
+                      "h-full font-normal text-default-500 bg-default-300/20",
+                  }}
+                  placeholder="Cari Pengguna"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  size="sm"
+                  radius="sm"
+                  startContent={<SearchIcon size={18} />}
+                  type="search"
+                />
+              </div>
+            }
             color="default"
             className="overflow-auto rounded-lg"
           >
@@ -194,25 +226,36 @@ export default function Admin() {
               <TableColumn>ROLE</TableColumn>
             </TableHeader>
             <TableBody emptyContent={"Tidak ada pengguna."}>
-              {paginatedListUser.map((user, index) => (
-                <TableRow key={user.uid}>
+              {paginatedListUser.map((users, index) => (
+                <TableRow key={users.uid}>
                   <TableCell>
                     {(pageListUser - 1) * rowsPerPageListUser + index + 1}
                   </TableCell>
-                  <TableCell>{user.displayName}</TableCell>
-                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{users.displayName}</TableCell>
+                  <TableCell>{users.email}</TableCell>
                   <TableCell>
-                    <Select
-                      size="small"
-                      value={user.role}
-                      onChange={(e) =>
-                        handleChangeRole(user.uid, e.target.value as string)
-                      }
-                    >
-                      <MenuItem value="admin">Admin</MenuItem>
-                      <MenuItem value="member">Member</MenuItem>
-                      <MenuItem value="registered">Registered</MenuItem>
-                    </Select>
+                    {user?.uid === users.uid ? (
+                      <Select
+                        disabled
+                        size="small"
+                        value={users.role}
+                        className="capitalize"
+                      >
+                        <MenuItem value={users.role}>{users.role}</MenuItem>
+                      </Select>
+                    ) : (
+                      <Select
+                        size="small"
+                        value={users.role}
+                        onChange={(e) =>
+                          handleChangeRole(users.uid, e.target.value as string)
+                        }
+                      >
+                        <MenuItem value="admin">Admin</MenuItem>
+                        <MenuItem value="member">Member</MenuItem>
+                        <MenuItem value="registered">Registered</MenuItem>
+                      </Select>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -233,9 +276,9 @@ export default function Admin() {
         </div>
         <div className="flex flex-col justify-center items-center gap-2 w-full sm:w-10/12 mx-auto text-sm outline outline-2 outline-emerald-200 rounded-lg mt-2">
           <Table
-            aria-label="Daftar Pengguna Aktif"
+            aria-label="Pengguna Aktif"
             radius="none"
-            topContent="Daftar Pengguna Aktif:"
+            topContent="Pengguna Aktif:"
             color="default"
             className="overflow-auto rounded-lg"
           >
