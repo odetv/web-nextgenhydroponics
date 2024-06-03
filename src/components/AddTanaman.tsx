@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Tanaman } from "../models/types";
 import {
   getTanamanData,
+  addNewTanaman,
   deleteTanaman,
   editTanaman,
   monitorDatabase,
@@ -9,6 +10,7 @@ import {
 import TuneIcon from "@mui/icons-material/Tune";
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -22,6 +24,7 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
+import AddIcon from "@mui/icons-material/Add";
 
 const formatDateForInput = (date: Date | null) => {
   if (!date) return "";
@@ -49,10 +52,13 @@ const calculateDaysBetween = (startDate: string, endDate: string) => {
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
 
-const ListTanaman = () => {
+const AddTanaman = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [tanaman, setTanaman] = useState<Tanaman | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const [namaBaru, setNamaBaru] = useState("");
+  const [tanggalPanenBaru, setTanggalPanenBaru] = useState("");
 
   const [editedNama, setEditedNama] = useState("");
   const [editedStatus, setEditedStatus] = useState({
@@ -75,6 +81,13 @@ const ListTanaman = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddNewTanaman = async () => {
+    await addNewTanaman(namaBaru, tanggalPanenBaru);
+    await fetchTanaman();
+    setNamaBaru("");
+    setTanggalPanenBaru("");
   };
 
   const updateUsiaDanEstimasiPanen = useCallback(() => {
@@ -176,69 +189,65 @@ const ListTanaman = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 grid-rows-1 sm:grid-cols-2 sm:grid-rows-1 gap-4 w-full">
-        {Object.keys(tanaman.nama_tanaman).map((nama) => (
-          <div
-            key={nama}
-            className="bg-slate-200 w-full p-4 rounded-lg relative"
-          >
-            <div>
-              <p className="text-center font-semibold text-lg pb-4">
-                Pertumbuhan Tanaman {nama || null}
-              </p>
+      <Table
+        aria-label="Daftar Tanaman"
+        radius="none"
+        topContent={
+          <div className="flex flex-row justify-between items-center">
+            <p>Daftar Tanaman:</p>
+            <div className="gap-2 rounded-lg flex flex-row justify-center items-center">
+              <Input
+                isRequired
+                radius="sm"
+                type="text"
+                value={namaBaru}
+                onChange={(e) => setNamaBaru(e.target.value)}
+                placeholder="Nama Tanaman Baru"
+              />
+              <AddIcon
+                className="bg-emerald-100 rounded-lg h-10 w-10 cursor-pointer p-2"
+                color="success"
+                onClick={handleAddNewTanaman}
+              />
+              {/* <input
+                type="datetime-local"
+                value={tanggalPanenBaru}
+                onChange={(e) => setTanggalPanenBaru(e.target.value)}
+                placeholder="Tanggal Panen Tanaman Baru"
+              /> */}
             </div>
-            <div className="flex flex-col justify-center items-center gap-1">
-              <div className="capitalize w-full">
-                <Table hideHeader aria-label="table" radius="sm">
-                  <TableHeader>
-                    <TableColumn className="py-0 px-0">Data</TableColumn>
-                    <TableColumn className="py-0 px-0">Space</TableColumn>
-                    <TableColumn className="py-0 px-0">Value</TableColumn>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow key="1">
-                      <TableCell>Status Tanaman</TableCell>
-                      <TableCell className="py-0 px-0">: </TableCell>
-                      <TableCell>
-                        {getStatusPertumbuhan(tanaman.status_pertumbuhan[nama])}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="2">
-                      <TableCell>Tanggal Tanam</TableCell>
-                      <TableCell className="py-0 px-0">:</TableCell>
-                      <TableCell>
-                        {formatDateForDisplay(
-                          tanaman.tanggal_tanam[nama] || null
-                        )}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="3">
-                      <TableCell>Tanggal Panen</TableCell>
-                      <TableCell className="py-0 px-0">:</TableCell>
-                      <TableCell>
-                        {formatDateForDisplay(
-                          tanaman.tanggal_panen[nama] || null
-                        )}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="4">
-                      <TableCell>Usia Tanaman</TableCell>
-                      <TableCell className="py-0 px-0">:</TableCell>
-                      <TableCell>
-                        {tanaman.usia_tanaman[nama] || null} Hari
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="5">
-                      <TableCell>Estimasi Panen</TableCell>
-                      <TableCell className="py-0 px-0">:</TableCell>
-                      <TableCell>
-                        {tanaman.estimasi_panen[nama] || null} Hari
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-              <div className="absolute bottom-6 right-6">
+          </div>
+        }
+        color="default"
+        className="overflow-auto rounded-lg capitalize"
+      >
+        <TableHeader>
+          <TableColumn>NO</TableColumn>
+          <TableColumn>NAMA TANAMAN</TableColumn>
+          <TableColumn>STATUS TANAMAN</TableColumn>
+          <TableColumn>TANGGAL TANAM</TableColumn>
+          <TableColumn>TANGGAL PANEN</TableColumn>
+          <TableColumn>USIA TANAMAN</TableColumn>
+          <TableColumn>ESTIMASI PANEN</TableColumn>
+          <TableColumn>AKSI</TableColumn>
+        </TableHeader>
+        <TableBody emptyContent={"Tidak ada tanaman."}>
+          {Object.keys(tanaman.nama_tanaman).map((nama, index) => (
+            <TableRow key={nama}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{nama || null}</TableCell>
+              <TableCell>
+                {getStatusPertumbuhan(tanaman.status_pertumbuhan[nama])}
+              </TableCell>
+              <TableCell>
+                {formatDateForDisplay(tanaman.tanggal_tanam[nama] || null)}
+              </TableCell>
+              <TableCell>
+                {formatDateForDisplay(tanaman.tanggal_panen[nama] || null)}
+              </TableCell>
+              <TableCell>{tanaman.usia_tanaman[nama] || null} Hari</TableCell>
+              <TableCell>{tanaman.estimasi_panen[nama] || null} Hari</TableCell>
+              <TableCell>
                 <Button
                   onPress={() => handleEdit(nama)}
                   size="sm"
@@ -248,11 +257,11 @@ const ListTanaman = () => {
                 >
                   <TuneIcon />
                 </Button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
         <ModalContent>
@@ -342,6 +351,12 @@ const ListTanaman = () => {
                 )}
               </ModalBody>
               <ModalFooter>
+                <Button
+                  onClick={() => handleDelete(selectedTanaman!)}
+                  color="danger"
+                >
+                  Hapus
+                </Button>
                 <Button onClick={handleUpdate} color="success" variant="flat">
                   Perbarui
                 </Button>
@@ -357,4 +372,4 @@ const ListTanaman = () => {
   );
 };
 
-export default ListTanaman;
+export default AddTanaman;
