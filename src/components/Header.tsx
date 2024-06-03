@@ -228,14 +228,16 @@ export default function Header() {
                   textValue="profile"
                   className="h-14 gap-2 text-blue-800 bg-blue-100"
                 >
-                  <div>
-                    <div className="font-semibold">
-                      {user ? user.displayName : ""}
+                  <Link href="/profile">
+                    <div>
+                      <div className="font-semibold">
+                        {user ? user.displayName : ""}
+                      </div>
+                      <div className="font-medium text-xs text-green-800">
+                        {user ? user.email : ""}
+                      </div>
                     </div>
-                    <div className="font-medium text-xs text-green-800">
-                      {user ? user.email : ""}
-                    </div>
-                  </div>
+                  </Link>
                 </DropdownItem>
 
                 <DropdownItem color="default" key="beranda" textValue="beranda">
@@ -311,7 +313,7 @@ export default function Header() {
                 >
                   <Link
                     className="flex flex-row items-center gap-1"
-                    href="/#"
+                    href="/setting"
                     color="foreground"
                   >
                     <SettingsIcon color="action" />
@@ -321,7 +323,7 @@ export default function Header() {
                 <DropdownItem color="default" key="bantuan" textValue="bantuan">
                   <Link
                     className="flex flex-row items-center gap-1"
-                    href="/#"
+                    href="/help"
                     color="foreground"
                   >
                     <HelpIcon color="action" />
