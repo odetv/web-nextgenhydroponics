@@ -29,7 +29,8 @@
     "firebaseConfig.ts",
     "firebaseConfig.js",
     "src/app/signin/page.tsx",
-    "src/app/page.js"
+    "src/app/page.js",
+    "build/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
