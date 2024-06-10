@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={poppins.className}>
           <Providers>
+            <Analytics />
             <Maintenance />
           </Providers>
         </body>
@@ -44,6 +46,7 @@ export default function RootLayout({
         <body className={poppins.className}>
           <Providers>
             <Header />
+            <Analytics />
             {children}
             <Footer />
           </Providers>
