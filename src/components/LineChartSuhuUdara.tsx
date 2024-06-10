@@ -10,8 +10,13 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@nextui-org/react";
 import * as XLSX from "xlsx";
+import InfoIcon from "@mui/icons-material/Info";
+import CloudIcon from "@mui/icons-material/Cloud";
 
 export default function LineChartSuhuUdara() {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -133,6 +138,26 @@ export default function LineChartSuhuUdara() {
 
   return (
     <div className="outline outline-slate-200 rounded-lg p-4 w-full">
+      <div className="relative">
+        <Popover placement="bottom" showArrow={true}>
+          <PopoverTrigger>
+            <CloudIcon
+              color="info"
+              fontSize="small"
+              className="absolute top-0 right-1 z-10 cursor-pointer"
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="px-1 py-2">
+              <div className="text-small font-bold">Kelembapan</div>
+              <div className="text-tiny flex flex-row justify-start items-center">
+                <CloudIcon className="pr-1" color="info" />
+                67%
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
       <canvas className="" ref={chartRef} />
       <div className="flex flex-row gap-2 justify-center items-center pt-1">
         <Dropdown backdrop="opaque" radius="sm" className="p-1">

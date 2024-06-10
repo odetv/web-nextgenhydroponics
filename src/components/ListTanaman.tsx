@@ -254,7 +254,12 @@ const ListTanaman = () => {
         ))}
       </div>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        className="mr-4 ml-4"
+      >
         <ModalContent>
           {(onClose) => (
             <>

@@ -15,6 +15,8 @@ import {
   Avatar,
   NavbarContent,
   Tooltip,
+  Badge,
+  Button,
 } from "@nextui-org/react";
 import Image from "next/image";
 import { SearchIcon } from "./SearchIcon";
@@ -29,6 +31,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics.png";
 import GuestIcon from "../assets/images/user/Guest.png";
 import Link from "next/link";
+import Notification from "./Notification";
 
 export default function Header() {
   const auth = getAuth(app);
@@ -208,147 +211,160 @@ export default function Header() {
           />
         </Tooltip>
         {user ? (
-          <Dropdown placement="bottom-start">
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="success"
-                size="sm"
-                alt={user?.displayName || ""}
-                src={user?.photoURL || GuestIcon.src}
-              />
-            </DropdownTrigger>
-            <div className="font-semibold flex flex-row items-center justify-center">
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem
-                  key="profile"
-                  color="secondary"
-                  textValue="profile"
-                  className="h-14 gap-2 text-blue-800 bg-blue-100"
-                >
-                  <Link href="/profile">
-                    <div>
-                      <div className="font-semibold">
-                        {user ? user.displayName : ""}
-                      </div>
-                      <div className="font-medium text-xs text-green-800">
-                        {user ? user.email : ""}
-                      </div>
-                    </div>
-                  </Link>
-                </DropdownItem>
-
-                <DropdownItem color="default" key="beranda" textValue="beranda">
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/#beranda"
-                    color="foreground"
-                    onClick={() => handleMenuClick("/#beranda")}
-                  >
-                    <HomeIcon color="action" />
-                    Beranda
-                  </Link>
-                </DropdownItem>
-                <DropdownItem
-                  color="default"
-                  key="dashboard"
-                  textValue="Dashboard"
-                >
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/dashboard"
-                    color="foreground"
-                    onClick={() => handleMenuClick("/dashboard")}
-                  >
-                    <DashboardIcon color="action" />
-                    Dashboard
-                  </Link>
-                </DropdownItem>
-
-                <DropdownItem
-                  color="default"
-                  key="overview"
-                  textValue="overview"
-                >
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/#overview"
-                    color="foreground"
-                    onClick={() => handleMenuClick("/#overview")}
-                  >
-                    <CategoryIcon color="action" />
-                    Overview
-                  </Link>
-                </DropdownItem>
-                <DropdownItem color="default" key="blog" textValue="blog">
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/blog"
-                    color="foreground"
-                    onClick={() => handleMenuClick("/blog")}
-                  >
-                    <ArticleIcon color="action" />
-                    Blog
-                  </Link>
-                </DropdownItem>
-
-                <DropdownItem color="default" key="admin" textValue="admin">
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/admin"
-                    color="foreground"
-                    onClick={() => handleMenuClick("/admin")}
-                  >
-                    <AdminPanelSettingsIcon color="action" />
-                    Admin Panel
-                  </Link>
-                </DropdownItem>
-
-                <DropdownItem
-                  color="default"
-                  key="pengaturan"
-                  textValue="pengaturan"
-                >
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/setting"
-                    color="foreground"
-                  >
-                    <SettingsIcon color="action" />
-                    Pengaturan
-                  </Link>
-                </DropdownItem>
-                <DropdownItem color="default" key="bantuan" textValue="bantuan">
-                  <Link
-                    className="flex flex-row items-center gap-1"
-                    href="/help"
-                    color="foreground"
-                  >
-                    <HelpIcon color="action" />
-                    Bantuan
-                  </Link>
-                </DropdownItem>
-                <DropdownItem
-                  color="danger"
-                  key="logout"
-                  className="mt-1 bg-blue-100"
-                  textValue="actionauth"
-                >
-                  <NavbarContent
-                    className="font-semibold text-red-800 flex flex-row items-center justify-center"
-                    onClick={handleLogout}
-                  >
-                    <button className="flex flex-row items-center gap-1">
-                      <p>Keluar</p>
-                      <LogoutIcon />
-                    </button>
-                  </NavbarContent>
-                </DropdownItem>
-              </DropdownMenu>
+          <>
+            <div>
+              <Notification />
             </div>
-          </Dropdown>
+            <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="success"
+                  size="sm"
+                  alt={user?.displayName || ""}
+                  src={user?.photoURL || GuestIcon.src}
+                />
+              </DropdownTrigger>
+              <div className="font-semibold flex flex-row items-center justify-center">
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem
+                    key="profile"
+                    color="secondary"
+                    textValue="profile"
+                    className="h-14 gap-2 text-blue-800 bg-blue-100"
+                  >
+                    <Link href="/profile">
+                      <div>
+                        <div className="font-semibold">
+                          {user ? user.displayName : ""}
+                        </div>
+                        <div className="font-medium text-xs text-green-800">
+                          {user ? user.email : ""}
+                        </div>
+                      </div>
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem
+                    color="default"
+                    key="beranda"
+                    textValue="beranda"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#beranda"
+                      color="foreground"
+                      onClick={() => handleMenuClick("/#beranda")}
+                    >
+                      <HomeIcon color="action" />
+                      Beranda
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem
+                    color="default"
+                    key="dashboard"
+                    textValue="Dashboard"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/dashboard"
+                      color="foreground"
+                      onClick={() => handleMenuClick("/dashboard")}
+                    >
+                      <DashboardIcon color="action" />
+                      Dashboard
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem
+                    color="default"
+                    key="overview"
+                    textValue="overview"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/#overview"
+                      color="foreground"
+                      onClick={() => handleMenuClick("/#overview")}
+                    >
+                      <CategoryIcon color="action" />
+                      Overview
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem color="default" key="blog" textValue="blog">
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/blog"
+                      color="foreground"
+                      onClick={() => handleMenuClick("/blog")}
+                    >
+                      <ArticleIcon color="action" />
+                      Blog
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem color="default" key="admin" textValue="admin">
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/admin"
+                      color="foreground"
+                      onClick={() => handleMenuClick("/admin")}
+                    >
+                      <AdminPanelSettingsIcon color="action" />
+                      Admin Panel
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem
+                    color="default"
+                    key="pengaturan"
+                    textValue="pengaturan"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/setting"
+                      color="foreground"
+                    >
+                      <SettingsIcon color="action" />
+                      Pengaturan
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem
+                    color="default"
+                    key="bantuan"
+                    textValue="bantuan"
+                  >
+                    <Link
+                      className="flex flex-row items-center gap-1"
+                      href="/help"
+                      color="foreground"
+                    >
+                      <HelpIcon color="action" />
+                      Bantuan
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem
+                    color="danger"
+                    key="logout"
+                    className="mt-1 bg-blue-100"
+                    textValue="actionauth"
+                  >
+                    <NavbarContent
+                      className="font-semibold text-red-800 flex flex-row items-center justify-center"
+                      onClick={handleLogout}
+                    >
+                      <button className="flex flex-row items-center gap-1">
+                        <p>Keluar</p>
+                        <LogoutIcon />
+                      </button>
+                    </NavbarContent>
+                  </DropdownItem>
+                </DropdownMenu>
+              </div>
+            </Dropdown>
+          </>
         ) : (
           <>
             <AuthenticationForm />
