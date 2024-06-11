@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { app } from "../../firebaseConfig";
-import { getAuth, User, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import AuthenticationForm from "./AuthenticationForm";
 import {
   Navbar,
@@ -32,14 +31,11 @@ import LogoNextGenHydroponics from "../assets/images/logo/LogoNextGenHydroponics
 import GuestIcon from "../assets/images/user/Guest.png";
 import Link from "next/link";
 import Notification from "./Notification";
+import { useUserAuthentication } from "../services/usersService";
 
 export default function Header() {
-  const auth = getAuth(app);
-  const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
+  const { user, setUser, handleLogout } = useUserAuthentication();
   const [activeMenu, setActiveMenu] = useState<string>("");
-
-  const afterOut = "/";
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -52,19 +48,7 @@ export default function Header() {
     });
 
     return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      router.push(afterOut);
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (error: any) {
-      console.error("Error signing out:", error.message);
-    }
-  };
+  }, [setUser]);
 
   const handleMenuClick = (menu: string) => {
     setActiveMenu(menu);
