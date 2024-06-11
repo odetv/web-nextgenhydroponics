@@ -29,6 +29,10 @@ export default function RootLayout({
   if (process.env.NEXT_PUBLIC_VERCEL_MAINTENANCE_MODE === "true") {
     return (
       <html lang="en">
+        <meta
+          name="google-site-verification"
+          content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
+        />
         <body className={poppins.className}>
           <Providers>
             <Analytics />
@@ -43,6 +47,10 @@ export default function RootLayout({
   } else
     return (
       <html lang="en">
+        <meta
+          name="google-site-verification"
+          content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
+        />
         <body className={poppins.className}>
           <Providers>
             <Header />
