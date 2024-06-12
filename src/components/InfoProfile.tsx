@@ -32,9 +32,9 @@ const InfoProfile = () => {
           priority={true}
         />
       </div>
-      <div>
-        <p>{user?.displayName || ""}</p>
-        <p>{user?.email || ""}</p>
+      <div className="p-4 bg-gray-100 rounded-md">
+        <p className="font-semibold text-base">{user?.displayName || ""}</p>
+        <p className="text-sm">{user?.email || ""}</p>
       </div>
     </div>
   );
