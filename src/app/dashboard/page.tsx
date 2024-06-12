@@ -113,7 +113,7 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="flex flex-col justify-center items-center gap-3 pt-8 pb-8">
+    <main className="flex flex-col justify-center items-center gap-3 pt-2 sm:pt-8 pb-8">
       {user ? (
         <>
           <div className="text-center p-4 gap-2">

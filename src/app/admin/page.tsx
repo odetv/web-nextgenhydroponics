@@ -189,7 +189,7 @@ export default function Admin() {
   return (
     <main className="flex flex-col justify-center w-full min-h-screen gap-3 p-4">
       <>
-        <p className="text-center text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl font-bold pb-2 pt-8">
+        <p className="text-center text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl font-bold pb-2 pt-2 sm:pt-8">
           Selamat datang di Admin Panel, {user.displayName}👋
         </p>
         <div className="flex flex-col justify-center items-center gap-2 w-full sm:w-10/12 mx-auto text-sm outline outline-2 outline-emerald-200 rounded-lg mt-2">

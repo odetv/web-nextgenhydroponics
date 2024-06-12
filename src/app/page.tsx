@@ -18,7 +18,7 @@ export default function LandingPage() {
   return (
     <main
       id="beranda"
-      className="flex flex-col justify-center items-center min-h-screen pb-16 pt-4 sm:pt-16"
+      className="flex flex-col justify-center items-center min-h-screen pb-16 sm:pt-16"
     >
       <motion.div
         className="progress-bar fixed top-16 left-0 right-0 h-1 origin-left bg-green-500 z-50"
