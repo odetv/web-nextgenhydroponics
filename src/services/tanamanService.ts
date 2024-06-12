@@ -177,6 +177,45 @@ const monitorDatabase = () => {
   });
 };
 
+const scheduleDailyUpdate = () => {
+  const now = new Date();
+  const msUntilMidnight =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      0,
+      0,
+      0
+    ).getTime() - now.getTime();
+  setTimeout(() => {
+    performDailyUpdate();
+    setInterval(performDailyUpdate, 24 * 60 * 60 * 1000);
+  }, msUntilMidnight);
+};
+
+const performDailyUpdate = async () => {
+  try {
+    const tanaman = await getTanamanData();
+    const now = new Date();
+    for (const namaTanaman in tanaman.nama_tanaman) {
+      const tanggalTanam = tanaman.tanggal_tanam[namaTanaman];
+      const tanggalPanen = tanaman.tanggal_panen[namaTanaman];
+      tanaman.usia_tanaman[namaTanaman] = calculateUsiaTanaman(tanggalTanam);
+      tanaman.estimasi_panen[namaTanaman] = calculateEstimasiPanen(
+        tanggalTanam,
+        tanggalPanen
+      );
+    }
+    await updateTanamanData(tanaman);
+  } catch (error) {
+    console.error("Error updating daily plant data: ", error);
+  }
+};
+
+monitorDatabase();
+scheduleDailyUpdate();
+
 export {
   getTanamanData,
   updateTanamanData,
@@ -185,4 +224,5 @@ export {
   editTanaman,
   addDefaultDataIfEmpty,
   monitorDatabase,
+  scheduleDailyUpdate,
 };

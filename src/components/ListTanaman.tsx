@@ -5,6 +5,7 @@ import {
   deleteTanaman,
   editTanaman,
   monitorDatabase,
+  scheduleDailyUpdate,
 } from "../services/tanamanService";
 import TuneIcon from "@mui/icons-material/Tune";
 import {
@@ -105,6 +106,7 @@ const ListTanaman = () => {
   useEffect(() => {
     monitorDatabase();
     fetchTanaman();
+    scheduleDailyUpdate();
   }, []);
 
   useEffect(() => {
