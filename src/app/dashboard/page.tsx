@@ -60,6 +60,7 @@ export default function Dashboard() {
   const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
   const [imageUrl, setImageUrl] = useState("");
+  const [timestamp, setTimestamp] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -72,17 +73,41 @@ export default function Dashboard() {
     }
   }, [user]);
 
+  // useEffect(() => {
+  //   const db = getDatabase();
+  //   const photosRef = ref(db, "esp32cam");
+  //   const latestPhotoQuery = query(photosRef, limitToLast(1));
+
+  //   const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
+  //     snapshot.forEach((childSnapshot) => {
+  //       const base64String = childSnapshot.val().photo;
+  //       if (base64String) {
+  //         setImageUrl(`data:image/png;base64,${base64String}`);
+  //       }
+  //     });
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
   useEffect(() => {
     const db = getDatabase();
     const photosRef = ref(db, "esp32cam");
     const latestPhotoQuery = query(photosRef, limitToLast(1));
 
     const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        const base64String = childSnapshot.val().photo;
-        if (base64String) {
-          setImageUrl(`data:image/png;base64,${base64String}`);
-        }
+      snapshot.forEach((dateSnapshot) => {
+        dateSnapshot.forEach((timeSnapshot) => {
+          const data = timeSnapshot.val();
+          const base64String = data.photo_original;
+          const timestamp = data.timestamp;
+          if (base64String) {
+            setImageUrl(base64String);
+          }
+          if (timestamp) {
+            setTimestamp(timestamp);
+          }
+        });
       });
     });
 
@@ -587,13 +612,21 @@ export default function Dashboard() {
                                 >
                                   <p className="pl-1">Live</p>
                                 </Chip>
-                                <Image
-                                  width={640}
-                                  height={640}
-                                  src={imageUrl}
-                                  alt="Preview ESP32-CAM"
-                                  className="rounded-lg"
-                                />
+                                <div className="flex flex-col">
+                                  <Image
+                                    width={640}
+                                    height={640}
+                                    src={imageUrl}
+                                    alt="Preview ESP32-CAM"
+                                    className="rounded-lg"
+                                  />
+                                  <div className="pt-2 text-xs flex flex-row">
+                                    <p className="font-semibold pr-1">
+                                      Update terakhir:
+                                    </p>
+                                    <p>{timestamp}</p>
+                                  </div>
+                                </div>
                               </>
                             ) : (
                               <p>Mengolah gambar...</p>
