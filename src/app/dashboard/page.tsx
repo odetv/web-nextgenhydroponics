@@ -28,6 +28,7 @@ import {
   onValue,
   query,
   limitToLast,
+  remove,
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
@@ -90,23 +91,71 @@ export default function Dashboard() {
   //   return () => unsubscribe();
   // }, []);
 
+  // useEffect(() => {
+  //   const db = getDatabase();
+  //   const photosRef = ref(db, "esp32cam");
+  //   const latestPhotoQuery = query(photosRef, limitToLast(1));
+
+  //   const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
+  //     snapshot.forEach((dateSnapshot) => {
+  //       dateSnapshot.forEach((timeSnapshot) => {
+  //         const data = timeSnapshot.val();
+  //         const base64String = data.photo_original;
+  //         const timestamp = data.timestamp;
+  //         if (base64String) {
+  //           setImageUrl(base64String);
+  //         }
+  //         if (timestamp) {
+  //           setTimestamp(timestamp);
+  //         }
+  //       });
+  //     });
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
   useEffect(() => {
     const db = getDatabase();
     const photosRef = ref(db, "esp32cam");
-    const latestPhotoQuery = query(photosRef, limitToLast(1));
-
-    const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
+    const unsubscribe = onValue(photosRef, (snapshot) => {
+      let deletePromises: any[] = [];
       snapshot.forEach((dateSnapshot) => {
         dateSnapshot.forEach((timeSnapshot) => {
           const data = timeSnapshot.val();
-          const base64String = data.photo_original;
           const timestamp = data.timestamp;
-          if (base64String) {
-            setImageUrl(base64String);
+          const date = new Date(timestamp);
+          const year = date.getFullYear();
+          console.log("Checking timestamp:", timestamp);
+          if (year === 2036) {
+            console.log(`Removing invalid entry with timestamp: ${timestamp}`);
+            const deletePromise = remove(timeSnapshot.ref)
+              .then(() => {
+                console.log("Invalid entry removed successfully");
+              })
+              .catch((error) => {
+                console.error("Error removing invalid entry:", error);
+              });
+            deletePromises.push(deletePromise);
           }
-          if (timestamp) {
-            setTimestamp(timestamp);
-          }
+        });
+      });
+      Promise.all(deletePromises).then(() => {
+        const latestPhotoQuery = query(photosRef, limitToLast(1));
+        onValue(latestPhotoQuery, (latestSnapshot) => {
+          latestSnapshot.forEach((latestDateSnapshot) => {
+            latestDateSnapshot.forEach((latestTimeSnapshot) => {
+              const latestData = latestTimeSnapshot.val();
+              const latestBase64String = latestData.photo_original;
+              const latestTimestamp = latestData.timestamp;
+              if (latestBase64String) {
+                setImageUrl(latestBase64String);
+              }
+              if (latestTimestamp) {
+                setTimestamp(latestTimestamp);
+              }
+            });
+          });
         });
       });
     });
