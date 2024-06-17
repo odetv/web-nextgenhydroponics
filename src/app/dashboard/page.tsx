@@ -61,6 +61,8 @@ export default function Dashboard() {
   const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
   const [imageUrl, setImageUrl] = useState("");
+  const [photoHama, setPhotoHama] = useState("");
+  const [statusHama, setStatusHama] = useState("");
   const [timestamp, setTimestamp] = useState("");
 
   useEffect(() => {
@@ -126,7 +128,6 @@ export default function Dashboard() {
           const timestamp = data.timestamp;
           const date = new Date(timestamp);
           const year = date.getFullYear();
-          console.log("Checking timestamp:", timestamp);
           if (year === 2036) {
             console.log(`Removing invalid entry with timestamp: ${timestamp}`);
             const deletePromise = remove(timeSnapshot.ref)
@@ -147,9 +148,19 @@ export default function Dashboard() {
             latestDateSnapshot.forEach((latestTimeSnapshot) => {
               const latestData = latestTimeSnapshot.val();
               const latestBase64String = latestData.photo_original;
+              const latestPhotoHama = latestData.photo_hama;
+              const latestStatusHama = latestData.status_hama;
               const latestTimestamp = latestData.timestamp;
               if (latestBase64String) {
                 setImageUrl(latestBase64String);
+              }
+              if (latestPhotoHama) {
+                setPhotoHama(latestPhotoHama);
+              }
+              if (latestStatusHama) {
+                setStatusHama(
+                  latestStatusHama ? "Terdeteksi" : "Tidak Terdeteksi"
+                );
               }
               if (latestTimestamp) {
                 setTimestamp(latestTimestamp);
@@ -635,12 +646,57 @@ export default function Dashboard() {
                     <ModalBody>
                       <div className="relative flex justify-center items-center">
                         {isSelectedAI ? (
-                          <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
-                            <WarningIcon color="warning" fontSize="medium" />
-                            <p className="text-sm">
-                              Kamera Pantau Hama Tanaman Tidak Aktif!
-                            </p>
-                          </div>
+                          // <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
+                          //   <WarningIcon color="warning" fontSize="medium" />
+                          //   <p className="text-sm">
+                          //     Kamera Pantau Hama Tanaman Tidak Aktif!
+                          //   </p>
+                          // </div>
+                          <>
+                            {imageUrl ? (
+                              <>
+                                <Chip
+                                  startContent={
+                                    <Image
+                                      src={RedIcon}
+                                      alt="Red Icon"
+                                      width={8}
+                                      height={8}
+                                    />
+                                  }
+                                  color="danger"
+                                  variant="dot"
+                                  size="sm"
+                                  className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
+                                >
+                                  <p className="pl-1">Live</p>
+                                </Chip>
+                                <div className="flex flex-col">
+                                  <Image
+                                    width={640}
+                                    height={640}
+                                    src={photoHama}
+                                    alt="Preview ESP32-CAM"
+                                    className="rounded-lg"
+                                  />
+                                  <div className="pt-2 text-xs flex flex-row">
+                                    <p className="font-semibold pr-1">
+                                      Update Terakhir:
+                                    </p>
+                                    <p>{timestamp}</p>
+                                  </div>
+                                  <div className="text-xs flex flex-row">
+                                    <p className="font-semibold pr-1">
+                                      Status Hama:
+                                    </p>
+                                    <p>{statusHama}</p>
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <p>Mengolah gambar...</p>
+                            )}
+                          </>
                         ) : (
                           <>
                             {imageUrl ? (
@@ -671,7 +727,7 @@ export default function Dashboard() {
                                   />
                                   <div className="pt-2 text-xs flex flex-row">
                                     <p className="font-semibold pr-1">
-                                      Update terakhir:
+                                      Update Terakhir:
                                     </p>
                                     <p>{timestamp}</p>
                                   </div>

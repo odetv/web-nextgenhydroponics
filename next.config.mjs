@@ -18,6 +18,10 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: [
+      "nextgen.smartgreenovation.com",
+      "nextgen.dev.smartgreenovation.com",
+    ],
     remotePatterns: [
       {
         protocol: "https",
