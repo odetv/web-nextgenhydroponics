@@ -60,6 +60,7 @@ export default function Dashboard() {
   const [isSelectedNutrisi, setIsSelectedNutrisi] = React.useState(true);
   const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
+  const [isPreviewAI, setIsPreviewAI] = React.useState(true);
   const [imageUrl, setImageUrl] = useState("");
   const [photoHama, setPhotoHama] = useState("");
   const [statusHama, setStatusHama] = useState("");
@@ -149,7 +150,7 @@ export default function Dashboard() {
               const latestData = latestTimeSnapshot.val();
               const latestBase64String = latestData.photo_original;
               const latestPhotoHama = latestData.photo_hama;
-              const latestStatusHama = latestData.status_hama;
+              let latestStatusHama = latestData.status_hama;
               const latestTimestamp = latestData.timestamp;
               if (latestBase64String) {
                 setImageUrl(latestBase64String);
@@ -157,10 +158,13 @@ export default function Dashboard() {
               if (latestPhotoHama) {
                 setPhotoHama(latestPhotoHama);
               }
-              if (latestStatusHama) {
+              if (latestStatusHama === "true" || latestStatusHama === "false") {
+                latestStatusHama = JSON.parse(latestStatusHama);
                 setStatusHama(
                   latestStatusHama ? "Terdeteksi" : "Tidak Terdeteksi"
                 );
+              } else {
+                setStatusHama("Tidak Terdeteksi");
               }
               if (latestTimestamp) {
                 setTimestamp(latestTimestamp);
@@ -639,21 +643,15 @@ export default function Dashboard() {
                 {(onClose) => (
                   <>
                     <ModalHeader className="flex flex-col gap-1">
-                      {isSelectedAI
+                      {isSelectedAI && isPreviewAI
                         ? "Pantau Hama Tanaman"
                         : "Pantau Kamera Pengintai"}
                     </ModalHeader>
                     <ModalBody>
                       <div className="relative flex justify-center items-center">
-                        {isSelectedAI ? (
-                          // <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
-                          //   <WarningIcon color="warning" fontSize="medium" />
-                          //   <p className="text-sm">
-                          //     Kamera Pantau Hama Tanaman Tidak Aktif!
-                          //   </p>
-                          // </div>
+                        {isSelectedAI && isPreviewAI ? (
                           <>
-                            {imageUrl ? (
+                            {photoHama ? (
                               <>
                                 <Chip
                                   startContent={
@@ -676,7 +674,7 @@ export default function Dashboard() {
                                     width={640}
                                     height={640}
                                     src={photoHama}
-                                    alt="Preview ESP32-CAM"
+                                    alt="Pantau Hama Tanaman"
                                     className="rounded-lg"
                                   />
                                   <div className="pt-2 text-xs flex flex-row">
@@ -694,7 +692,15 @@ export default function Dashboard() {
                                 </div>
                               </>
                             ) : (
-                              <p>Mengolah gambar...</p>
+                              <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
+                                <WarningIcon
+                                  color="warning"
+                                  fontSize="medium"
+                                />
+                                <p className="text-sm">
+                                  Kamera Pantau Hama Tanaman Tidak Aktif!
+                                </p>
+                              </div>
                             )}
                           </>
                         ) : (
@@ -722,7 +728,7 @@ export default function Dashboard() {
                                     width={640}
                                     height={640}
                                     src={imageUrl}
-                                    alt="Preview ESP32-CAM"
+                                    alt="Pantau Kamera Pengintai"
                                     className="rounded-lg"
                                   />
                                   <div className="pt-2 text-xs flex flex-row">
@@ -731,16 +737,39 @@ export default function Dashboard() {
                                     </p>
                                     <p>{timestamp}</p>
                                   </div>
+                                  <div className="text-xs flex flex-row">
+                                    <p className="font-semibold pr-1">
+                                      Status Hama:{" "}
+                                    </p>
+                                    <p>-</p>
+                                  </div>
                                 </div>
                               </>
                             ) : (
-                              <p>Mengolah gambar...</p>
+                              <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
+                                <WarningIcon
+                                  color="warning"
+                                  fontSize="medium"
+                                />
+                                <p className="text-sm">Kamera Tidak Aktif!</p>
+                              </div>
                             )}
                           </>
                         )}
                       </div>
                     </ModalBody>
                     <ModalFooter>
+                      <div className="flex flex-row items-center pr-2">
+                        <p className="text-sm">Komparasi</p>
+                        <Switch
+                          className="pl-2"
+                          size="sm"
+                          isSelected={isPreviewAI}
+                          onValueChange={setIsPreviewAI}
+                          defaultSelected
+                          color="success"
+                        ></Switch>
+                      </div>
                       <Button color="danger" variant="flat" onPress={onClose}>
                         Tutup
                       </Button>
