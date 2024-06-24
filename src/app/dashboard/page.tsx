@@ -77,47 +77,6 @@ export default function Dashboard() {
     }
   }, [user]);
 
-  // useEffect(() => {
-  //   const db = getDatabase();
-  //   const photosRef = ref(db, "esp32cam");
-  //   const latestPhotoQuery = query(photosRef, limitToLast(1));
-
-  //   const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
-  //     snapshot.forEach((childSnapshot) => {
-  //       const base64String = childSnapshot.val().photo;
-  //       if (base64String) {
-  //         setImageUrl(`data:image/png;base64,${base64String}`);
-  //       }
-  //     });
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-  // useEffect(() => {
-  //   const db = getDatabase();
-  //   const photosRef = ref(db, "esp32cam");
-  //   const latestPhotoQuery = query(photosRef, limitToLast(1));
-
-  //   const unsubscribe = onValue(latestPhotoQuery, (snapshot) => {
-  //     snapshot.forEach((dateSnapshot) => {
-  //       dateSnapshot.forEach((timeSnapshot) => {
-  //         const data = timeSnapshot.val();
-  //         const base64String = data.photo_original;
-  //         const timestamp = data.timestamp;
-  //         if (base64String) {
-  //           setImageUrl(base64String);
-  //         }
-  //         if (timestamp) {
-  //           setTimestamp(timestamp);
-  //         }
-  //       });
-  //     });
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
   useEffect(() => {
     const db = getDatabase();
     const photosRef = ref(db, "esp32cam");
@@ -174,7 +133,6 @@ export default function Dashboard() {
         });
       });
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -283,13 +241,17 @@ export default function Dashboard() {
           </div>
 
           <div className="flex flex-col gap-4 w-full">
-            <div className="flex flex-row justify-center items-center gap-4 -mb-6">
+            {/* <div className="flex flex-row justify-center items-center gap-4 -mb-6">
               <SpedoNutrisi />
               <SpedoPH />
-            </div>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
+            </div> */}
+            <div className="grid grid-cols-1 grid-rows-2 sm:grid-cols-2 sm:grid-rows-1 justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto outline outline-slate-200 rounded-lg p-4">
               <LineChartSuhuAir />
-              <LineChartSuhuUdara />
+              {/* <LineChartSuhuUdara /> */}
+              <div className="flex flex-row justify-center items-center gap-4 -mb-6">
+                <SpedoNutrisi />
+                <SpedoPH />
+              </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
               <ListTanaman />
@@ -370,9 +332,9 @@ export default function Dashboard() {
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol Suhu
               </p>
-              <p className="text-sm">Kondisi suhu udara dan air hidroponik</p>
+              <p className="text-sm">Kondisi suhu air hidroponik</p>
               <div className="w-11/12 grid grid-rows-2 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
-                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
+                {/* <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
                     isDisabled
                     hideThumb={true}
@@ -388,7 +350,7 @@ export default function Dashboard() {
                     <ThermostatIcon color="error" />
                     <p className="text-sm">36°C</p>
                   </div>
-                </div>
+                </div> */}
                 <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
                   <div className="flex flex-row gap-2 justify-start items-center">
                     <Slider

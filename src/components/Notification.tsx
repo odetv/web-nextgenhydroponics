@@ -32,7 +32,7 @@ export default function AccessibleBadges() {
       <PopoverTrigger>
         <IconButton aria-label={notificationsLabel(100)}>
           <Badge
-            badgeContent={10}
+            badgeContent={0}
             color="warning"
             variant="standard"
             className="text-default-400"

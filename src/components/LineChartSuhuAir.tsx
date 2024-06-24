@@ -12,11 +12,93 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import * as XLSX from "xlsx";
+import { database } from "../../firebaseConfig";
+import { get, onValue, ref } from "firebase/database";
 
 export default function LineChartSuhuAir() {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const [chartData, setChartData] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
+  const [timeRange, setTimeRange] = useState<string>("1d"); // Default 1 day
+  const [timestamp, setTimestamp] = useState<string>("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const datesRef = ref(database, "esp32");
+        const datesSnapshot = await get(datesRef);
+        if (datesSnapshot.exists()) {
+          const datesData = datesSnapshot.val();
+          const dates = Object.keys(datesData);
+
+          // Filter dates based on the selected time range
+          const filteredDates = filterDates(dates, timeRange);
+          if (filteredDates.length === 0) {
+            console.error("No data available for the selected time range.");
+            return;
+          }
+          const latestDate = filteredDates.sort().reverse()[0];
+
+          const dataRef = ref(database, `esp32/${latestDate}`);
+          onValue(dataRef, (snapshot) => {
+            const data = snapshot.val();
+            if (!data) {
+              console.error("No data available for the latest date.");
+              return;
+            }
+            const newChartData: number[] = [];
+            const newLabels: string[] = [];
+
+            const times = Object.keys(data)
+              .sort()
+              .reverse()
+              .slice(0, 10)
+              .reverse();
+
+            times.forEach((time) => {
+              newLabels.push(time);
+              newChartData.push(parseFloat(data[time].sensor_suhu_air));
+            });
+
+            setLabels(newLabels);
+            setChartData(newChartData);
+            setTimestamp(`${latestDate} ${times[times.length - 1]}`);
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [timeRange]);
+
+  const filterDates = (dates: string[], range: string) => {
+    const now = new Date();
+    let filteredDates = [];
+
+    switch (range) {
+      case "1d":
+        const oneDayAgo = new Date(now);
+        oneDayAgo.setDate(now.getDate() - 1);
+        filteredDates = dates.filter((date) => new Date(date) >= oneDayAgo);
+        break;
+      case "7d":
+        const sevenDaysAgo = new Date(now);
+        sevenDaysAgo.setDate(now.getDate() - 7);
+        filteredDates = dates.filter((date) => new Date(date) >= sevenDaysAgo);
+        break;
+      case "1m":
+        const oneMonthAgo = new Date(now);
+        oneMonthAgo.setMonth(now.getMonth() - 1);
+        filteredDates = dates.filter((date) => new Date(date) >= oneMonthAgo);
+        break;
+      default:
+        filteredDates = dates;
+    }
+
+    return filteredDates;
+  };
 
   useEffect(() => {
     if (chartRef.current) {
@@ -30,39 +112,11 @@ export default function LineChartSuhuAir() {
         const newChart = new Chart(context, {
           type: "line",
           data: {
-            labels: [
-              "12AM",
-              "1AM",
-              "2AM",
-              "3AM",
-              "4AM",
-              "5AM",
-              "6AM",
-              "7AM",
-              "8AM",
-              "9AM",
-              "10AM",
-              "11AM",
-              "12PM",
-              "1PM",
-              "2PM",
-              "3PM",
-              "4PM",
-              "5PM",
-              "6PM",
-              "7PM",
-              "8PM",
-              "9PM",
-              "10PM",
-              "11PM",
-            ],
+            labels: labels,
             datasets: [
               {
                 label: "Suhu Air Hidroponik (°C)",
-                data: [
-                  30, 28, 31, 34, 29, 30, 30, 30, 28, 31, 34, 29, 30, 30, 30,
-                  28, 31, 31, 34, 29, 30, 30, 32, 29,
-                ],
+                data: chartData,
                 backgroundColor: ["rgba(255, 99, 132, 0.2)"],
                 borderColor: ["rgba(255, 99, 132, 1)"],
                 borderWidth: 1,
@@ -136,10 +190,36 @@ export default function LineChartSuhuAir() {
   }
 
   return (
-    <div className="outline outline-slate-200 rounded-lg p-4 w-full">
+    <div className="">
+      <div className="flex flex-row justify-between items-center">
+        <div className="text-xs flex flex-row items-center justify-start">
+          <p className="pr-1 font-bold">Waktu:</p>
+          <p>{timestamp ? timestamp : "-"}</p>
+        </div>
+
+        <Dropdown backdrop="transparent" radius="sm" className="p-1 mb-4">
+          <DropdownTrigger>
+            <Button variant="flat" color="success" size="sm" radius="sm">
+              Filter Waktu
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu aria-label="Filter Time Range">
+            <DropdownItem onClick={() => setTimeRange("1d")} key="1d">
+              1 Hari yang Lalu
+            </DropdownItem>
+            <DropdownItem onClick={() => setTimeRange("7d")} key="7d">
+              7 Hari yang Lalu
+            </DropdownItem>
+            <DropdownItem onClick={() => setTimeRange("1m")} key="1m">
+              1 Bulan yang Lalu
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+
       <canvas className="" ref={chartRef} />
       <div className="flex flex-row gap-2 justify-center items-center pt-1">
-        <Dropdown backdrop="opaque" radius="sm" className="p-1">
+        <Dropdown backdrop="transparent" radius="sm" className="p-1">
           <DropdownTrigger>
             <Button variant="flat" color="success" size="sm" radius="sm">
               Chart Menu
