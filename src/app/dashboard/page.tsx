@@ -333,7 +333,7 @@ export default function Dashboard() {
                 Monitoring dan Kontrol Suhu
               </p>
               <p className="text-sm">Kondisi suhu air hidroponik</p>
-              <div className="w-11/12 grid grid-rows-2 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
+              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
                 {/* <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
                     isDisabled
