@@ -202,11 +202,26 @@ function Footer() {
       </div>
       <div className="py-4 text-[11px] text-center text-gray-200">
         <p rel="noopener noreferrer">
+          <Link href="#" className="cursor-none">
+            ©️2024{" "}
+          </Link>
+          <Link
+            href="https://www.smartgreenovation.com/"
+            className="hover:text-emerald-400 transition-all ease-in-out"
+          >
+            Smart Green Garden{" "}
+          </Link>
           <Link
             href="/"
             className="hover:text-emerald-400 transition-all ease-in-out"
           >
-            ©️2024 Next-Gen Hydroponics | All rights reserved
+            | Next-Gen Hydroponics{" "}
+          </Link>
+          <Link
+            href="/"
+            className="hover:text-emerald-400 transition-all ease-in-out"
+          >
+            | All rights reserved
           </Link>
         </p>
       </div>

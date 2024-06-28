@@ -3,8 +3,78 @@ import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 
 export default function Help() {
-  const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+  const helpList = [
+    {
+      questionContent: "Apa sih itu Next-Gen Hydroponics?",
+      answerContent:
+        "Next-Gen Hydroponics adalah sistem pertanian hidroponik canggih yang menggabungkan teknologi AI dan IoT dengan energi terbarukan yaitu panel surya untuk meningkatkan efisiensi dan keberlanjutan.",
+    },
+    {
+      questionContent: "Tanaman apa aja yang ditanam Next-Gen Hydroponics?",
+      answerContent:
+        "Untuk saat ini, ada 2 tanaman yaitu Cabai dan Selada. Kedepannya, banyak Mulai dari sayuran hijau kayak selada, bayam, sampai tanaman buah kecil kayak tomat dan cabai.",
+    },
+    {
+      questionContent:
+        "Kenapa kita harus menggunakan teknologi AI dan IoT pada hidroponik?",
+      answerContent:
+        "Teknologi AI dan IoT membantu memonitor dan mengatur kondisi tanaman secara otomatis, kayak suhu, kelembapan, pH, dan nutrisi, jadi tanaman bisa tumbuh lebih optimal tanpa perlu banyak perawatan sehingga bisa lebih optimal.",
+    },
+    {
+      questionContent: "Gimana cara kerjanya Next-Gen Hydroponics ini?",
+      answerContent:
+        "Sistem ini menggunakan sensor untuk mengukur kondisi lingkungan tanaman dan datanya dikirim ke mikrokontroller dan sistem AI. Maka, mikrokontroler dan AI ini yang nanti mengatur segalanya biar tanaman dapet kondisi terbaik untuk tumbuh.",
+    },
+    {
+      questionContent: "Apakah menggunakan panel surya bisa hemat energi?",
+      answerContent:
+        "Yup, dengan panel surya, sistem hidroponik ini bisa jalan pakai energi matahari, jadi tidak terlalu bergantung dengan listrik dari PLN dan pastinya lebih ramah lingkungan.",
+    },
+    {
+      questionContent: "Siapa aja yang bisa manfaatin teknologi ini?",
+      answerContent:
+        "Semua bisa, mulai dari petani kecil, para pecinta hobi tanaman, sampai perusahaan besar yang mau lebih efisien dan sustainable dalam bertani.",
+    },
+    {
+      questionContent: "Gampang gak pakai sistem ini?",
+      answerContent:
+        "Gampang kok, semua udah otomatis dan bisa di konfigurasi manual juga.",
+    },
+    {
+      questionContent:
+        "Berapa biaya buat pasang sistem Next-Gen Hydroponics ini?",
+      answerContent:
+        "Biayanya variatif tergantung skala yang kamu mau. Untuk detailnya, bisa kontak tim kita buat konsultasi lebih lanjut.",
+    },
+    {
+      questionContent:
+        "Bisa nggak sistem ini dipakai di daerah yang sinar mataharinya nggak terlalu kuat?",
+      answerContent:
+        "Bisa aja, selama ada cukup sinar matahari buat ngisi baterai panel surya. Kalau kurang, bisa pakai kombinasi dengan sumber listrik lain.",
+    },
+    {
+      questionContent: "Apakah sistem ini ramah lingkungan?",
+      answerContent:
+        "Pastinya! Dengan energi terbarukan dan pengelolaan yang efisien, kita bisa mengurangi jejak karbon dan limbah yang dihasilkan dari pertanian konvensional.",
+    },
+    {
+      questionContent:
+        "Apa yang membuat Next-Gen Hydroponics beda dari sistem hidroponik lain?",
+      answerContent:
+        "Integrasi teknologi AI dan IoT yang canggih serta penggunaan energi terbarukan bikin sistem ini lebih efisien, otomatis, dan sustainable dibanding yang lain.",
+    },
+    {
+      questionContent: "Bagaimana cara saya melihat performa tanaman saya?",
+      answerContent:
+        "Kamu bisa cek performa tanaman lewat aplikasi mobile atau website yang sudah terhubung dengan sistem Next-Gen Hydroponics.",
+    },
+    {
+      questionContent:
+        "Apakah saya bisa mengontrol sistem ini dari jarak jauh?",
+      answerContent:
+        "Bisa banget! Kamu bisa mengontrol dan memonitor sistem hidroponik ini lewat aplikasi mobile atau website, jadi kamu bisa cek kondisi tanaman dari mana saja dan kapan saja.",
+    },
+  ];
 
   return (
     <div
@@ -32,24 +102,15 @@ export default function Help() {
       </div>
       <div className="text-sm w-full mt-2 bg-gray-100 rounded-lg p-2">
         <Accordion isCompact>
-          <AccordionItem key="1" aria-label="Pertanyaan 1" title="Pertanyaan 1">
-            {defaultContent}
-          </AccordionItem>
-          <AccordionItem key="2" aria-label="Pertanyaan 2" title="Pertanyaan 2">
-            {defaultContent}
-          </AccordionItem>
-          <AccordionItem key="3" aria-label="Pertanyaan 3" title="Pertanyaan 3">
-            {defaultContent}
-          </AccordionItem>
-          <AccordionItem key="4" aria-label="Pertanyaan 4" title="Pertanyaan 4">
-            {defaultContent}
-          </AccordionItem>
-          <AccordionItem key="5" aria-label="Pertanyaan 5" title="Pertanyaan 5">
-            {defaultContent}
-          </AccordionItem>
-          <AccordionItem key="6" aria-label="Pertanyaan 6" title="Pertanyaan 6">
-            {defaultContent}
-          </AccordionItem>
+          {helpList.map((item, index) => (
+            <AccordionItem
+              key={index}
+              aria-label={item.questionContent}
+              title={item.questionContent}
+            >
+              {item.answerContent}
+            </AccordionItem>
+          ))}
         </Accordion>
       </div>
     </div>

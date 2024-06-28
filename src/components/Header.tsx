@@ -301,7 +301,7 @@ export default function Header() {
                     </Link>
                   </DropdownItem>
 
-                  <DropdownItem
+                  {/* <DropdownItem
                     color="default"
                     key="pengaturan"
                     textValue="pengaturan"
@@ -314,7 +314,7 @@ export default function Header() {
                       <SettingsIcon color="action" />
                       Pengaturan
                     </Link>
-                  </DropdownItem>
+                  </DropdownItem> */}
                   <DropdownItem
                     color="default"
                     key="bantuan"

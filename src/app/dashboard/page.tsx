@@ -37,7 +37,6 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import WifiIcon from "@mui/icons-material/Wifi";
 import SpeedIcon from "@mui/icons-material/Speed";
 import RedIcon from "../../assets/images/components/red-circle.gif";
-import useStatusEsp from "../../middleware/DataEsp32Provider";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
 import AlertLoginGuest from "@/components/AlertLoginGuest";
 import AlertAuthorizedMember from "@/components/AlertAuthorizedMember";
@@ -144,8 +143,6 @@ export default function Dashboard() {
   }
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const status = useStatusEsp();
 
   if (isCheckingAuth) {
     return <AlertCheckAuth />;
@@ -699,12 +696,14 @@ export default function Dashboard() {
                                     </p>
                                     <p>{timestamp}</p>
                                   </div>
-                                  <div className="text-xs flex flex-row">
-                                    <p className="font-semibold pr-1">
-                                      Status Hama:{" "}
-                                    </p>
-                                    <p>-</p>
-                                  </div>
+                                  {isSelectedAI ? (
+                                    <div className="text-xs flex flex-row">
+                                      <p className="font-semibold pr-1">
+                                        Status Hama:{" "}
+                                      </p>
+                                      <p>-</p>
+                                    </div>
+                                  ) : null}
                                 </div>
                               </>
                             ) : (
@@ -721,17 +720,19 @@ export default function Dashboard() {
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      <div className="flex flex-row items-center pr-2">
-                        <p className="text-sm">Komparasi</p>
-                        <Switch
-                          className="pl-2"
-                          size="sm"
-                          isSelected={isPreviewAI}
-                          onValueChange={setIsPreviewAI}
-                          defaultSelected
-                          color="success"
-                        ></Switch>
-                      </div>
+                      {isSelectedAI ? (
+                        <div className="flex flex-row items-center pr-2">
+                          <p className="text-sm">Komparasi</p>
+                          <Switch
+                            className="pl-2"
+                            size="sm"
+                            isSelected={isPreviewAI}
+                            onValueChange={setIsPreviewAI}
+                            defaultSelected
+                            color="success"
+                          ></Switch>
+                        </div>
+                      ) : null}
                       <Button color="danger" variant="flat" onPress={onClose}>
                         Tutup
                       </Button>
