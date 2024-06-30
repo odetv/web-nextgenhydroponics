@@ -549,7 +549,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
                     <p>Status:</p>
-                    {isSelectedAI ? <p>Terdeteksi</p> : <p>-</p>}
+                    {isSelectedAI ? <p>{statusHama}</p> : <p>-</p>}
                   </div>
                 </div>
                 {isSelectedAI ? (
@@ -630,7 +630,7 @@ export default function Dashboard() {
                                 </Chip>
                                 <div className="flex flex-col">
                                   <Image
-                                    width={640}
+                                    width={1920}
                                     height={640}
                                     src={photoHama}
                                     alt="Pantau Hama Tanaman"

@@ -120,10 +120,18 @@ const AddTanaman = () => {
     fetchTanaman();
   }, []);
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     updateUsiaDanEstimasiPanen();
+  //   }, 24 * 60 * 60 * 1000); // Update every 24 hours
+
+  //   return () => clearInterval(intervalId);
+  // }, [updateUsiaDanEstimasiPanen]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       updateUsiaDanEstimasiPanen();
-    }, 24 * 60 * 60 * 1000); // Update every 24 hours
+    }, 0); // Update everytime
 
     return () => clearInterval(intervalId);
   }, [updateUsiaDanEstimasiPanen]);

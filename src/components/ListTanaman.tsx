@@ -109,10 +109,18 @@ const ListTanaman = () => {
     scheduleDailyUpdate();
   }, []);
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     updateUsiaDanEstimasiPanen();
+  //   }, 24 * 60 * 60 * 1000); // Update every 24 hours
+
+  //   return () => clearInterval(intervalId);
+  // }, [updateUsiaDanEstimasiPanen]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       updateUsiaDanEstimasiPanen();
-    }, 24 * 60 * 60 * 1000); // Update every 24 hours
+    }, 1000); // Update every 1 second
 
     return () => clearInterval(intervalId);
   }, [updateUsiaDanEstimasiPanen]);
