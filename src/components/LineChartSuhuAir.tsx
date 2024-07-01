@@ -17,7 +17,10 @@ import { get, onValue, ref } from "firebase/database";
 
 export default function LineChartSuhuAir() {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const [chartData, setChartData] = useState<number[]>([]);
+  const [chartData, setChartData] = useState<{
+    air: number[];
+    udara: number[];
+  }>({ air: [], udara: [] });
   const [labels, setLabels] = useState<string[]>([]);
   const [timeRange, setTimeRange] = useState<string>("1d"); // Default 1 day
   const [timestamp, setTimestamp] = useState<string>("");
@@ -25,13 +28,12 @@ export default function LineChartSuhuAir() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const datesRef = ref(database, "esp32");
+        const datesRef = ref(database, "esp32info");
         const datesSnapshot = await get(datesRef);
         if (datesSnapshot.exists()) {
           const datesData = datesSnapshot.val();
           const dates = Object.keys(datesData);
 
-          // Filter dates based on the selected time range
           const filteredDates = filterDates(dates, timeRange);
           if (filteredDates.length === 0) {
             console.error("No data available for the selected time range.");
@@ -39,14 +41,15 @@ export default function LineChartSuhuAir() {
           }
           const latestDate = filteredDates.sort().reverse()[0];
 
-          const dataRef = ref(database, `esp32/${latestDate}`);
+          const dataRef = ref(database, `esp32info/${latestDate}`);
           onValue(dataRef, (snapshot) => {
             const data = snapshot.val();
             if (!data) {
               console.error("No data available for the latest date.");
               return;
             }
-            const newChartData: number[] = [];
+            const newChartDataAir: number[] = [];
+            const newChartDataUdara: number[] = [];
             const newLabels: string[] = [];
 
             const times = Object.keys(data)
@@ -57,11 +60,12 @@ export default function LineChartSuhuAir() {
 
             times.forEach((time) => {
               newLabels.push(time);
-              newChartData.push(parseFloat(data[time].sensor_suhu_air));
+              newChartDataAir.push(parseFloat(data[time].sensor_suhu_air));
+              newChartDataUdara.push(parseFloat(data[time].sensor_suhu_udara));
             });
 
             setLabels(newLabels);
-            setChartData(newChartData);
+            setChartData({ air: newChartDataAir, udara: newChartDataUdara });
             setTimestamp(`${latestDate} ${times[times.length - 1]}`);
           });
         }
@@ -75,23 +79,47 @@ export default function LineChartSuhuAir() {
 
   const filterDates = (dates: string[], range: string) => {
     const now = new Date();
-    let filteredDates = [];
+    let filteredDates: string[] = [];
 
     switch (range) {
       case "1d":
         const oneDayAgo = new Date(now);
         oneDayAgo.setDate(now.getDate() - 1);
-        filteredDates = dates.filter((date) => new Date(date) >= oneDayAgo);
+        filteredDates = dates.filter((date) => {
+          const dateParts = date.split("-");
+          const dateObj = new Date(
+            parseInt(dateParts[0]),
+            parseInt(dateParts[1]) - 1,
+            parseInt(dateParts[2])
+          );
+          return dateObj >= oneDayAgo;
+        });
         break;
       case "7d":
         const sevenDaysAgo = new Date(now);
         sevenDaysAgo.setDate(now.getDate() - 7);
-        filteredDates = dates.filter((date) => new Date(date) >= sevenDaysAgo);
+        filteredDates = dates.filter((date) => {
+          const dateParts = date.split("-");
+          const dateObj = new Date(
+            parseInt(dateParts[0]),
+            parseInt(dateParts[1]) - 1,
+            parseInt(dateParts[2])
+          );
+          return dateObj >= sevenDaysAgo;
+        });
         break;
       case "1m":
         const oneMonthAgo = new Date(now);
         oneMonthAgo.setMonth(now.getMonth() - 1);
-        filteredDates = dates.filter((date) => new Date(date) >= oneMonthAgo);
+        filteredDates = dates.filter((date) => {
+          const dateParts = date.split("-");
+          const dateObj = new Date(
+            parseInt(dateParts[0]),
+            parseInt(dateParts[1]) - 1,
+            parseInt(dateParts[2])
+          );
+          return dateObj >= oneMonthAgo;
+        });
         break;
       default:
         filteredDates = dates;
@@ -116,9 +144,16 @@ export default function LineChartSuhuAir() {
             datasets: [
               {
                 label: "Suhu Air Hidroponik (°C)",
-                data: chartData,
+                data: chartData.air,
                 backgroundColor: ["rgba(255, 99, 132, 0.2)"],
                 borderColor: ["rgba(255, 99, 132, 1)"],
+                borderWidth: 1,
+              },
+              {
+                label: "Suhu Udara (°C)",
+                data: chartData.udara,
+                backgroundColor: ["rgba(54, 162, 235, 0.2)"],
+                borderColor: ["rgba(54, 162, 235, 1)"],
                 borderWidth: 1,
               },
             ],
@@ -152,7 +187,7 @@ export default function LineChartSuhuAir() {
         const file = canvas.toDataURL("image/jpg");
         const link = document.createElement("a");
         link.href = file;
-        link.download = "LineChartSuhuAirHidroponik.jpg";
+        link.download = "LineChartSuhu.jpg";
         link.click();
       }
     }
@@ -163,7 +198,7 @@ export default function LineChartSuhuAir() {
       const file = chartRef.current.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = file;
-      link.download = "LineChartSuhuAirHidroponik.png";
+      link.download = "LineChartSuhu.png";
       link.click();
     }
   }
@@ -172,20 +207,18 @@ export default function LineChartSuhuAir() {
     if (chartRef.current && (chartRef.current as any).chart) {
       const chart = (chartRef.current as any).chart;
       const data = [
-        ["Waktu", "Suhu Air Hidroponik (°C)"],
+        ["Tanggal", "Waktu", "Suhu Air Hidroponik (°C)", "Suhu Udara (°C)"],
         ...chart.data.labels.map((label: any, index: string | number) => [
+          timestamp.split(" ")[0],
           label,
           chart.data.datasets[0].data[index],
+          chart.data.datasets[1].data[index],
         ]),
       ];
       const worksheet = XLSX.utils.aoa_to_sheet(data);
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(
-        workbook,
-        worksheet,
-        "SheetSuhuAirHidroponik"
-      );
-      XLSX.writeFile(workbook, "LineChartSuhuAirHidroponik.xlsx");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "SheetSuhu");
+      XLSX.writeFile(workbook, "LineChartSuhu.xlsx");
     }
   }
 
