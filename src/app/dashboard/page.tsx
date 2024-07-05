@@ -392,7 +392,7 @@ export default function Dashboard() {
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
                             />
-                            <div className="flex flex-row justify-between w-full">
+                            <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
                                 <div className="pt-2 text-xs flex flex-row">
                                   <p className="font-semibold pr-1">
@@ -409,16 +409,16 @@ export default function Dashboard() {
                               </div>
                               <div>
                                 {isSelectedAI ? (
-                                  <div className="flex flex-row items-center justify-center mx-auto p-2 rounded-lg mt-2">
-                                    <p className="text-sm pl-2">Komparasi</p>
+                                  <div className="flex flex-row items-center justify-center mx-auto p-1 rounded-lg mt-2">
                                     <Switch
-                                      className="pl-2 -mr-3"
+                                      className="-mr-2"
                                       size="sm"
                                       isSelected={isPreviewAI}
                                       onValueChange={setIsPreviewAI}
                                       defaultSelected
                                       color="success"
                                     ></Switch>
+                                    <p className="text-sm pl-2">Komparasi</p>
                                   </div>
                                 ) : null}
                               </div>
@@ -466,7 +466,7 @@ export default function Dashboard() {
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
                             />
-                            <div className="flex flex-row justify-between w-full">
+                            <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
                                 <div className="pt-2 text-xs flex flex-row">
                                   <p className="font-semibold pr-1">
@@ -483,16 +483,16 @@ export default function Dashboard() {
                               </div>
                               <div>
                                 {isSelectedAI ? (
-                                  <div className="flex flex-row items-center justify-center mx-auto p-2 rounded-lg mt-2">
-                                    <p className="text-sm pl-2">Komparasi</p>
+                                  <div className="flex flex-row items-center justify-center mx-auto p-1 rounded-lg mt-2">
                                     <Switch
-                                      className="pl-2 -mr-3"
+                                      className="-mr-2"
                                       size="sm"
                                       isSelected={isPreviewAI}
                                       onValueChange={setIsPreviewAI}
                                       defaultSelected
                                       color="success"
                                     ></Switch>
+                                    <p className="text-sm pl-2">Komparasi</p>
                                   </div>
                                 ) : null}
                               </div>
