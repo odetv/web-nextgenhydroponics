@@ -21,6 +21,7 @@ const nextConfig = {
     domains: [
       "nextgen.smartgreenovation.com",
       "nextgen.dev.smartgreenovation.com",
+      "lh3.googleusercontent.com",
     ],
     remotePatterns: [
       {

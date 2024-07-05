@@ -11,11 +11,12 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import CloudIcon from "@mui/icons-material/Cloud";
 import * as XLSX from "xlsx";
 import { database } from "../../firebaseConfig";
 import { get, onValue, ref } from "firebase/database";
 
-export default function LineChartSuhuAir() {
+export default function LineChartSuhu() {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const [chartData, setChartData] = useState<{
     air: number[];
@@ -143,17 +144,17 @@ export default function LineChartSuhuAir() {
             labels: labels,
             datasets: [
               {
-                label: "Suhu Air Hidroponik (°C)",
-                data: chartData.air,
-                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-                borderColor: ["rgba(255, 99, 132, 1)"],
-                borderWidth: 1,
-              },
-              {
                 label: "Suhu Udara (°C)",
                 data: chartData.udara,
                 backgroundColor: ["rgba(54, 162, 235, 0.2)"],
                 borderColor: ["rgba(54, 162, 235, 1)"],
+                borderWidth: 1,
+              },
+              {
+                label: "Suhu Air Hidroponik (°C)",
+                data: chartData.air,
+                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                borderColor: ["rgba(255, 99, 132, 1)"],
                 borderWidth: 1,
               },
             ],
@@ -228,6 +229,13 @@ export default function LineChartSuhuAir() {
         <div className="text-xs flex flex-row items-center justify-start">
           <p className="pr-1 font-bold">Waktu:</p>
           <p>{timestamp ? timestamp : "-"}</p>
+        </div>
+
+        <div className="text-xs flex flex-row items-center justify-center">
+          <CloudIcon color="primary" />
+          <p className="pl-1.5">Kelembapan:</p>
+          <p className="pl-1">79</p>
+          <p>%</p>
         </div>
 
         <Dropdown backdrop="transparent" radius="sm" className="p-1 mb-4">

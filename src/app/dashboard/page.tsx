@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { Typography } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { useAuth } from "@/middleware/AuthenticationProviders";
 import {
   Button,
@@ -34,30 +33,24 @@ import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
 import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
-import WifiIcon from "@mui/icons-material/Wifi";
-import SpeedIcon from "@mui/icons-material/Speed";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
 import AlertLoginGuest from "@/components/AlertLoginGuest";
 import AlertAuthorizedMember from "@/components/AlertAuthorizedMember";
-import LineChartSuhuAir from "@/components/LineChartSuhuAir";
-import LineChartSuhuUdara from "@/components/LineChartSuhuUdara";
 import SpedoNutrisi from "@/components/SpedoNutrisi";
 import SpedoPH from "@/components/SpedoPH";
 import ListTanaman from "@/components/ListTanaman";
 import WarningIcon from "@mui/icons-material/Warning";
+import LineChartSuhu from "@/components/LineChartSuhu";
+import CameraIcon from "@mui/icons-material/Camera";
+import ComputerIcon from "@mui/icons-material/Computer";
 
 export default function Dashboard() {
   const user = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [loadingSuhu, setLoadingSuhu] = React.useState(false);
-  const [loadingPH, setLoadingPH] = React.useState(false);
-  const [isSelectedNFTDFT, setIsSelectedNFTDFT] = React.useState(true);
   const [isSelectedManualOtomatis, setIsSelectedManualOtomatis] =
     React.useState(true);
-  const [isSelectedNutrisi, setIsSelectedNutrisi] = React.useState(true);
-  const [isSelectedLampu, setIsSelectedLampu] = React.useState(true);
   const [isSelectedAI, setIsSelectedAI] = React.useState(true);
   const [isPreviewAI, setIsPreviewAI] = React.useState(true);
   const [imageUrl, setImageUrl] = useState("");
@@ -135,13 +128,6 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, []);
 
-  function handleSuhu() {
-    setLoadingSuhu(true);
-  }
-  function handlePH() {
-    setLoadingPH(true);
-  }
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   if (isCheckingAuth) {
@@ -180,57 +166,107 @@ export default function Dashboard() {
                 </PopoverTrigger>
                 <PopoverContent>
                   <div className="px-1 py-2">
-                    <div className="text-small font-bold">
+                    <div className="text-small font-bold pb-2">
                       Mikrokontroller ESP32
                     </div>
-                    <div className="text-tiny">Status: Mati</div>
+                    <div className="flex flex-col justify-start items-start gap-1">
+                      <div>
+                        <div className="text-tiny font-bold">
+                          Kondisi ESP32 Satu
+                        </div>
+                        <div className="text-tiny">
+                          SSID: Smart Green Garden
+                        </div>
+                        <div className="text-tiny">
+                          IP Address:{" "}
+                          <a href="http://192.168.100.172">192.168.100.172</a>
+                        </div>
+                        <div className="text-tiny">Status: Mati</div>
+                      </div>
+                      <div>
+                        <div className="text-tiny font-bold">
+                          Kondisi ESP32 Dua
+                        </div>
+                        <div className="text-tiny">
+                          SSID: Smart Green Garden
+                        </div>
+                        <div className="text-tiny">
+                          IP Address:{" "}
+                          <a href="http://192.168.100.172">192.168.100.172</a>
+                        </div>
+                        <div className="text-tiny">Status: Mati</div>
+                      </div>
+                    </div>
                   </div>
                 </PopoverContent>
               </Popover>
               <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger>
                   <Chip
-                    startContent={<SpeedIcon fontSize="small" />}
+                    startContent={<CameraIcon fontSize="small" />}
                     variant="faded"
                     color="primary"
                     size="lg"
                     className="cursor-pointer"
                   >
-                    Bagus
+                    {status === "hidup" ? "Hidup" : "Mati"}
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>
                   <div className="px-1 py-2">
-                    <div className="text-small font-bold">
-                      Kondisi Mikrokontroller
+                    <div className="text-small font-bold pb-2">
+                      Mikrokontroller ESP32CAM
                     </div>
-                    <div className="text-tiny">Status: Bagus</div>
+                    <div className="flex flex-col justify-start items-start gap-1">
+                      <div>
+                        <div className="text-tiny font-bold">
+                          Kondisi ESP32CAM
+                        </div>
+                        <div className="text-tiny">
+                          SSID: Smart Green Garden
+                        </div>
+                        <div className="text-tiny">
+                          IP Address:{" "}
+                          <a href="http://192.168.100.172">192.168.100.172</a>
+                        </div>
+                        <div className="text-tiny">Status: Mati</div>
+                      </div>
+                    </div>
                   </div>
                 </PopoverContent>
               </Popover>
               <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger>
                   <Chip
-                    startContent={<WifiIcon fontSize="small" />}
+                    startContent={<ComputerIcon fontSize="small" />}
                     variant="faded"
                     color="primary"
                     size="lg"
                     className="cursor-pointer"
                   >
-                    Terputus
+                    Hidup
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>
                   <div className="px-1 py-2">
-                    <div className="text-small font-bold">
-                      Konektivitas Wifi Mikrokontroller
+                    <div className="text-small font-bold pb-2">Server</div>
+                    <div className="flex flex-col justify-start items-start gap-1">
+                      <div>
+                        <div className="text-tiny font-bold">
+                          Kondisi ESP32CAM
+                        </div>
+                        <div className="text-tiny">
+                          Web Server: <a href="https://nginx.org/">Nginx</a>
+                        </div>
+                        <div className="text-tiny">
+                          Domain:{" "}
+                          <a href="https://nextgen.smartgreenovation.com/">
+                            nextgen.smartgreenovation.com
+                          </a>
+                        </div>
+                        <div className="text-tiny">Status: Hidup</div>
+                      </div>
                     </div>
-                    <div className="text-tiny">SSID: Smart Green Garden</div>
-                    <div className="text-tiny">
-                      IP Address:{" "}
-                      <a href="http://192.168.100.172">192.168.100.172</a>
-                    </div>
-                    <div className="text-tiny">Status: Terputus</div>
                   </div>
                 </PopoverContent>
               </Popover>
@@ -238,13 +274,8 @@ export default function Dashboard() {
           </div>
 
           <div className="flex flex-col gap-4 w-full">
-            {/* <div className="flex flex-row justify-center items-center gap-4 -mb-6">
-              <SpedoNutrisi />
-              <SpedoPH />
-            </div> */}
             <div className="grid grid-cols-1 grid-rows-2 sm:grid-cols-2 sm:grid-rows-1 justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto outline outline-slate-200 rounded-lg p-4">
-              <LineChartSuhuAir />
-              {/* <LineChartSuhuUdara /> */}
+              <LineChartSuhu />
               <div className="flex flex-row justify-center items-center gap-4 -mb-6">
                 <SpedoNutrisi />
                 <SpedoPH />
@@ -252,6 +283,31 @@ export default function Dashboard() {
             </div>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
               <ListTanaman />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex flex-col gap-2 mt-6 mb-2 bg-green-200 p-4 rounded-lg justify-center items-center">
+              <div className="flex flex-col justify-center items-center gap-2 text-sm">
+                <Switch
+                  size="sm"
+                  isSelected={isSelectedManualOtomatis}
+                  onValueChange={setIsSelectedManualOtomatis}
+                  defaultSelected
+                  color="success"
+                >
+                  {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
+                </Switch>
+                {isSelectedManualOtomatis ? (
+                  <p className="text-sm">
+                    Sistem Hidroponik Berjalan Pada Mode Otomatis
+                  </p>
+                ) : (
+                  <p className="text-sm">
+                    Sistem Hidroponik Berjalan Pada Mode Manual
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -266,23 +322,11 @@ export default function Dashboard() {
               <p className="text-sm">
                 Atur saluran irigasi secara manual atau otomatis
               </p>
-              <div className="pt-3">
-                <p className="text-sm">Kapasitas Air Hidroponik: 58 Liter</p>
+              <div className="mt-3 mb-3 pt-3 pb-3 bg-green-300 p-2 rounded-lg">
+                <p className="text-sm">Kapasitas Tank 150 Liter</p>
+                <p className="text-sm">Sisa Air Hidroponik: 58 Liter</p>
               </div>
               <div>
-                <div className="flex flex-row gap-6 mt-4 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
-                  <div className="flex flex-row justify-center items-center gap-2 text-sm">
-                    <Switch
-                      size="sm"
-                      isSelected={isSelectedManualOtomatis}
-                      onValueChange={setIsSelectedManualOtomatis}
-                      defaultSelected
-                      color="success"
-                    >
-                      {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
-                    </Switch>
-                  </div>
-                </div>
                 {isSelectedManualOtomatis ? (
                   <div>
                     <p className="text-sm">
@@ -300,17 +344,6 @@ export default function Dashboard() {
                       </Switch>
                     </div>
                     <div className="grid grid-cols-2 grid-rows-1 justify-start">
-                      {/* <div className="flex flex-row justify-center items-center gap-2 text-sm">
-                        <Switch
-                          size="sm"
-                          isSelected={isSelectedNFTDFT}
-                          onValueChange={setIsSelectedNFTDFT}
-                          defaultSelected
-                          color="success"
-                        >
-                          {isSelectedNFTDFT ? "DFT" : "NFT"}
-                        </Switch>
-                      </div> */}
                       <Switch size="sm" color="primary">
                         Pompa
                       </Switch>
@@ -322,6 +355,7 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+
             <div
               id="suhu"
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
@@ -331,7 +365,7 @@ export default function Dashboard() {
               </p>
               <p className="text-sm">Kondisi suhu air hidroponik</p>
               <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
-                {/* <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
+                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
                   <Slider
                     isDisabled
                     hideThumb={true}
@@ -347,7 +381,7 @@ export default function Dashboard() {
                     <ThermostatIcon color="error" />
                     <p className="text-sm">36°C</p>
                   </div>
-                </div> */}
+                </div>
                 <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
                   <div className="flex flex-row gap-2 justify-start items-center">
                     <Slider
@@ -366,16 +400,6 @@ export default function Dashboard() {
                       <p className="text-sm">32°C</p>
                     </div>
                   </div>
-                  {/* <LoadingButton
-                    size="small"
-                    onClick={handleSuhu}
-                    loading={loadingSuhu}
-                    loadingIndicator="Proses..."
-                    variant="text"
-                    className=""
-                  >
-                    <span>Segarkan</span>
-                  </LoadingButton> */}
                 </div>
               </div>
             </div>
@@ -389,30 +413,18 @@ export default function Dashboard() {
               <p className="text-sm">
                 Atur nutrisi tanaman secara manual atau otomatis
               </p>
-              <div className="pt-3">
-                <p className="text-sm">Kapasitas Nutrisi A: 4 Liter</p>
-                <p className="text-sm">Kapasitas Nutrisi B: 5 Liter</p>
-              </div>
               <div>
-                <div className="bg-green-200 flex flex-row p-4 mt-4 mb-4 gap-6 rounded-lg justify-between items-center">
-                  <div className="flex flex-row justify-center items-center gap-2 text-sm">
-                    <Switch
-                      size="sm"
-                      isSelected={isSelectedNutrisi}
-                      onValueChange={setIsSelectedNutrisi}
-                      defaultSelected
-                      color="success"
-                    >
-                      {isSelectedNutrisi ? "Otomatis" : "Manual"}
-                    </Switch>
-                  </div>
-                  <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
-                    <p>Nutrisi:</p>
+                <div className="flex flex-col justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg mt-3 mb-3">
+                  <p className="text-sm">Kapasitas Tank 5 Liter</p>
+                  <p className="text-sm">Sisa Nutrisi A: 4 Liter</p>
+                  <p className="text-sm">Sisa Nutrisi B: 5 Liter</p>
+                  <div className="flex flex-row justify-center items-center gap-1">
+                    <p>Nilai Nutrisi:</p>
                     <p>850</p>
                     <p>PPM</p>
                   </div>
                 </div>
-                {isSelectedNutrisi ? (
+                {isSelectedManualOtomatis ? (
                   <div>
                     <p className="text-sm">
                       Kebutuhan nutrisi diatur secara otomatis
@@ -423,7 +435,7 @@ export default function Dashboard() {
                     <Input
                       color="default"
                       type="number"
-                      label="Atur Jumlah Nutrisi"
+                      label="Atur Jumlah Nutrisi (PPM)"
                       size="sm"
                     />
                     <Button
@@ -439,6 +451,7 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+
             <div
               id="ph"
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
@@ -447,11 +460,12 @@ export default function Dashboard() {
                 Monitoring dan Kontrol pH Air
               </p>
               <p className="text-sm">Atur pH air secara manual atau otomatis</p>
-              <div className="pt-3">
-                <p className="text-sm">Kapasitas pH Up: 5 Liter</p>
-                <p className="text-sm">Kapasitas pH Down: 3 Liter</p>
+              <div className="bg-green-300 p-2 rounded-lg mt-3 mb-3">
+                <p className="text-sm">Kapasitas Tank 5 Liter</p>
+                <p className="text-sm">Sisa pH Up: 5 Liter</p>
+                <p className="text-sm">Sisa pH Down: 3 Liter</p>
               </div>
-              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center gap-4 text-sm pt-4">
+              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center gap-4 text-sm pt-1">
                 <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
                   <div className="flex flex-row gap-2 justify-start items-center">
                     <Slider
@@ -470,16 +484,34 @@ export default function Dashboard() {
                       <p className="text-sm">6,37</p>
                     </div>
                   </div>
-                  {/* <LoadingButton
-                    size="small"
-                    onClick={handlePH}
-                    loading={loadingPH}
-                    loadingIndicator="Proses..."
-                    variant="text"
-                  >
-                    <span>Stabilkan</span>
-                  </LoadingButton> */}
                 </div>
+              </div>
+              <div>
+                {isSelectedManualOtomatis ? (
+                  <div>
+                    <p className="text-sm pt-3">
+                      Kebutuhan pH air diatur secara otomatis
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-row justify-center items-center gap-4 text-sm pt-3">
+                    <Input
+                      color="default"
+                      type="number"
+                      label="Atur Jumlah pH Air"
+                      size="sm"
+                    />
+                    <Button
+                      variant="flat"
+                      color="default"
+                      radius="sm"
+                      size="lg"
+                      className="text-sm"
+                    >
+                      Perbarui
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
             <div
@@ -487,37 +519,26 @@ export default function Dashboard() {
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
-                Monitoring dan Kontrol Grow LED
+                Monitoring dan Kontrol Grow Light
               </p>
               <p className="text-sm">
                 Atur lampu tanaman secara manual atau otomatis
               </p>
               <div>
-                <div className="flex flex-row gap-6 mt-4 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
-                  <div className="flex flex-row justify-center items-center gap-2 text-sm">
-                    <Switch
-                      size="sm"
-                      isSelected={isSelectedLampu}
-                      onValueChange={setIsSelectedLampu}
-                      defaultSelected
-                      color="success"
-                    >
-                      {isSelectedLampu ? "Otomatis" : "Manual"}
-                    </Switch>
-                  </div>
-                  <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
-                    <p>Kondisi:</p>
-                    {isSelectedLampu ? <p>Menyala</p> : <p>-</p>}
-                  </div>
+                <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg mt-3 mb-3">
+                  <p>Kondisi:</p>
+                  {isSelectedManualOtomatis ? <p>Menyala</p> : <p>-</p>}
                 </div>
-                {isSelectedLampu ? (
+                {isSelectedManualOtomatis ? (
                   <div>
-                    <p className="text-sm">Lampu diatur secara otomatis</p>
+                    <p className="text-sm">
+                      Lampu tanaman diatur secara otomatis
+                    </p>
                   </div>
                 ) : (
                   <div className="flex flex-row justify-center items-center gap-6 text-sm ">
                     <Switch size="sm" color="primary">
-                      Lampu Grow LED
+                      Lampu Grow Light
                     </Switch>
                   </div>
                 )}
