@@ -40,7 +40,7 @@ export default function SpedoNutrisi() {
             transform: "translate(0px, 0px)",
           },
         })}
-        text={({ value, valueMax }) => `${value} / ${valueMax}`}
+        text={({ value, valueMax }) => `${value} / ${valueMax} PPM`}
       />
     </div>
   );

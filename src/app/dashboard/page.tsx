@@ -45,6 +45,14 @@ import LineChartSuhu from "@/components/LineChartSuhu";
 import CameraIcon from "@mui/icons-material/Camera";
 import ComputerIcon from "@mui/icons-material/Computer";
 import { database } from "../../../firebaseConfig";
+import SpedoAirHidroponik from "@/components/SpedoAirHidroponik";
+import SpedoNutrisiA from "@/components/SpedoNutrisiA";
+import SpedoNutrisiB from "@/components/SpedoNutrisiB";
+import SpedoPHUp from "@/components/SpedoPHUp";
+import SpedoPHDown from "@/components/SpedoPHDown";
+import SpedoPestisida from "@/components/SpedoPestisida";
+import LampON from "@/assets/images/components/lamp-on.png";
+import LampOFF from "@/assets/images/components/lamp-off.png";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -350,38 +358,186 @@ export default function Dashboard() {
           <div className="flex flex-col gap-4 w-full">
             <div className="grid grid-cols-1 grid-rows-2 sm:grid-cols-2 sm:grid-rows-1 justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto outline outline-slate-200 rounded-lg p-4">
               <LineChartSuhu />
-              <div className="flex flex-row justify-center items-center gap-4 -mb-6">
-                <SpedoNutrisi />
-                <SpedoPH />
+              <div>
+                <div className="relative flex justify-center items-center">
+                  {isSelectedAI && isPreviewAI ? (
+                    <>
+                      {photoHama ? (
+                        <>
+                          <Chip
+                            startContent={
+                              <Image
+                                src={RedIcon}
+                                alt="Red Icon"
+                                width={8}
+                                height={8}
+                              />
+                            }
+                            color="danger"
+                            variant="dot"
+                            size="sm"
+                            className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
+                          >
+                            <p className="pl-1">
+                              {isSelectedAI && isPreviewAI
+                                ? "Pantau Hama Tanaman"
+                                : "Pantau Kamera Pengintai"}
+                            </p>
+                          </Chip>
+                          <div className="flex flex-col justify-center items-center">
+                            <Image
+                              width={1920}
+                              height={640}
+                              src={photoHama}
+                              alt="Pantau Hama Tanaman"
+                              className="rounded-lg"
+                            />
+                            <div className="flex flex-row justify-between w-full">
+                              <div>
+                                <div className="pt-2 text-xs flex flex-row">
+                                  <p className="font-semibold pr-1">
+                                    Update Terakhir:
+                                  </p>
+                                  <p>{timestamp}</p>
+                                </div>
+                                <div className="text-xs flex flex-row">
+                                  <p className="font-semibold pr-1">
+                                    Status Hama:
+                                  </p>
+                                  <p>{statusHama}</p>
+                                </div>
+                              </div>
+                              <div>
+                                {isSelectedAI ? (
+                                  <div className="flex flex-row items-center justify-center mx-auto p-2 rounded-lg mt-2">
+                                    <p className="text-sm pl-2">Komparasi</p>
+                                    <Switch
+                                      className="pl-2 -mr-3"
+                                      size="sm"
+                                      isSelected={isPreviewAI}
+                                      onValueChange={setIsPreviewAI}
+                                      defaultSelected
+                                      color="success"
+                                    ></Switch>
+                                  </div>
+                                ) : null}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
+                          <WarningIcon color="warning" fontSize="medium" />
+                          <p className="text-sm">
+                            Kamera Pantau Hama Tanaman Tidak Aktif!
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {imageUrl ? (
+                        <>
+                          <Chip
+                            startContent={
+                              <Image
+                                src={RedIcon}
+                                alt="Red Icon"
+                                width={8}
+                                height={8}
+                              />
+                            }
+                            color="danger"
+                            variant="dot"
+                            size="sm"
+                            className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
+                          >
+                            <p className="pl-1">
+                              {isSelectedAI && isPreviewAI
+                                ? "Pantau Hama Tanaman"
+                                : "Pantau Kamera Pengintai"}
+                            </p>
+                          </Chip>
+                          <div className="flex flex-col justify-center items-center">
+                            <Image
+                              width={640}
+                              height={640}
+                              src={imageUrl}
+                              alt="Pantau Kamera Pengintai"
+                              className="rounded-lg"
+                            />
+                            <div className="flex flex-row justify-between w-full">
+                              <div>
+                                <div className="pt-2 text-xs flex flex-row">
+                                  <p className="font-semibold pr-1">
+                                    Update Terakhir:
+                                  </p>
+                                  <p>{timestamp}</p>
+                                </div>
+                                <div className="text-xs flex flex-row">
+                                  <p className="font-semibold pr-1">
+                                    Status Hama:
+                                  </p>
+                                  <p>-</p>
+                                </div>
+                              </div>
+                              <div>
+                                {isSelectedAI ? (
+                                  <div className="flex flex-row items-center justify-center mx-auto p-2 rounded-lg mt-2">
+                                    <p className="text-sm pl-2">Komparasi</p>
+                                    <Switch
+                                      className="pl-2 -mr-3"
+                                      size="sm"
+                                      isSelected={isPreviewAI}
+                                      onValueChange={setIsPreviewAI}
+                                      defaultSelected
+                                      color="success"
+                                    ></Switch>
+                                  </div>
+                                ) : null}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex flex-col justify-center items-center gap-1 pt-6 pb-6">
+                          <WarningIcon color="warning" fontSize="medium" />
+                          <p className="text-sm">Kamera Tidak Aktif!</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
+              <div className="flex flex-col gap-2 mt-2 mb-2 bg-green-200 p-4 rounded-lg justify-center items-center">
+                <div className="flex flex-col justify-center items-center gap-2 text-sm">
+                  <Switch
+                    size="sm"
+                    isSelected={isSelectedManualOtomatis}
+                    onValueChange={setIsSelectedManualOtomatis}
+                    defaultSelected
+                    color="success"
+                  >
+                    {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
+                  </Switch>
+                  {isSelectedManualOtomatis ? (
+                    <p className="text-sm">
+                      Sistem Hidroponik Berjalan Pada Mode Otomatis
+                    </p>
+                  ) : (
+                    <p className="text-sm">
+                      Sistem Hidroponik Berjalan Pada Mode Manual
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
               <ListTanaman />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex flex-col gap-2 mt-6 mb-2 bg-green-200 p-4 rounded-lg justify-center items-center">
-              <div className="flex flex-col justify-center items-center gap-2 text-sm">
-                <Switch
-                  size="sm"
-                  isSelected={isSelectedManualOtomatis}
-                  onValueChange={setIsSelectedManualOtomatis}
-                  defaultSelected
-                  color="success"
-                >
-                  {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
-                </Switch>
-                {isSelectedManualOtomatis ? (
-                  <p className="text-sm">
-                    Sistem Hidroponik Berjalan Pada Mode Otomatis
-                  </p>
-                ) : (
-                  <p className="text-sm">
-                    Sistem Hidroponik Berjalan Pada Mode Manual
-                  </p>
-                )}
-              </div>
             </div>
           </div>
 
@@ -396,9 +552,10 @@ export default function Dashboard() {
               <p className="text-sm">
                 Atur saluran irigasi secara manual atau otomatis
               </p>
-              <div className="mt-3 mb-3 pt-3 pb-3 bg-green-300 p-2 rounded-lg">
-                <p className="text-sm">Kapasitas Tank 150 Liter</p>
-                <p className="text-sm">Sisa Air Hidroponik: 58 Liter</p>
+              <div className="mt-3 -mb-3">
+                <SpedoAirHidroponik />
+                {/* <p className="text-sm">Kapasitas Tank 150 Liter</p>
+                <p className="text-sm">Sisa Air Hidroponik: 58 Liter</p> */}
               </div>
               <div>
                 {isSelectedManualOtomatis ? (
@@ -431,53 +588,6 @@ export default function Dashboard() {
             </div>
 
             <div
-              id="suhu"
-              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
-            >
-              <p className="font-semibold text-md">
-                Monitoring dan Kontrol Suhu
-              </p>
-              <p className="text-sm">Kondisi suhu air hidroponik</p>
-              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
-                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
-                  <Slider
-                    isDisabled
-                    hideThumb={true}
-                    label="Suhu Udara"
-                    color="danger"
-                    hideValue={true}
-                    step={1}
-                    maxValue={100}
-                    minValue={0}
-                    defaultValue={75}
-                  />
-                  <div className="flex flex-row items-center justify-center">
-                    <ThermostatIcon color="error" />
-                    <p className="text-sm">36°C</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
-                  <div className="flex flex-row gap-2 justify-start items-center">
-                    <Slider
-                      isDisabled
-                      hideThumb={true}
-                      label="Suhu Air"
-                      color="primary"
-                      hideValue={true}
-                      step={1}
-                      maxValue={100}
-                      minValue={0}
-                      defaultValue={50}
-                    />
-                    <div className="flex flex-row items-center justify-center">
-                      <ThermostatIcon color="primary" />
-                      <p className="text-sm">32°C</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
               id="nutrisi"
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
@@ -488,14 +598,29 @@ export default function Dashboard() {
                 Atur nutrisi tanaman secara manual atau otomatis
               </p>
               <div>
-                <div className="flex flex-col justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg mt-3 mb-3">
-                  <p className="text-sm">Kapasitas Tank 5 Liter</p>
-                  <p className="text-sm">Sisa Nutrisi A: 4 Liter</p>
-                  <p className="text-sm">Sisa Nutrisi B: 5 Liter</p>
-                  <div className="flex flex-row justify-center items-center gap-1">
-                    <p>Nilai Nutrisi:</p>
-                    <p>850</p>
-                    <p>PPM</p>
+                <div className="flex flex-col justify-center items-center gap-1 text-sm mt-3 mb-3">
+                  <div className="flex flex-row justify-center items-center -mb-6">
+                    <SpedoNutrisiA />
+                    <SpedoNutrisiB />
+                  </div>
+                  <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg sm:w-full w-11/12">
+                    <div className="flex flex-row gap-2 justify-start items-center">
+                      <Slider
+                        isDisabled
+                        hideThumb={true}
+                        label="Nutrisi Tanaman"
+                        color="primary"
+                        hideValue={true}
+                        step={1}
+                        maxValue={1000}
+                        minValue={0}
+                        defaultValue={850}
+                      />
+                      <div className="flex flex-row items-center justify-center w-full">
+                        <WaterDropIcon color="primary" />
+                        <p className="text-sm">850 / 1000 PPM</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {isSelectedManualOtomatis ? (
@@ -533,11 +658,12 @@ export default function Dashboard() {
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol pH Air
               </p>
-              <p className="text-sm">Atur pH air secara manual atau otomatis</p>
-              <div className="bg-green-300 p-2 rounded-lg mt-3 mb-3">
-                <p className="text-sm">Kapasitas Tank 5 Liter</p>
-                <p className="text-sm">Sisa pH Up: 5 Liter</p>
-                <p className="text-sm">Sisa pH Down: 3 Liter</p>
+              <p className="text-sm  mb-3">
+                Atur pH air secara manual atau otomatis
+              </p>
+              <div className="flex flex-row justify-center items-center -mb-6">
+                <SpedoPHUp />
+                <SpedoPHDown />
               </div>
               <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center gap-4 text-sm pt-1">
                 <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
@@ -545,17 +671,17 @@ export default function Dashboard() {
                     <Slider
                       isDisabled
                       hideThumb={true}
-                      label="pH Air"
-                      color="warning"
+                      label="pH Air Hidroponik"
+                      color="primary"
                       hideValue={true}
                       step={1}
                       maxValue={10}
                       minValue={0}
                       defaultValue={6}
                     />
-                    <div className="flex flex-row items-center justify-center">
-                      <WaterDropIcon color="warning" />
-                      <p className="text-sm">6,37</p>
+                    <div className="flex flex-row items-center justify-center w-1/2">
+                      <WaterDropIcon color="primary" />
+                      <p className="text-sm">6,37 / 10</p>
                     </div>
                   </div>
                 </div>
@@ -588,8 +714,62 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+
             <div
-              id="lampu"
+              id="suhu"
+              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+            >
+              <p className="font-semibold text-md">
+                Monitoring dan Kontrol Suhu
+              </p>
+              <p className="text-sm">Kondisi suhu air hidroponik</p>
+              <div className="w-11/12 grid grid-rows-1 grid-cols-1 justify-center items-center text-sm pt-4 gap-3">
+                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
+                  <Slider
+                    isDisabled
+                    hideThumb={true}
+                    label="Suhu Udara"
+                    color="warning"
+                    hideValue={true}
+                    step={1}
+                    maxValue={100}
+                    minValue={0}
+                    defaultValue={75}
+                  />
+                  <div className="flex flex-row items-center justify-center">
+                    <ThermostatIcon color="warning" />
+                    <p className="text-sm">36°C</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
+                  <div className="flex flex-row gap-2 justify-start items-center">
+                    <Slider
+                      isDisabled
+                      hideThumb={true}
+                      label="Suhu Air"
+                      color="primary"
+                      hideValue={true}
+                      step={1}
+                      maxValue={100}
+                      minValue={0}
+                      defaultValue={50}
+                    />
+                    <div className="flex flex-row items-center justify-center">
+                      <ThermostatIcon color="primary" />
+                      <p className="text-sm">32°C</p>
+                    </div>
+                  </div>
+                </div>
+                {isSelectedManualOtomatis ? (
+                  <div>
+                    <p className="text-sm">Suhu air diatur secara otomatis</p>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div
+              id="growlight"
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
@@ -599,9 +779,22 @@ export default function Dashboard() {
                 Atur lampu tanaman secara manual atau otomatis
               </p>
               <div>
-                <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg mt-3 mb-3">
-                  <p>Kondisi:</p>
-                  {isSelectedManualOtomatis ? <p>Menyala</p> : <p>-</p>}
+                <div className="flex flex-row justify-center items-center gap-1 text-sm p-2 mt-3 mb-3">
+                  {isSelectedManualOtomatis ? (
+                    <Image
+                      width={128}
+                      height={128}
+                      src={LampON}
+                      alt="Grow Light"
+                    />
+                  ) : (
+                    <Image
+                      width={128}
+                      height={128}
+                      src={LampOFF}
+                      alt="Grow Light"
+                    />
+                  )}
                 </div>
                 {isSelectedManualOtomatis ? (
                   <div>
@@ -618,6 +811,7 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+
             <div
               id="ai"
               className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
@@ -626,11 +820,11 @@ export default function Dashboard() {
                 Monitoring dan Kontrol Hama
               </p>
               <p className="text-sm">Atur model secara manual atau otomatis</p>
-              <div className="pt-3">
-                <p className="text-sm">Kapasitas Pestisida: 2 Liter</p>
+              <div className="pt-3 -mb-6">
+                <SpedoPestisida />
               </div>
               <div>
-                <div className="flex flex-row gap-6 mt-4 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
+                <div className="flex flex-row gap-6 mt-2 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
                   <div className="flex flex-row justify-center items-center gap-2 text-sm">
                     <Switch
                       size="sm"
@@ -649,29 +843,27 @@ export default function Dashboard() {
                 </div>
                 {isSelectedAI ? (
                   <div>
-                    <p className="text-sm pb-3">
-                      Model AI Pendeteksi Hama Aktif
-                    </p>
-                    <Button
+                    <p className="text-sm pb-3">AI pendeteksi hama aktif</p>
+                    {/* <Button
                       onPress={onOpen}
                       size="sm"
                       color="primary"
                       variant="flat"
                     >
                       Pantau Hama
-                    </Button>
+                    </Button> */}
                   </div>
                 ) : (
                   <>
                     <div className="flex flex-col justify-center items-center text-sm">
                       <p className="text-sm pb-3">
-                        Model AI Pendeteksi Hama Tidak Aktif
+                        AI pendeteksi hama tidak aktif
                       </p>
                       <Switch size="sm" color="primary" className="pb-3">
                         Pompa Pestisida
                       </Switch>
                     </div>
-                    <div>
+                    {/* <div>
                       <Button
                         onPress={onOpen}
                         size="sm"
@@ -680,12 +872,13 @@ export default function Dashboard() {
                       >
                         Kamera Pengintai
                       </Button>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </div>
             </div>
-            <Modal
+
+            {/* <Modal
               isOpen={isOpen}
               placement="center"
               backdrop="blur"
@@ -835,7 +1028,7 @@ export default function Dashboard() {
                   </>
                 )}
               </ModalContent>
-            </Modal>
+            </Modal> */}
           </div>
         </>
       ) : (
