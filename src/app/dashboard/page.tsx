@@ -524,12 +524,12 @@ export default function Dashboard() {
                     {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
                   </Switch>
                   {isSelectedManualOtomatis ? (
-                    <p className="text-sm">
-                      Sistem Hidroponik Berjalan Pada Mode Otomatis
+                    <p className="text-sm text-center">
+                      Sistem Hidroponik Otomatis
                     </p>
                   ) : (
-                    <p className="text-sm">
-                      Sistem Hidroponik Berjalan Pada Mode Manual
+                    <p className="text-sm text-center">
+                      Sistem Hidroponik Manual
                     </p>
                   )}
                 </div>
