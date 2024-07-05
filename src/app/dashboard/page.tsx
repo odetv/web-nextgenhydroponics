@@ -44,6 +44,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import LineChartSuhu from "@/components/LineChartSuhu";
 import CameraIcon from "@mui/icons-material/Camera";
 import ComputerIcon from "@mui/icons-material/Computer";
+import { database } from "../../../firebaseConfig";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -57,6 +58,37 @@ export default function Dashboard() {
   const [photoHama, setPhotoHama] = useState("");
   const [statusHama, setStatusHama] = useState("");
   const [timestamp, setTimestamp] = useState("");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [statusESP32Info, setStatusESP32Info] = useState<string | null>(null);
+  const [ssidESP32Info, setSSIDESP32Info] = useState<string | null>(null);
+  const [ipAddressESP32Info, setIpAddressESP32Info] = useState<string | null>(
+    null
+  );
+  const [statusESP32Controls, setStatusESP32Controls] = useState<string | null>(
+    null
+  );
+  const [ssidESP32Controls, setSSIDESP32Controls] = useState<string | null>(
+    null
+  );
+  const [ipAddressESP32Controls, setIpAddressESP32Controls] = useState<
+    string | null
+  >(null);
+  const [statusESP32CAM, setStatusESP32CAM] = useState<string | null>(null);
+  const [ssidESP32CAM, setSSIDESP32CAM] = useState<string | null>(null);
+  const [ipAddressESP32CAM, setIpAddressESP32CAM] = useState<string | null>(
+    null
+  );
+  const [statusVPS, setStatusVPS] = useState<string | null>(null);
+  const [webServerVPS, setWebServerVPS] = useState<string | null>(null);
+  const [domainVPS, setDomainVPS] = useState<string | null>(null);
+  const [lastUpdateTimeESP32Info, setLastUpdateTimeESP32Info] =
+    useState<number>(Date.now());
+  const [lastUpdateTimeESP32Controls, setLastUpdateTimeESP32Controls] =
+    useState<number>(Date.now());
+  const [lastUpdateTimeESP32CAM, setLastUpdateTimeESP32CAM] = useState<number>(
+    Date.now()
+  );
 
   useEffect(() => {
     if (user) {
@@ -128,7 +160,49 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, []);
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  useEffect(() => {
+    const esp32InfoRef = ref(database, "settings/mikrokontroler/esp32info");
+    onValue(esp32InfoRef, (snapshot) => {
+      const data = snapshot.val();
+      setStatusESP32Info(data.status);
+      setSSIDESP32Info(data.ssid);
+      setIpAddressESP32Info(data.ipaddress);
+    });
+
+    const esp32ControlsRef = ref(
+      database,
+      "settings/mikrokontroler/esp32controls"
+    );
+    onValue(esp32ControlsRef, (snapshot) => {
+      const data = snapshot.val();
+      setStatusESP32Controls(data.status);
+      setSSIDESP32Controls(data.ssid);
+      setIpAddressESP32Controls(data.ipaddress);
+    });
+
+    const esp32camRef = ref(database, "settings/mikrokontroler/esp32cam");
+    onValue(esp32camRef, (snapshot) => {
+      const data = snapshot.val();
+      setStatusESP32CAM(data.status);
+      setSSIDESP32CAM(data.ssid);
+      setIpAddressESP32CAM(data.ipaddress);
+    });
+
+    const vpsRef = ref(database, "settings/server/vps");
+    onValue(vpsRef, (snapshot) => {
+      const data = snapshot.val();
+      setStatusVPS(data.status);
+      setDomainVPS(data.domain);
+      setWebServerVPS(data.webserver);
+    });
+  }, []);
+
+  const overallStatusESP32 =
+    statusESP32Info && statusESP32Controls
+      ? "Hidup"
+      : statusESP32Info || statusESP32Controls
+      ? "Bermasalah"
+      : "Mati";
 
   if (isCheckingAuth) {
     return <AlertCheckAuth />;
@@ -161,7 +235,7 @@ export default function Dashboard() {
                     size="lg"
                     className="cursor-pointer"
                   >
-                    {status === "hidup" ? "Hidup" : "Mati"}
+                    {overallStatusESP32}
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -172,29 +246,29 @@ export default function Dashboard() {
                     <div className="flex flex-col justify-start items-start gap-1">
                       <div>
                         <div className="text-tiny font-bold">
-                          Kondisi ESP32 Satu
+                          Kondisi ESP32 Info
+                        </div>
+                        <div className="text-tiny">SSID: {ssidESP32Info}</div>
+                        <div className="text-tiny">
+                          IP Address: <a href="">{ipAddressESP32Info}</a>
                         </div>
                         <div className="text-tiny">
-                          SSID: Smart Green Garden
+                          Status: {statusESP32Info ? "Hidup" : "Mati"}
                         </div>
-                        <div className="text-tiny">
-                          IP Address:{" "}
-                          <a href="http://192.168.100.172">192.168.100.172</a>
-                        </div>
-                        <div className="text-tiny">Status: Mati</div>
                       </div>
                       <div>
                         <div className="text-tiny font-bold">
-                          Kondisi ESP32 Dua
+                          Kondisi ESP32 Controls
                         </div>
                         <div className="text-tiny">
-                          SSID: Smart Green Garden
+                          SSID: {ssidESP32Controls}
                         </div>
                         <div className="text-tiny">
-                          IP Address:{" "}
-                          <a href="http://192.168.100.172">192.168.100.172</a>
+                          IP Address: <a href="">{ipAddressESP32Controls}</a>
                         </div>
-                        <div className="text-tiny">Status: Mati</div>
+                        <div className="text-tiny">
+                          Status: {statusESP32Controls ? "Hidup" : "Mati"}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -209,7 +283,7 @@ export default function Dashboard() {
                     size="lg"
                     className="cursor-pointer"
                   >
-                    {status === "hidup" ? "Hidup" : "Mati"}
+                    {statusESP32CAM ? "Hidup" : "Mati"}
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -222,14 +296,13 @@ export default function Dashboard() {
                         <div className="text-tiny font-bold">
                           Kondisi ESP32CAM
                         </div>
+                        <div className="text-tiny">SSID: {ssidESP32CAM}</div>
                         <div className="text-tiny">
-                          SSID: Smart Green Garden
+                          IP Address: <a href="">{ipAddressESP32CAM}</a>
                         </div>
                         <div className="text-tiny">
-                          IP Address:{" "}
-                          <a href="http://192.168.100.172">192.168.100.172</a>
+                          Status: {statusESP32CAM ? "Hidup" : "Mati"}
                         </div>
-                        <div className="text-tiny">Status: Mati</div>
                       </div>
                     </div>
                   </div>
@@ -244,7 +317,7 @@ export default function Dashboard() {
                     size="lg"
                     className="cursor-pointer"
                   >
-                    Hidup
+                    {statusVPS ? "Hidup" : "Mati"}
                   </Chip>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -252,19 +325,20 @@ export default function Dashboard() {
                     <div className="text-small font-bold pb-2">Server</div>
                     <div className="flex flex-col justify-start items-start gap-1">
                       <div>
-                        <div className="text-tiny font-bold">
-                          Kondisi ESP32CAM
-                        </div>
+                        <div className="text-tiny font-bold">Kondisi VPS</div>
                         <div className="text-tiny">
-                          Web Server: <a href="https://nginx.org/">Nginx</a>
+                          Web Server:{" "}
+                          <a href="https://nginx.org/">{webServerVPS}</a>
                         </div>
                         <div className="text-tiny">
                           Domain:{" "}
                           <a href="https://nextgen.smartgreenovation.com/">
-                            nextgen.smartgreenovation.com
+                            {domainVPS}
                           </a>
                         </div>
-                        <div className="text-tiny">Status: Hidup</div>
+                        <div className="text-tiny">
+                          Status: {statusVPS ? "Hidup" : "Mati"}
+                        </div>
                       </div>
                     </div>
                   </div>
