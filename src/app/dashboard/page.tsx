@@ -333,6 +333,9 @@ export default function Dashboard() {
   const [controlSumberAir, setControlSumberAir] = useState<number | undefined>(
     undefined
   );
+  const [controlGrowLight, setControlGrowLight] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const esp32controlsRef = ref(database, "esp32controls");
@@ -347,6 +350,7 @@ export default function Dashboard() {
       setControlPompaIrigasi(data.relay_pompa_irigasi);
       setControlPompaPestisida(data.relay_pompa_pestisida);
       setControlSumberAir(data.relay_sumber_air);
+      setControlGrowLight(data.relay_grow_light);
     });
   }, []);
 
@@ -364,6 +368,7 @@ export default function Dashboard() {
       set(ref(database, "esp32controls/relay_pompa_irigasi"), 0);
       set(ref(database, "esp32controls/relay_pompa_pestisida"), 0);
       set(ref(database, "esp32controls/relay_sumber_air"), 0);
+      set(ref(database, "esp32controls/relay_grow_light"), 0);
 
       setControlDinamoPengaduk(0);
       setControlNutrisiAB(0);
@@ -373,6 +378,7 @@ export default function Dashboard() {
       setControlPompaIrigasi(0);
       setControlPompaPestisida(0);
       setControlSumberAir(0);
+      setControlGrowLight(0);
     }
   };
 
@@ -422,6 +428,12 @@ export default function Dashboard() {
     const newControlValue = newValue ? 1 : 0;
     set(ref(database, "esp32controls/relay_sumber_air"), newControlValue);
     setControlSumberAir(newControlValue);
+  };
+
+  const handleSwitchGrowLightChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_grow_light"), newControlValue);
+    setControlGrowLight(newControlValue);
   };
 
   const overallStatusESP32 =
@@ -579,7 +591,7 @@ export default function Dashboard() {
               <LineChartSuhu />
               <div>
                 <div className="relative flex justify-center items-center">
-                  {isSelectedAI && isPreviewAI ? (
+                  {controlsAction && isPreviewAI ? (
                     <>
                       {photoHama ? (
                         <>
@@ -598,7 +610,7 @@ export default function Dashboard() {
                             className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
                           >
                             <p className="pl-1">
-                              {isSelectedAI && isPreviewAI
+                              {controlsAction && isPreviewAI
                                 ? "Pantau Hama Tanaman"
                                 : "Pantau Kamera Pengintai"}
                             </p>
@@ -627,7 +639,7 @@ export default function Dashboard() {
                                 </div>
                               </div>
                               <div>
-                                {isSelectedAI ? (
+                                {controlsAction === 1 ? (
                                   <div className="flex flex-row items-center justify-center mx-auto p-1 rounded-lg mt-2">
                                     <Switch
                                       className="-mr-2"
@@ -672,7 +684,7 @@ export default function Dashboard() {
                             className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
                           >
                             <p className="pl-1">
-                              {isSelectedAI && isPreviewAI
+                              {controlsAction && isPreviewAI
                                 ? "Pantau Hama Tanaman"
                                 : "Pantau Kamera Pengintai"}
                             </p>
@@ -701,7 +713,7 @@ export default function Dashboard() {
                                 </div>
                               </div>
                               <div>
-                                {isSelectedAI ? (
+                                {controlsAction === 1 ? (
                                   <div className="flex flex-row items-center justify-center mx-auto p-1 rounded-lg mt-2">
                                     <Switch
                                       className="-mr-2"
@@ -1108,7 +1120,7 @@ export default function Dashboard() {
               </p>
               <div>
                 <div className="flex flex-row justify-center items-center gap-1 text-sm p-2 mt-3 mb-3">
-                  {controlsAction === 1 ? (
+                  {/* {controlGrowLight === 1 ? (
                     <Image
                       width={128}
                       height={128}
@@ -1122,9 +1134,69 @@ export default function Dashboard() {
                       src={LampOFF}
                       alt="Grow Light"
                     />
+                  )} */}
+                  {controlsAction === 1 ? (
+                    <div className="flex flex-col justify-center items-center">
+                      <Image
+                        width={128}
+                        height={128}
+                        src={LampON}
+                        alt="Grow Light"
+                      />
+                      <p className="text-sm pt-4">
+                        Lampu tanaman diatur secara otomatis
+                      </p>
+                      {/* <Button
+                      onPress={onOpen}
+                      size="sm"
+                      color="primary"
+                      variant="flat"
+                    >
+                      Pantau Hama
+                    </Button> */}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-col justify-center items-center text-sm">
+                        {controlGrowLight === 1 ? (
+                          <Image
+                            width={128}
+                            height={128}
+                            src={LampON}
+                            alt="Grow Light"
+                          />
+                        ) : (
+                          <Image
+                            width={128}
+                            height={128}
+                            src={LampOFF}
+                            alt="Grow Light"
+                          />
+                        )}
+                        <Switch
+                          isSelected={controlGrowLight === 1}
+                          onValueChange={handleSwitchGrowLightChange}
+                          size="sm"
+                          color="primary"
+                          className="pt-4"
+                        >
+                          Lampu Grow Light
+                        </Switch>
+                      </div>
+                      {/* <div>
+                      <Button
+                        onPress={onOpen}
+                        size="sm"
+                        color="primary"
+                        variant="flat"
+                      >
+                        Kamera Pengintai
+                      </Button>
+                    </div> */}
+                    </>
                   )}
                 </div>
-                {controlsAction === 1 ? (
+                {/* {controlGrowLight === 1 ? (
                   <div>
                     <p className="text-sm">
                       Lampu tanaman diatur secara otomatis
@@ -1132,11 +1204,16 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="flex flex-row justify-center items-center gap-6 text-sm ">
-                    <Switch size="sm" color="primary">
+                    <Switch
+                      isSelected={controlGrowLight === 1}
+                      onValueChange={handleSwitchGrowLightChange}
+                      size="sm"
+                      color="primary"
+                    >
                       Lampu Grow Light
                     </Switch>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -1152,7 +1229,7 @@ export default function Dashboard() {
                 <SpedoPestisida />
               </div>
               <div>
-                <div className="flex flex-row gap-6 mt-2 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
+                {/* <div className="flex flex-row gap-6 mt-2 mb-4 bg-green-200 p-4 rounded-lg justify-center items-center">
                   <div className="flex flex-row justify-center items-center gap-2 text-sm">
                     <Switch
                       size="sm"
@@ -1161,15 +1238,15 @@ export default function Dashboard() {
                       defaultSelected
                       color="success"
                     >
-                      {isSelectedAI ? "AI" : "Manual"}
+                      {controlsAction === 1 ? "AI" : "Manual"}
                     </Switch>
                   </div>
                   <div className="flex flex-row justify-center items-center gap-1 text-sm bg-green-300 p-2 rounded-lg">
-                    <p>Status:</p>
-                    {isSelectedAI ? <p>{statusHama}</p> : <p>-</p>}
+                    <p>Status Hama:</p>
+                    {controlsAction === 1 ? <p>{statusHama}</p> : <p>-</p>}
                   </div>
-                </div>
-                {isSelectedAI ? (
+                </div> */}
+                {controlsAction === 1 ? (
                   <div>
                     <p className="text-sm pb-3">AI pendeteksi hama aktif</p>
                     {/* <Button
@@ -1187,7 +1264,13 @@ export default function Dashboard() {
                       <p className="text-sm pb-3">
                         AI pendeteksi hama tidak aktif
                       </p>
-                      <Switch size="sm" color="primary" className="pb-3">
+                      <Switch
+                        isSelected={controlPompaPestisida === 1}
+                        onValueChange={handleSwitchPompaPestisidaChange}
+                        size="sm"
+                        color="primary"
+                        className="pb-3"
+                      >
                         Pompa Pestisida
                       </Switch>
                     </div>
@@ -1330,7 +1413,7 @@ export default function Dashboard() {
                                     </p>
                                     <p>{timestamp}</p>
                                   </div>
-                                  {isSelectedAI ? (
+                                  {controlsAction === 1 ?(
                                     <div className="text-xs flex flex-row">
                                       <p className="font-semibold pr-1">
                                         Status Hama:{" "}
@@ -1354,7 +1437,7 @@ export default function Dashboard() {
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      {isSelectedAI ? (
+                      {controlsAction === 1 ?(
                         <div className="flex flex-row items-center pr-2">
                           <p className="text-sm">Komparasi</p>
                           <Switch

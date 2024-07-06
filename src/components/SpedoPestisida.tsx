@@ -23,8 +23,8 @@ export default function SpedoPestisida() {
             latestKapasitasPestisida >= 0 &&
             latestKapasitasPestisida <= 46
           ) {
-            const jarakSensorKeTutupTandon = 32;
-            const tinggiTandon = 14;
+            const jarakSensorKeTutupTandon = 37;
+            const tinggiTandon = 9;
 
             // Hitung tinggi air dari dasar tandon
             const tinggiAir =
@@ -71,7 +71,7 @@ export default function SpedoPestisida() {
         height={172}
         value={Number(kapasitasPestisida)}
         valueMin={0}
-        valueMax={10}
+        valueMax={5}
         sx={(theme) => ({
           // [`& .${gaugeClasses.valueArc}`]: {
           //   fill: "#52b202",

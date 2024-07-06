@@ -14,7 +14,7 @@ import {
 import CloudIcon from "@mui/icons-material/Cloud";
 import * as XLSX from "xlsx";
 import { database } from "../../firebaseConfig";
-import { get, onValue, ref } from "firebase/database";
+import { get, limitToLast, onValue, query, ref } from "firebase/database";
 
 export default function LineChartSuhu() {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -77,6 +77,32 @@ export default function LineChartSuhu() {
 
     fetchData();
   }, [timeRange]);
+
+  const [sensorKelembapanUdara, setSensorKelembapanUdara] = useState<
+    string | null
+  >(null);
+
+  useEffect(() => {
+    const esp32InfoRef = ref(database, "esp32info");
+    const latestQuery = query(esp32InfoRef, limitToLast(1));
+
+    onValue(latestQuery, (latestSnapshot) => {
+      latestSnapshot.forEach((latestDateSnapshot) => {
+        latestDateSnapshot.forEach((latestTimeSnapshot) => {
+          const latestData = latestTimeSnapshot.val();
+          const latestSensorKelembapanUdara =
+            latestData.sensor_kelembaban_udara;
+          if (latestSensorKelembapanUdara) {
+            const parsedSensorKelembapanUdaraFloat: string | null =
+              latestSensorKelembapanUdara !== null
+                ? String(parseFloat(latestSensorKelembapanUdara).toFixed(1))
+                : null;
+            setSensorKelembapanUdara(parsedSensorKelembapanUdaraFloat);
+          }
+        });
+      });
+    });
+  }, []);
 
   const filterDates = (dates: string[], range: string) => {
     const now = new Date();
@@ -233,7 +259,7 @@ export default function LineChartSuhu() {
 
         <div className="text-xs flex flex-row items-center justify-center">
           <CloudIcon color="primary" />
-          <p className="pl-1">79</p>
+          <p className="pl-1">{sensorKelembapanUdara}</p>
           <p>%</p>
         </div>
 
