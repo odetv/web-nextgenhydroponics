@@ -22,10 +22,10 @@ export default function SpedoAirHidroponik() {
           if (
             latestKapasitasTandonPencampuran !== null &&
             latestKapasitasTandonPencampuran >= 0 &&
-            latestKapasitasTandonPencampuran <= 61
+            latestKapasitasTandonPencampuran <= 69
           ) {
-            const jarakSensorKeTutupTandon = 20; // Misalkan 20 cm dari sensor ke tutup tandon
-            const tinggiTandon = 41; // Tinggi tandon adalah 41 cm
+            const jarakSensorKeTutupTandon = 30;
+            const tinggiTandon = 39;
 
             // Hitung tinggi air dari dasar tandon
             const tinggiAir =
@@ -50,8 +50,8 @@ export default function SpedoAirHidroponik() {
             setKapasitasTandonPencampuran(
               kapasitasTandonPencampuranInLitersRounded
             );
-          } else if (latestKapasitasTandonPencampuran > 61) {
-            // Jika nilai > 61 cm, set kapasitas menjadi 0 liter
+          } else if (latestKapasitasTandonPencampuran > 69) {
+            // Jika nilai > 69 cm, set kapasitas menjadi 0 liter
             setKapasitasTandonPencampuran("0");
           } else {
             console.error(

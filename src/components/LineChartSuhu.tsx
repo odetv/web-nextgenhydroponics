@@ -165,7 +165,7 @@ export default function LineChartSuhu() {
                 type: "category",
               },
               y: {
-                beginAtZero: true,
+                beginAtZero: false,
               },
             },
           },
@@ -233,7 +233,6 @@ export default function LineChartSuhu() {
 
         <div className="text-xs flex flex-row items-center justify-center">
           <CloudIcon color="primary" />
-          <p className="pl-1.5">Kelembapan:</p>
           <p className="pl-1">79</p>
           <p>%</p>
         </div>

@@ -28,6 +28,7 @@ import {
   query,
   limitToLast,
   remove,
+  set,
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
@@ -53,6 +54,8 @@ import SpedoPHDown from "@/components/SpedoPHDown";
 import SpedoPestisida from "@/components/SpedoPestisida";
 import LampON from "@/assets/images/components/lamp-on.png";
 import LampOFF from "@/assets/images/components/lamp-off.png";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import CloudIcon from "@mui/icons-material/Cloud";
 
 export default function Dashboard() {
   const user = useAuth();
@@ -204,6 +207,222 @@ export default function Dashboard() {
       setWebServerVPS(data.webserver);
     });
   }, []);
+
+  const [kapasitasTandonPencampuran, setKapasitasTandonPencampuran] = useState<
+    string | null
+  >(null);
+  const [kapasitasNutrisiA, setKapasitasNutrisiA] = useState<string | null>(
+    null
+  );
+  const [kapasitasNutrisiB, setKapasitasNutrisiB] = useState<string | null>(
+    null
+  );
+  const [sensorTDS, setSensorTDS] = useState<string | null>(null);
+  const [sensorPH, setSensorPH] = useState<string | null>(null);
+  const [sensorSuhuAir, setSensorSuhuAir] = useState<string | null>(null);
+  const [sensorSuhuUdara, setSensorSuhuUdara] = useState<string | null>(null);
+  const [sensorKelembapanUdara, setSensorKelembapanUdara] = useState<
+    string | null
+  >(null);
+  const [kapasitasPHUp, setKapasitasPHUp] = useState<string | null>(null);
+  const [kapasitasPHDown, setKapasitasPHDown] = useState<string | null>(null);
+  const [kapasitasPestisida, setKapasitasPestisida] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    const esp32InfoRef = ref(database, "esp32info");
+    const latestQuery = query(esp32InfoRef, limitToLast(1));
+    onValue(latestQuery, (latestSnapshot) => {
+      latestSnapshot.forEach((latestDateSnapshot) => {
+        latestDateSnapshot.forEach((latestTimeSnapshot) => {
+          const latestData = latestTimeSnapshot.val();
+          const latestKapasitasTandonPencampuran =
+            latestData.kapasitas_tandon_pencampuran;
+          const latestKapasitasNutrisiA = latestData.kapasitas_nutrisi_a;
+          const latestKapasitasNutrisiB = latestData.kapasitas_nutrisi_b;
+          const latestSensorTDS = latestData.sensor_tds;
+          const latestSensorPH = latestData.sensor_ph;
+          const latestKapasitasPHUp = latestData.kapasitas_ph_up;
+          const latestKapasitasPHDown = latestData.kapasitas_ph_down;
+          const latestKapasitasPestisida = latestData.kapasitas_pestisida;
+          const latestSensorSuhuAir = latestData.sensor_suhu_air;
+          const latestSensorSuhuUdara = latestData.sensor_suhu_udara;
+          const latestSensorKelembapanUdara =
+            latestData.sensor_kelembaban_udara;
+          if (latestKapasitasTandonPencampuran) {
+            setKapasitasTandonPencampuran(latestKapasitasTandonPencampuran);
+          }
+          if (latestKapasitasNutrisiA) {
+            setKapasitasNutrisiA(latestKapasitasNutrisiA);
+          }
+          if (latestKapasitasNutrisiB) {
+            setKapasitasNutrisiB(latestKapasitasNutrisiB);
+          }
+          if (latestKapasitasPHUp) {
+            setKapasitasPHUp(latestKapasitasPHUp);
+          }
+          if (latestKapasitasPHDown) {
+            setKapasitasPHDown(latestKapasitasPHDown);
+          }
+          if (latestKapasitasPestisida) {
+            setKapasitasPestisida(latestKapasitasPestisida);
+          }
+          if (latestSensorTDS) {
+            const parsedSensorTDS: string | null =
+              latestSensorTDS !== null
+                ? String(parseFloat(latestSensorTDS).toFixed(1))
+                : null;
+            setSensorTDS(parsedSensorTDS);
+          }
+          if (latestSensorPH) {
+            const parsedSensorPH: string | null =
+              latestSensorPH !== null
+                ? String(parseFloat(latestSensorPH).toFixed(1))
+                : null;
+            setSensorPH(parsedSensorPH);
+          }
+          if (latestSensorSuhuAir) {
+            const parsedSensorSuhuAirFloat: string | null =
+              latestSensorSuhuAir !== null
+                ? String(parseFloat(latestSensorSuhuAir).toFixed(1))
+                : null;
+            setSensorSuhuAir(parsedSensorSuhuAirFloat);
+          }
+          if (latestSensorSuhuUdara) {
+            const parsedSensorSuhuUdaraFloat: string | null =
+              latestSensorSuhuUdara !== null
+                ? String(parseFloat(latestSensorSuhuUdara).toFixed(1))
+                : null;
+            setSensorSuhuUdara(parsedSensorSuhuUdaraFloat);
+          }
+          if (latestSensorKelembapanUdara) {
+            const parsedSensorKelembapanUdaraFloat: string | null =
+              latestSensorKelembapanUdara !== null
+                ? String(parseFloat(latestSensorKelembapanUdara).toFixed(1))
+                : null;
+            setSensorKelembapanUdara(parsedSensorKelembapanUdaraFloat);
+          }
+        });
+      });
+    });
+  }, []);
+
+  const [controlsAction, setControlsAction] = useState<number | undefined>(
+    undefined
+  );
+  const [controlDinamoPengaduk, setControlDinamoPengaduk] = useState<
+    number | undefined
+  >(undefined);
+  const [controlNutrisiAB, setControlNutrisiAB] = useState<number | undefined>(
+    undefined
+  );
+  const [controlPengurasanPipa, setControlPengurasanPipa] = useState<
+    number | undefined
+  >(undefined);
+  const [controlPHDown, setControlPHDown] = useState<number | undefined>(
+    undefined
+  );
+  const [controlPHUp, setControlPHUp] = useState<number | undefined>(undefined);
+  const [controlPompaIrigasi, setControlPompaIrigasi] = useState<
+    number | undefined
+  >(undefined);
+  const [controlPompaPestisida, setControlPompaPestisida] = useState<
+    number | undefined
+  >(undefined);
+  const [controlSumberAir, setControlSumberAir] = useState<number | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const esp32controlsRef = ref(database, "esp32controls");
+    onValue(esp32controlsRef, (snapshot) => {
+      const data = snapshot.val();
+      setControlsAction(data.controls_action);
+      setControlDinamoPengaduk(data.relay_dinamo_pengaduk);
+      setControlNutrisiAB(data.relay_nutrisi_ab);
+      setControlPengurasanPipa(data.relay_pengurasan_pipa);
+      setControlPHDown(data.relay_ph_down);
+      setControlPHUp(data.relay_ph_up);
+      setControlPompaIrigasi(data.relay_pompa_irigasi);
+      setControlPompaPestisida(data.relay_pompa_pestisida);
+      setControlSumberAir(data.relay_sumber_air);
+    });
+  }, []);
+
+  const handleSwitchControlsActionChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/controls_action"), newControlValue);
+    setControlsAction(newControlValue);
+
+    if (newControlValue === 1 || newControlValue === 0) {
+      set(ref(database, "esp32controls/relay_dinamo_pengaduk"), 0);
+      set(ref(database, "esp32controls/relay_nutrisi_ab"), 0);
+      set(ref(database, "esp32controls/relay_pengurasan_pipa"), 0);
+      set(ref(database, "esp32controls/relay_ph_down"), 0);
+      set(ref(database, "esp32controls/relay_ph_up"), 0);
+      set(ref(database, "esp32controls/relay_pompa_irigasi"), 0);
+      set(ref(database, "esp32controls/relay_pompa_pestisida"), 0);
+      set(ref(database, "esp32controls/relay_sumber_air"), 0);
+
+      setControlDinamoPengaduk(0);
+      setControlNutrisiAB(0);
+      setControlPengurasanPipa(0);
+      setControlPHDown(0);
+      setControlPHUp(0);
+      setControlPompaIrigasi(0);
+      setControlPompaPestisida(0);
+      setControlSumberAir(0);
+    }
+  };
+
+  const handleSwitchDinamoPengadukChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_dinamo_pengaduk"), newControlValue);
+    setControlDinamoPengaduk(newControlValue);
+  };
+
+  const handleSwitchNutrisiABChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_nutrisi_ab"), newControlValue);
+    setControlNutrisiAB(newControlValue);
+  };
+
+  const handleSwitchPengurasanPipaChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_pengurasan_pipa"), newControlValue);
+    setControlPengurasanPipa(newControlValue);
+  };
+
+  const handleSwitchPHDownChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_ph_down"), newControlValue);
+    setControlPHDown(newControlValue);
+  };
+
+  const handleSwitchPHUpChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_ph_up"), newControlValue);
+    setControlPHUp(newControlValue);
+  };
+
+  const handleSwitchPompaIrigasiChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_pompa_irigasi"), newControlValue);
+    setControlPompaIrigasi(newControlValue);
+  };
+
+  const handleSwitchPompaPestisidaChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_pompa_pestisida"), newControlValue);
+    setControlPompaPestisida(newControlValue);
+  };
+
+  const handleSwitchSumberAirChange = (newValue: boolean) => {
+    const newControlValue = newValue ? 1 : 0;
+    set(ref(database, "esp32controls/relay_sumber_air"), newControlValue);
+    setControlSumberAir(newControlValue);
+  };
 
   const overallStatusESP32 =
     statusESP32Info && statusESP32Controls
@@ -513,23 +732,22 @@ export default function Dashboard() {
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-11/12 sm:w-4/6 md:w-4/6 lg:w-4/6 xl:w-4/6 mx-auto">
               <div className="flex flex-col gap-2 mt-2 mb-2 bg-green-200 p-4 rounded-lg justify-center items-center">
-                <div className="flex flex-col justify-center items-center gap-2 text-sm">
+                <div className="flex flex-col justify-center items-center gap-1 text-sm">
                   <Switch
                     size="sm"
-                    isSelected={isSelectedManualOtomatis}
-                    onValueChange={setIsSelectedManualOtomatis}
-                    defaultSelected
+                    isSelected={controlsAction === 1}
+                    onValueChange={handleSwitchControlsActionChange}
                     color="success"
                   >
-                    {isSelectedManualOtomatis ? "Otomatis" : "Manual"}
+                    {controlsAction === 1 ? "Otomatis" : "Manual"}
                   </Switch>
-                  {isSelectedManualOtomatis ? (
+                  {controlsAction === 1 ? (
                     <p className="text-sm text-center">
-                      Sistem Hidroponik Otomatis
+                      Sistem Hidroponik Diproses Otomatis
                     </p>
                   ) : (
                     <p className="text-sm text-center">
-                      Sistem Hidroponik Manual
+                      Sistem Hidroponik Diproses Manual
                     </p>
                   )}
                 </div>
@@ -544,7 +762,7 @@ export default function Dashboard() {
           <div className="p-4 grid grid-cols-1 grid-rows-6 gap-6 sm:grid-cols-3 sm:grid-rows-2 sm:gap-6 md:grid-cols-3 md:grid-rows-2 md:gap-6 lg:grid-cols-3 lg:grid-rows-2 lg:gap-6 xl:grid-cols-3 xl:grid-rows-2 xl:gap-6">
             <div
               id="irigasi"
-              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+              className="relative bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
                 Sistem Saluran Irigasi Otomatis
@@ -554,11 +772,9 @@ export default function Dashboard() {
               </p>
               <div className="mt-3 -mb-3">
                 <SpedoAirHidroponik />
-                {/* <p className="text-sm">Kapasitas Tank 150 Liter</p>
-                <p className="text-sm">Sisa Air Hidroponik: 58 Liter</p> */}
               </div>
               <div>
-                {isSelectedManualOtomatis ? (
+                {controlsAction === 1 ? (
                   <div>
                     <p className="text-sm">
                       Kebutuhan air diatur secara otomatis
@@ -567,29 +783,68 @@ export default function Dashboard() {
                 ) : (
                   <div className="grid grid-cols-1 grid-rows-2 justify-center items-center gap-2 text-sm ">
                     <div className="grid grid-cols-2 grid-rows-1 justify-start">
-                      <Switch size="sm" color="primary">
+                      <Switch
+                        isSelected={controlSumberAir === 1}
+                        onValueChange={handleSwitchSumberAirChange}
+                        size="sm"
+                        color="primary"
+                      >
                         Sumber Air
                       </Switch>
-                      <Switch size="sm" color="primary">
-                        Saluran Irigasi
+                      <Switch
+                        isSelected={controlPengurasanPipa === 1}
+                        onValueChange={handleSwitchPengurasanPipaChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        Pengurasan Pipa
                       </Switch>
                     </div>
                     <div className="grid grid-cols-2 grid-rows-1 justify-start">
-                      <Switch size="sm" color="primary">
-                        Pompa
+                      <Switch
+                        isSelected={controlPompaIrigasi === 1}
+                        onValueChange={handleSwitchPompaIrigasiChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        Pompa Irigasi
                       </Switch>
-                      <Switch size="sm" color="primary">
-                        Pengaduk
+                      <Switch
+                        isSelected={controlDinamoPengaduk === 1}
+                        onValueChange={handleSwitchDinamoPengadukChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        Pengaduk Air
                       </Switch>
                     </div>
                   </div>
                 )}
               </div>
+              <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
+                <Popover placement="left" showArrow={true}>
+                  <PopoverTrigger>
+                    <InfoOutlinedIcon color="disabled" />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">
+                        Informasi Sensor
+                      </div>
+                      <div className="text-tiny">
+                        Sensor Ultrasonik Tandon Hidroponik:{" "}
+                        {kapasitasTandonPencampuran}
+                        {"cm"}
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
 
             <div
               id="nutrisi"
-              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+              className="relative bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol Nutrisi
@@ -614,23 +869,25 @@ export default function Dashboard() {
                         step={1}
                         maxValue={1000}
                         minValue={0}
-                        defaultValue={850}
+                        value={
+                          sensorTDS !== null ? parseInt(sensorTDS) : undefined
+                        }
                       />
                       <div className="flex flex-row items-center justify-center w-full">
                         <WaterDropIcon color="primary" />
-                        <p className="text-sm">850 / 1000 PPM</p>
+                        <p className="text-sm">{sensorTDS} / 1000 PPM</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                {isSelectedManualOtomatis ? (
+                {controlsAction === 1 ? (
                   <div>
-                    <p className="text-sm">
+                    <p className="text-sm mb-4">
                       Kebutuhan nutrisi diatur secara otomatis
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-center items-center gap-4 text-sm">
+                  <div className="flex flex-row justify-center items-center gap-4 text-sm mb-8">
                     <Input
                       color="default"
                       type="number"
@@ -648,12 +905,34 @@ export default function Dashboard() {
                     </Button>
                   </div>
                 )}
+                <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
+                  <Popover placement="left" showArrow={true}>
+                    <PopoverTrigger>
+                      <InfoOutlinedIcon color="disabled" />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">
+                          Informasi Sensor
+                        </div>
+                        <div className="text-tiny">
+                          Sensor Ultrasonik Nutrisi A: {kapasitasNutrisiA}
+                          {"cm"}
+                        </div>
+                        <div className="text-tiny">
+                          Sensor Ultrasonik Nutrisi B: {kapasitasNutrisiB}
+                          {"cm"}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
 
             <div
               id="ph"
-              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+              className="relative bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol pH Air
@@ -677,17 +956,17 @@ export default function Dashboard() {
                       step={1}
                       maxValue={10}
                       minValue={0}
-                      defaultValue={6}
+                      value={sensorPH !== null ? parseInt(sensorPH) : undefined}
                     />
                     <div className="flex flex-row items-center justify-center w-1/2">
                       <WaterDropIcon color="primary" />
-                      <p className="text-sm">6,37 / 10</p>
+                      <p className="text-sm">{sensorPH} / 10</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div>
-                {isSelectedManualOtomatis ? (
+                {controlsAction === 1 ? (
                   <div>
                     <p className="text-sm pt-3">
                       Kebutuhan pH air diatur secara otomatis
@@ -712,6 +991,28 @@ export default function Dashboard() {
                     </Button>
                   </div>
                 )}
+                <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
+                  <Popover placement="left" showArrow={true}>
+                    <PopoverTrigger>
+                      <InfoOutlinedIcon color="disabled" />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">
+                          Informasi Sensor
+                        </div>
+                        <div className="text-tiny">
+                          Sensor Ultrasonik pH Up: {kapasitasPHUp}
+                          {"cm"}
+                        </div>
+                        <div className="text-tiny">
+                          Sensor Ultrasonik pH Down: {kapasitasPHDown}
+                          {"cm"}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
 
@@ -728,17 +1029,40 @@ export default function Dashboard() {
                   <Slider
                     isDisabled
                     hideThumb={true}
+                    label="Kelembapan"
+                    color="primary"
+                    hideValue={true}
+                    maxValue={100}
+                    minValue={0}
+                    value={
+                      sensorKelembapanUdara !== null
+                        ? parseInt(sensorKelembapanUdara)
+                        : undefined
+                    }
+                  />
+                  <div className="flex flex-row items-center justify-center">
+                    <CloudIcon color="primary" />
+                    <p className="pl-2 text-sm">{sensorKelembapanUdara}%</p>
+                  </div>
+                </div>
+                <div className="flex flex-row justify-start items-center gap-2 bg-green-200 p-2 rounded-lg">
+                  <Slider
+                    isDisabled
+                    hideThumb={true}
                     label="Suhu Udara"
                     color="warning"
                     hideValue={true}
-                    step={1}
-                    maxValue={100}
+                    maxValue={50}
                     minValue={0}
-                    defaultValue={75}
+                    value={
+                      sensorSuhuUdara !== null
+                        ? parseInt(sensorSuhuUdara)
+                        : undefined
+                    }
                   />
                   <div className="flex flex-row items-center justify-center">
                     <ThermostatIcon color="warning" />
-                    <p className="text-sm">36°C</p>
+                    <p className="text-sm">{sensorSuhuUdara}°C</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 bg-green-200 p-2 rounded-lg">
@@ -750,17 +1074,21 @@ export default function Dashboard() {
                       color="primary"
                       hideValue={true}
                       step={1}
-                      maxValue={100}
+                      maxValue={50}
                       minValue={0}
-                      defaultValue={50}
+                      value={
+                        sensorSuhuAir !== null
+                          ? parseInt(sensorSuhuAir)
+                          : undefined
+                      }
                     />
                     <div className="flex flex-row items-center justify-center">
                       <ThermostatIcon color="primary" />
-                      <p className="text-sm">32°C</p>
+                      <p className="text-sm">{sensorSuhuAir}°C</p>
                     </div>
                   </div>
                 </div>
-                {isSelectedManualOtomatis ? (
+                {controlsAction === 1 ? (
                   <div>
                     <p className="text-sm">Suhu air diatur secara otomatis</p>
                   </div>
@@ -780,7 +1108,7 @@ export default function Dashboard() {
               </p>
               <div>
                 <div className="flex flex-row justify-center items-center gap-1 text-sm p-2 mt-3 mb-3">
-                  {isSelectedManualOtomatis ? (
+                  {controlsAction === 1 ? (
                     <Image
                       width={128}
                       height={128}
@@ -796,7 +1124,7 @@ export default function Dashboard() {
                     />
                   )}
                 </div>
-                {isSelectedManualOtomatis ? (
+                {controlsAction === 1 ? (
                   <div>
                     <p className="text-sm">
                       Lampu tanaman diatur secara otomatis
@@ -814,7 +1142,7 @@ export default function Dashboard() {
 
             <div
               id="ai"
-              className="bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
+              className="relative bg-green-100 p-6 rounded-xl text-center flex flex-col justify-center items-center"
             >
               <p className="font-semibold text-md">
                 Monitoring dan Kontrol Hama
@@ -875,6 +1203,24 @@ export default function Dashboard() {
                     </div> */}
                   </>
                 )}
+                <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
+                  <Popover placement="left" showArrow={true}>
+                    <PopoverTrigger>
+                      <InfoOutlinedIcon color="disabled" />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">
+                          Informasi Sensor
+                        </div>
+                        <div className="text-tiny">
+                          Sensor Ultrasonik Pestisida: {kapasitasPestisida}
+                          {"cm"}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
 
