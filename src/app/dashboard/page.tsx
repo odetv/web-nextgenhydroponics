@@ -17,6 +17,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
+  Image,
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -32,7 +33,7 @@ import {
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
-import Image from "next/image";
+// import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
@@ -598,7 +599,7 @@ export default function Dashboard() {
                           <Chip
                             startContent={
                               <Image
-                                src={RedIcon}
+                                src={RedIcon.src}
                                 alt="Red Icon"
                                 width={8}
                                 height={8}
@@ -607,7 +608,7 @@ export default function Dashboard() {
                             color="danger"
                             variant="dot"
                             size="sm"
-                            className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
+                            className="absolute top-4 right-4 z-20 bg-white opacity-50 pl-2"
                           >
                             <p className="pl-1">
                               {controlsAction && isPreviewAI
@@ -672,7 +673,7 @@ export default function Dashboard() {
                           <Chip
                             startContent={
                               <Image
-                                src={RedIcon}
+                                src={RedIcon.src}
                                 alt="Red Icon"
                                 width={8}
                                 height={8}
@@ -681,7 +682,7 @@ export default function Dashboard() {
                             color="danger"
                             variant="dot"
                             size="sm"
-                            className="absolute top-4 right-4 z-10 bg-white opacity-50 pl-2"
+                            className="absolute top-4 right-4 z-20 bg-white opacity-50 pl-2"
                           >
                             <p className="pl-1">
                               {controlsAction && isPreviewAI
@@ -1140,7 +1141,7 @@ export default function Dashboard() {
                       <Image
                         width={128}
                         height={128}
-                        src={LampON}
+                        src={LampON.src}
                         alt="Grow Light"
                       />
                       <p className="text-sm pt-4">
@@ -1162,14 +1163,14 @@ export default function Dashboard() {
                           <Image
                             width={128}
                             height={128}
-                            src={LampON}
+                            src={LampON.src}
                             alt="Grow Light"
                           />
                         ) : (
                           <Image
                             width={128}
                             height={128}
-                            src={LampOFF}
+                            src={LampOFF.src}
                             alt="Grow Light"
                           />
                         )}
