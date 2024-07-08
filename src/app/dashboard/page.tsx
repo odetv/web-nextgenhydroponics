@@ -352,6 +352,22 @@ export default function Dashboard() {
       setControlPompaPestisida(data.relay_pompa_pestisida);
       setControlSumberAir(data.relay_sumber_air);
       setControlGrowLight(data.relay_grow_light);
+
+      // Gabungkan data relay
+      const relayData = [
+        data.relay_pengurasan_pipa,
+        data.relay_pompa_irigasi,
+        data.relay_dinamo_pengaduk,
+        data.relay_nutrisi_ab,
+        data.relay_ph_up,
+        data.relay_ph_down,
+        data.relay_pompa_pestisida,
+        data.relay_sumber_air,
+        data.relay_grow_light,
+      ].join(",");
+
+      // Update relay_data di Firebase
+      set(ref(database, "esp32controls/relay_data"), relayData);
     });
   }, []);
 
