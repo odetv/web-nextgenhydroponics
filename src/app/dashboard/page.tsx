@@ -30,6 +30,7 @@ import {
   limitToLast,
   remove,
   set,
+  update,
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
@@ -337,6 +338,7 @@ export default function Dashboard() {
   const [controlGrowLight, setControlGrowLight] = useState<number | undefined>(
     undefined
   );
+  const [relayValuesChanged, setRelayValuesChanged] = useState(false);
 
   useEffect(() => {
     const esp32controlsRef = ref(database, "esp32controls");
@@ -373,30 +375,65 @@ export default function Dashboard() {
 
   const handleSwitchControlsActionChange = (newValue: boolean) => {
     const newControlValue = newValue ? 1 : 0;
-    set(ref(database, "esp32controls/controls_action"), newControlValue);
-    setControlsAction(newControlValue);
 
-    if (newControlValue === 1 || newControlValue === 0) {
-      set(ref(database, "esp32controls/relay_dinamo_pengaduk"), 0);
-      set(ref(database, "esp32controls/relay_nutrisi_ab"), 0);
-      set(ref(database, "esp32controls/relay_pengurasan_pipa"), 0);
-      set(ref(database, "esp32controls/relay_ph_down"), 0);
-      set(ref(database, "esp32controls/relay_ph_up"), 0);
-      set(ref(database, "esp32controls/relay_pompa_irigasi"), 0);
-      set(ref(database, "esp32controls/relay_pompa_pestisida"), 0);
-      set(ref(database, "esp32controls/relay_sumber_air"), 0);
-      set(ref(database, "esp32controls/relay_grow_light"), 0);
+    // Update controls_action in Firebase
+    set(ref(database, "esp32controls/controls_action"), newControlValue)
+      .then(() => {
+        setControlsAction(newControlValue);
 
-      setControlDinamoPengaduk(0);
-      setControlNutrisiAB(0);
-      setControlPengurasanPipa(0);
-      setControlPHDown(0);
-      setControlPHUp(0);
-      setControlPompaIrigasi(0);
-      setControlPompaPestisida(0);
-      setControlSumberAir(0);
-      setControlGrowLight(0);
-    }
+        // Check if controls_action is set to 1 for the first time
+        if (newControlValue === 1 && !relayValuesChanged) {
+          const relayUpdates = {
+            relay_dinamo_pengaduk: 0,
+            relay_nutrisi_ab: 0,
+            relay_pengurasan_pipa: 0,
+            relay_ph_down: 0,
+            relay_ph_up: 0,
+            relay_pompa_irigasi: 0,
+            relay_pompa_pestisida: 0,
+            relay_sumber_air: 0,
+            relay_grow_light: 0,
+          };
+
+          const controlsActionRef = ref(database, "esp32controls");
+          update(controlsActionRef, relayUpdates)
+            .then(() => {
+              setRelayValuesChanged(true);
+              console.log("Relay values updated successfully");
+            })
+            .catch((error) => {
+              console.error("Error updating relay values:", error);
+            });
+        } else if (newControlValue === 0) {
+          // Reset relay values only if they have been changed before
+          if (relayValuesChanged) {
+            const relayUpdates = {
+              relay_dinamo_pengaduk: 0,
+              relay_nutrisi_ab: 0,
+              relay_pengurasan_pipa: 0,
+              relay_ph_down: 0,
+              relay_ph_up: 0,
+              relay_pompa_irigasi: 0,
+              relay_pompa_pestisida: 0,
+              relay_sumber_air: 0,
+              relay_grow_light: 0,
+            };
+
+            const controlsActionRef = ref(database, "esp32controls");
+            update(controlsActionRef, relayUpdates)
+              .then(() => {
+                setRelayValuesChanged(false);
+                console.log("Relay values reset successfully");
+              })
+              .catch((error) => {
+                console.error("Error resetting relay values:", error);
+              });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating controls_action:", error);
+      });
   };
 
   const handleSwitchDinamoPengadukChange = (newValue: boolean) => {
