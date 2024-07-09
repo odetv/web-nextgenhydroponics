@@ -671,8 +671,8 @@ export default function Dashboard() {
                           </Chip>
                           <div className="flex flex-col justify-center items-center">
                             <Image
-                              width={1920}
-                              height={640}
+                              width={640}
+                              height={480}
                               src={photoHama}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
@@ -746,7 +746,7 @@ export default function Dashboard() {
                           <div className="flex flex-col justify-center items-center">
                             <Image
                               width={640}
-                              height={640}
+                              height={480}
                               src={imageUrl}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
@@ -847,8 +847,8 @@ export default function Dashboard() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 grid-rows-2 justify-center items-center gap-2 text-sm ">
-                    <div className="grid grid-cols-2 grid-rows-1 justify-start">
+                  <div className="grid grid-cols-1 grid-rows-2 justify-center items-center gap-2 text-sm text-left">
+                    <div className="grid grid-cols-2 grid-rows-1 justify-start text-left">
                       <Switch
                         isSelected={controlSumberAir === 1}
                         onValueChange={handleSwitchSumberAirChange}
@@ -866,7 +866,7 @@ export default function Dashboard() {
                         Pengurasan Pipa
                       </Switch>
                     </div>
-                    <div className="grid grid-cols-2 grid-rows-1 justify-start">
+                    <div className="grid grid-cols-2 grid-rows-1 justify-start text-left">
                       <Switch
                         isSelected={controlPompaIrigasi === 1}
                         onValueChange={handleSwitchPompaIrigasiChange}
@@ -953,22 +953,35 @@ export default function Dashboard() {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-center items-center gap-4 text-sm mb-8">
-                    <Input
-                      color="default"
-                      type="number"
-                      label="Atur Jumlah Nutrisi (PPM)"
-                      size="sm"
-                    />
-                    <Button
-                      variant="flat"
-                      color="default"
-                      radius="sm"
-                      size="lg"
-                      className="text-sm"
-                    >
-                      Perbarui
-                    </Button>
+                  <div className="flex flex-col justify-center items-center gap-4 text-sm mb-8">
+                    <div className="grid grid-cols-1 grid-rows-1 justify-start">
+                      <Switch
+                        isSelected={controlNutrisiAB === 1}
+                        onValueChange={handleSwitchNutrisiABChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        Nutrisi AB Mix
+                      </Switch>
+                    </div>
+                    <div className="flex flex-row justify-center gap-4 items-center">
+                      <Input
+                        color="default"
+                        type="number"
+                        label="Atur Jumlah Nutrisi (PPM)"
+                        size="sm"
+                        min={0}
+                      />
+                      <Button
+                        variant="flat"
+                        color="default"
+                        radius="sm"
+                        size="lg"
+                        className="text-sm"
+                      >
+                        Perbarui
+                      </Button>
+                    </div>
                   </div>
                 )}
                 <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
@@ -1039,22 +1052,44 @@ export default function Dashboard() {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-center items-center gap-4 text-sm pt-3">
-                    <Input
-                      color="default"
-                      type="number"
-                      label="Atur Jumlah pH Air"
-                      size="sm"
-                    />
-                    <Button
-                      variant="flat"
-                      color="default"
-                      radius="sm"
-                      size="lg"
-                      className="text-sm"
-                    >
-                      Perbarui
-                    </Button>
+                  <div className="flex flex-col justify-center items-center gap-4 text-sm pt-3">
+                    <div className="grid grid-cols-2 grid-rows-1 justify-start">
+                      <Switch
+                        isSelected={controlPHUp === 1}
+                        onValueChange={handleSwitchPHUpChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        pH Up
+                      </Switch>
+                      <Switch
+                        isSelected={controlPHDown === 1}
+                        onValueChange={handleSwitchPHDownChange}
+                        size="sm"
+                        color="primary"
+                      >
+                        pH Down
+                      </Switch>
+                    </div>
+                    <div className="flex flex-row gap-4 justify-center items-center">
+                      <Input
+                        color="default"
+                        type="number"
+                        label="Atur Jumlah pH Air"
+                        size="sm"
+                        step={0.1}
+                        min={0}
+                      />
+                      <Button
+                        variant="flat"
+                        color="default"
+                        radius="sm"
+                        size="lg"
+                        className="text-sm"
+                      >
+                        Perbarui
+                      </Button>
+                    </div>
                   </div>
                 )}
                 <div className="absolute bottom-4 right-4 z-10 cursor-pointer">
