@@ -678,8 +678,8 @@ export default function Dashboard() {
                           </Chip>
                           <div className="flex flex-col justify-center items-center">
                             <Image
-                              width={640}
-                              height={480}
+                              width={1920}
+                              height={640}
                               src={photoHama}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
@@ -752,8 +752,8 @@ export default function Dashboard() {
                           </Chip>
                           <div className="flex flex-col justify-center items-center">
                             <Image
-                              width={640}
-                              height={480}
+                              width={1920}
+                              height={640}
                               src={imageUrl}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
