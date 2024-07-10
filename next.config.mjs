@@ -25,7 +25,19 @@ const nextConfig = {
     ],
     remotePatterns: [
       {
-        // protocol: "https",
+        protocol: "https",
+        hostname: "nextgen.smartgreenovation.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "nextgen.dev.smartgreenovation.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "firebasestorage.googleapis.com",
         port: "",
         pathname: "/**",
