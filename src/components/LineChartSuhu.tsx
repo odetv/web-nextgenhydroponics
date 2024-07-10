@@ -93,10 +93,13 @@ export default function LineChartSuhu() {
           const latestSensorKelembapanUdara =
             latestData.sensor_kelembaban_udara;
           if (latestSensorKelembapanUdara) {
-            const parsedSensorKelembapanUdaraFloat: string | null =
+            let parsedSensorKelembapanUdaraFloat: string | null =
               latestSensorKelembapanUdara !== null
                 ? String(parseFloat(latestSensorKelembapanUdara).toFixed(1))
                 : null;
+            if (parsedSensorKelembapanUdaraFloat === "NaN") {
+              parsedSensorKelembapanUdaraFloat = "0";
+            }
             setSensorKelembapanUdara(parsedSensorKelembapanUdaraFloat);
           }
         });

@@ -296,13 +296,20 @@ export default function Dashboard() {
               latestSensorSuhuUdara !== null
                 ? String(parseFloat(latestSensorSuhuUdara).toFixed(1))
                 : null;
-            setSensorSuhuUdara(parsedSensorSuhuUdaraFloat);
+            const sensorSuhuUdaraValue =
+              parsedSensorSuhuUdaraFloat === "NaN"
+                ? "0"
+                : parsedSensorSuhuUdaraFloat;
+            setSensorSuhuUdara(sensorSuhuUdaraValue);
           }
           if (latestSensorKelembapanUdara) {
-            const parsedSensorKelembapanUdaraFloat: string | null =
+            let parsedSensorKelembapanUdaraFloat: string | null =
               latestSensorKelembapanUdara !== null
                 ? String(parseFloat(latestSensorKelembapanUdara).toFixed(1))
                 : null;
+            if (parsedSensorKelembapanUdaraFloat === "NaN") {
+              parsedSensorKelembapanUdaraFloat = "0";
+            }
             setSensorKelembapanUdara(parsedSensorKelembapanUdaraFloat);
           }
         });
