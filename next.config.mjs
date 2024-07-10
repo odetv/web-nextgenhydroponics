@@ -20,12 +20,12 @@ const nextConfig = {
   images: {
     domains: [
       "nextgen.smartgreenovation.com",
-      "http://nextgen.dev.smartgreenovation.com",
+      "nextgen.dev.smartgreenovation.com",
       "lh3.googleusercontent.com",
     ],
     remotePatterns: [
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "firebasestorage.googleapis.com",
         port: "",
         pathname: "/**",
