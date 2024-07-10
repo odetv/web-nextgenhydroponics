@@ -17,7 +17,6 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Image,
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -34,7 +33,7 @@ import {
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
-// import Image from "next/image";
+import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
@@ -678,8 +677,8 @@ export default function Dashboard() {
                           </Chip>
                           <div className="flex flex-col justify-center items-center">
                             <Image
-                              width={1920}
-                              height={640}
+                              width={640}
+                              height={480}
                               src={photoHama}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
@@ -752,8 +751,8 @@ export default function Dashboard() {
                           </Chip>
                           <div className="flex flex-col justify-center items-center">
                             <Image
-                              width={1920}
-                              height={640}
+                              width={640}
+                              height={480}
                               src={imageUrl}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
