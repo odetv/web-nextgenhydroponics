@@ -23,6 +23,7 @@ const nextConfig = {
       "nextgen.dev.smartgreenovation.com",
       "lh3.googleusercontent.com",
     ],
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: "https",
