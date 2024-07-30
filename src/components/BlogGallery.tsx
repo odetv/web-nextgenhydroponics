@@ -105,7 +105,7 @@ export default function GalleryInstagram() {
                         <Image
                           onClick={() => openModal(post)}
                           alt={post.id}
-                          className="object-cover w-full h-full cursor-pointer"
+                          className="object-cover w-full h-96 cursor-pointer"
                           src={post.thumbnail_url}
                         />
                       </div>

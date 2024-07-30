@@ -142,8 +142,8 @@ export default function Admin() {
     // return users.slice(start, end);
     const filteredUsers = users.filter(
       (user) =>
-        user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchQuery.toLowerCase())
+        user.displayName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const start = (pageListUser - 1) * rowsPerPageListUser;
     const end = start + rowsPerPageListUser;

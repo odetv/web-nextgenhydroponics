@@ -173,12 +173,108 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    const db = getDatabase();
+    const dataRef = ref(db, "esp32info");
+
+    const unsubscribe = onValue(dataRef, async (snapshot) => {
+      const deletePromises: Promise<void>[] = [];
+      let dataDitemukan = false;
+
+      snapshot.forEach((dateSnapshot) => {
+        const dateKey = dateSnapshot.key; // Mengambil kunci tanggal
+        // console.log(`Memeriksa data dengan tanggal: ${dateKey}`); // Log untuk debugging
+
+        if (dateKey && dateKey.startsWith("2036")) {
+          dataDitemukan = true;
+          // console.log(
+          //   `Menghapus data dengan tahun 2036 untuk tanggal: ${dateKey}`
+          // );
+          const deletePromise = remove(ref(db, `esp32info/${dateKey}`))
+            .then(() => {
+              // console.log(`Data dengan tanggal ${dateKey} berhasil dihapus`);
+            })
+            .catch((error) => {
+              // console.error("Terjadi kesalahan saat menghapus data:", error);
+            });
+          deletePromises.push(deletePromise);
+        }
+      });
+
+      if (dataDitemukan) {
+        try {
+          await Promise.all(deletePromises);
+          // console.log("Semua data dengan tahun 2036 telah dihapus");
+        } catch (error) {
+          // console.error("Kesalahan saat proses penghapusan:", error);
+        }
+      } else {
+        // console.log("Tidak ada data dengan tahun 2036 yang ditemukan");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const database = getDatabase();
+    const checkAndInitializeData = (refPath: string, defaultData: object) => {
+      const dataRef = ref(database, refPath);
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data === null) {
+          console.log(
+            `Data tidak ditemukan di ${refPath}, menulis data default`
+          );
+          set(dataRef, defaultData)
+            .then(() =>
+              console.log(`Data default berhasil ditulis ke ${refPath}`)
+            )
+            .catch((error) =>
+              console.error(
+                `Kesalahan saat menulis data default ke ${refPath}:`,
+                error
+              )
+            );
+        }
+      });
+    };
+
+    // Inisialisasi data untuk ESP32 Info
+    checkAndInitializeData("settings/mikrokontroler/esp32info", {
+      status: "1",
+      ssid: "Smart Green Garden",
+      ipaddress: "192.168.1.1",
+    });
+
+    // Inisialisasi data untuk ESP32 Controls
+    checkAndInitializeData("settings/mikrokontroler/esp32controls", {
+      status: "1",
+      ssid: "Smart Green Garden",
+      ipaddress: "192.168.1.2",
+    });
+
+    // Inisialisasi data untuk ESP32 CAM
+    checkAndInitializeData("settings/mikrokontroler/esp32cam", {
+      status: "1",
+      ssid: "Smart Green Garden",
+      ipaddress: "192.168.1.3",
+    });
+
+    // Inisialisasi data untuk VPS
+    checkAndInitializeData("settings/server/vps", {
+      status: "1",
+      domain: "dev.smartgreenovation.com",
+      webserver: "Nginx",
+    });
+  }, []);
+
+  useEffect(() => {
     const esp32InfoRef = ref(database, "settings/mikrokontroler/esp32info");
     onValue(esp32InfoRef, (snapshot) => {
       const data = snapshot.val();
-      setStatusESP32Info(data.status);
-      setSSIDESP32Info(data.ssid);
-      setIpAddressESP32Info(data.ipaddress);
+      setStatusESP32Info(data?.status ?? null);
+      setSSIDESP32Info(data?.ssid ?? null);
+      setIpAddressESP32Info(data?.ipaddress ?? null);
     });
 
     const esp32ControlsRef = ref(
@@ -187,25 +283,25 @@ export default function Dashboard() {
     );
     onValue(esp32ControlsRef, (snapshot) => {
       const data = snapshot.val();
-      setStatusESP32Controls(data.status);
-      setSSIDESP32Controls(data.ssid);
-      setIpAddressESP32Controls(data.ipaddress);
+      setStatusESP32Controls(data?.status ?? null);
+      setSSIDESP32Controls(data?.ssid ?? null);
+      setIpAddressESP32Controls(data?.ipaddress ?? null);
     });
 
     const esp32camRef = ref(database, "settings/mikrokontroler/esp32cam");
     onValue(esp32camRef, (snapshot) => {
       const data = snapshot.val();
-      setStatusESP32CAM(data.status);
-      setSSIDESP32CAM(data.ssid);
-      setIpAddressESP32CAM(data.ipaddress);
+      setStatusESP32CAM(data?.status ?? null);
+      setSSIDESP32CAM(data?.ssid ?? null);
+      setIpAddressESP32CAM(data?.ipaddress ?? null);
     });
 
     const vpsRef = ref(database, "settings/server/vps");
     onValue(vpsRef, (snapshot) => {
       const data = snapshot.val();
-      setStatusVPS(data.status);
-      setDomainVPS(data.domain);
-      setWebServerVPS(data.webserver);
+      setStatusVPS(data?.status ?? null);
+      setDomainVPS(data?.domain ?? null);
+      setWebServerVPS(data?.webserver ?? null);
     });
   }, []);
 
@@ -627,11 +723,16 @@ export default function Dashboard() {
                         <div className="text-tiny font-bold">Kondisi VPS</div>
                         <div className="text-tiny">
                           Web Server:{" "}
-                          <a href="https://nginx.org/">{webServerVPS}</a>
+                          <a target="_blank" href="https://nginx.org/">
+                            {webServerVPS}
+                          </a>
                         </div>
                         <div className="text-tiny">
                           Domain:{" "}
-                          <a href="https://nextgen.smartgreenovation.com/">
+                          <a
+                            target="_blank"
+                            href="http://dev.smartgreenovation.com"
+                          >
                             {domainVPS}
                           </a>
                         </div>

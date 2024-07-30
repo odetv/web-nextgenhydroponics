@@ -186,7 +186,11 @@ const ListTanaman = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 grid-rows-1 sm:grid-cols-2 sm:grid-rows-1 gap-4 w-full">
+      <div
+        className={`gap-4 w-full grid grid-cols-${
+          Object.keys(tanaman.nama_tanaman).length > 1 ? 2 : 1
+        }`}
+      >
         {Object.keys(tanaman.nama_tanaman).map((nama) => (
           <div
             key={nama}
