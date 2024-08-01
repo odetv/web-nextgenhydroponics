@@ -17,7 +17,6 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Image,
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -34,7 +33,7 @@ import {
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
-// import Image from "next/image";
+import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import AlertCheckAuth from "@/components/AlertCheckAuth";
@@ -784,6 +783,7 @@ export default function Dashboard() {
                               src={photoHama}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
+                              priority={true}
                             />
                             <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
@@ -858,6 +858,7 @@ export default function Dashboard() {
                               src={imageUrl}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
+                              priority={true}
                             />
                             <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
@@ -1339,6 +1340,7 @@ export default function Dashboard() {
                         height={128}
                         src={LampON.src}
                         alt="Grow Light"
+                        priority={true}
                       />
                       <p className="text-sm pt-4">
                         Lampu tanaman diatur secara otomatis
@@ -1361,6 +1363,7 @@ export default function Dashboard() {
                             height={128}
                             src={LampON.src}
                             alt="Grow Light"
+                            priority={true}
                           />
                         ) : (
                           <Image
@@ -1368,6 +1371,7 @@ export default function Dashboard() {
                             height={128}
                             src={LampOFF.src}
                             alt="Grow Light"
+                            priority={true}
                           />
                         )}
                         <Switch
