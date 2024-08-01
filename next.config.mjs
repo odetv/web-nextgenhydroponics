@@ -17,11 +17,11 @@ const nextConfig = {
     ];
     return config;
   },
-  experimental: {
-    images: {
-      unoptimized: true,
-    },
-  },
+  // experimental: {
+  //   images: {
+  //     unoptimized: true,
+  //   },
+  // },
   images: {
     domains: [
       "nextgen.smartgreenovation.com",

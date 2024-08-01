@@ -17,6 +17,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
+  Image,
 } from "@nextui-org/react";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -33,7 +34,7 @@ import {
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import AuthenticationForm from "../../components/AuthenticationForm";
-import Image from "next/image";
+// import Image from "next/image";
 import MemoryIcon from "@mui/icons-material/Memory";
 import RedIcon from "../../assets/images/components/red-circle.gif";
 import AlertCheckAuth from "@/components/AlertCheckAuth";

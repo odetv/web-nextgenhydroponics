@@ -3,9 +3,10 @@ import { app, database } from "../../firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { useUserAuthentication } from "../services/usersService";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { onValue, ref } from "firebase/database";
 import React from "react";
+import { Image } from "@nextui-org/react";
 
 const InfoProfile = () => {
   const { user, setUser, handleLogout } = useUserAuthentication();
@@ -135,7 +136,6 @@ const InfoProfile = () => {
             src={user.photoURL || ""}
             width={164}
             height={164}
-            priority={true}
           />
         )}
       </div>
