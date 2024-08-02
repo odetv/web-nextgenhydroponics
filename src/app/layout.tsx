@@ -18,8 +18,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Next-Gen Hydroponics",
   description:
-    "Website Tim Next-Gen Hydroponics Program MBKM Riset Independen Smart Green Garden Dago Engineering FTK Undiksha",
+    "Website Smart Greenovation Tim Smart Green Garden Next-Gen Hydroponics Program MBKM Riset Independen Smart Green Garden Dago Engineering FTK Undiksha",
 };
+export const googleVerification = "tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI";
 
 export default function RootLayout({
   children,
@@ -29,10 +30,10 @@ export default function RootLayout({
   if (process.env.NEXT_PUBLIC_VERCEL_MAINTENANCE_MODE === "true") {
     return (
       <html lang="en">
-        <meta
+        {/* <meta
           name="google-site-verification"
           content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
-        />
+        /> */}
         <meta
           http-equiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
@@ -51,10 +52,10 @@ export default function RootLayout({
   } else
     return (
       <html lang="en">
-        <meta
+        {/* <meta
           name="google-site-verification"
           content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
-        />
+        /> */}
         <meta
           http-equiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
