@@ -781,7 +781,7 @@ export default function Dashboard() {
                             <Image
                               width={640}
                               height={480}
-                              src={photoHama}
+                              src={photoHama.replace("https://", "http://")}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
                             />
@@ -855,7 +855,7 @@ export default function Dashboard() {
                             <Image
                               width={640}
                               height={480}
-                              src={imageUrl}
+                              src={photoHama.replace("https://", "http://")}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
                             />
