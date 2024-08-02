@@ -35,7 +35,7 @@ export default function RootLayout({
           content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
         /> */}
         <meta
-          http-equiv="Content-Security-Policy"
+          httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
         ></meta>
         <body className={poppins.className}>
@@ -57,7 +57,7 @@ export default function RootLayout({
           content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
         /> */}
         <meta
-          http-equiv="Content-Security-Policy"
+          httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
         ></meta>
         <body className={poppins.className}>
