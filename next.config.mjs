@@ -25,7 +25,7 @@ const nextConfig = {
   images: {
     domains: [
       "nextgen.smartgreenovation.com",
-      "nextgen.dev.smartgreenovation.com",
+      "http://nextgen.dev.smartgreenovation.com",
       "lh3.googleusercontent.com",
     ],
     unoptimized: false,
