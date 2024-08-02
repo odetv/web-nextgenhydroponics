@@ -33,6 +33,10 @@ export default function RootLayout({
           name="google-site-verification"
           content="tu2vxodNTr0wM3ZeAE1qYR0aIq6u9SPOvUA7jApPSTI"
         />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
         <body className={poppins.className}>
           <Providers>
             <Analytics />
