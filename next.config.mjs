@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   // output: "export",
   // trailingSlash: true,
@@ -26,9 +27,10 @@ const nextConfig = {
     domains: [
       "nextgen.smartgreenovation.com",
       "nextgen.dev.smartgreenovation.com",
+      "nextgen.dev.smartgreenovation.com/uploadedFile",
       "lh3.googleusercontent.com",
     ],
-    unoptimized: false,
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -43,13 +45,26 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "http",
+        hostname: "nextgen.dev.smartgreenovation.com/uploadedFile",
+        port: "",
+        pathname: "/**",
+      },
+      {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "**",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

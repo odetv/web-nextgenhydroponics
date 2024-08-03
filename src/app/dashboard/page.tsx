@@ -784,7 +784,6 @@ export default function Dashboard() {
                               src={photoHama}
                               alt="Pantau Hama Tanaman"
                               className="rounded-lg"
-                              priority={true}
                             />
                             <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
@@ -859,7 +858,6 @@ export default function Dashboard() {
                               src={imageUrl}
                               alt="Pantau Kamera Pengintai"
                               className="rounded-lg"
-                              priority={true}
                             />
                             <div className="flex flex-col sm:flex-row justify-between w-full">
                               <div>
