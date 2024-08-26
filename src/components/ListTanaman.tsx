@@ -23,6 +23,7 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
+import { useAuth } from "@/middleware/AuthenticationProviders";
 
 const formatDateForInput = (date: Date | null) => {
   if (!date) return "";
@@ -51,6 +52,7 @@ const calculateDaysBetween = (startDate: string, endDate: string) => {
 };
 
 const ListTanaman = () => {
+  const user = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [tanaman, setTanaman] = useState<Tanaman | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -252,17 +254,19 @@ const ListTanaman = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="absolute bottom-6 right-6">
-                <Button
-                  onPress={() => handleEdit(nama)}
-                  size="sm"
-                  color="success"
-                  variant="flat"
-                  className="p-2 min-w-8 h-8"
-                >
-                  <TuneIcon />
-                </Button>
-              </div>
+              {user && user.role === "admin" ? (
+                <div className="absolute bottom-6 right-6">
+                  <Button
+                    onPress={() => handleEdit(nama)}
+                    size="sm"
+                    color="success"
+                    variant="flat"
+                    className="p-2 min-w-8 h-8"
+                  >
+                    <TuneIcon />
+                  </Button>
+                </div>
+              ) : null}
             </div>
           </div>
         ))}
