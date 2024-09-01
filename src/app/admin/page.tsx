@@ -112,7 +112,7 @@ export default function Admin() {
           };
           return {
             ...typedUser,
-            role: typedUser.role || "registered",
+            role: typedUser.role || "member",
           };
         });
       setActiveUsers(activeUsersList);

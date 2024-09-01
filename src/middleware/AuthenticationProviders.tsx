@@ -24,9 +24,9 @@ export function useAuth() {
         const snapshot = await get(userRef);
         const userExists = snapshot.exists();
 
-        let userRole = "registered";
+        let userRole = "member";
         if (userExists) {
-          userRole = snapshot.val().role || "registered";
+          userRole = snapshot.val().role || "member";
         }
         if (ADMIN_EMAILS.includes(userData.email ?? "")) {
           userRole = "admin";
