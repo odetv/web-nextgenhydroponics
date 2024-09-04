@@ -632,6 +632,7 @@ export default function Dashboard() {
                 <Popover placement="bottom" showArrow={true}>
                   <PopoverTrigger>
                     <Chip
+                      isDisabled
                       startContent={<MemoryIcon fontSize="small" />}
                       variant="faded"
                       color="primary"
@@ -680,6 +681,7 @@ export default function Dashboard() {
                 <Popover placement="bottom" showArrow={true}>
                   <PopoverTrigger>
                     <Chip
+                      isDisabled
                       startContent={<CameraIcon fontSize="small" />}
                       variant="faded"
                       color="primary"
@@ -714,6 +716,7 @@ export default function Dashboard() {
                 <Popover placement="bottom" showArrow={true}>
                   <PopoverTrigger>
                     <Chip
+                      isDisabled
                       startContent={<ComputerIcon fontSize="small" />}
                       variant="faded"
                       color="primary"
@@ -923,6 +926,7 @@ export default function Dashboard() {
                   <div className="flex flex-col gap-2 mt-2 mb-2 bg-green-200 p-4 rounded-lg justify-center items-center">
                     <div className="flex flex-col justify-center items-center gap-1 text-sm">
                       <Switch
+                        isDisabled
                         size="sm"
                         isSelected={controlsAction === 1}
                         onValueChange={handleSwitchControlsActionChange}
@@ -1111,6 +1115,7 @@ export default function Dashboard() {
                         >
                           <div className="flex flex-row justify-center gap-4 items-center">
                             <Input
+                              isDisabled
                               color="default"
                               type="number"
                               label="Atur Jumlah Nutrisi (PPM)"
@@ -1118,6 +1123,7 @@ export default function Dashboard() {
                               min={0}
                             />
                             <Button
+                              isDisabled
                               variant="flat"
                               color="default"
                               radius="sm"
@@ -1139,6 +1145,14 @@ export default function Dashboard() {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="flex flex-col justify-start">
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">Peringatan</div>
+                          <div className="text-tiny">
+                            Input jumlah nutrisi tidak berfungsi (Karena
+                            terkendala pada proses pengaturan jumlah nutrisi
+                            (PPM) di IoT). Silahkan gunakan switch manual!
+                          </div>
+                        </div>
                         <div className="px-1 py-2">
                           <div className="text-small font-bold">
                             Standar Parameter
@@ -1242,6 +1256,7 @@ export default function Dashboard() {
                         >
                           <div className="flex flex-row gap-4 justify-center items-center">
                             <Input
+                              isDisabled
                               color="default"
                               type="number"
                               label="Atur Jumlah pH Air"
@@ -1250,6 +1265,7 @@ export default function Dashboard() {
                               min={0}
                             />
                             <Button
+                              isDisabled
                               variant="flat"
                               color="default"
                               radius="sm"
@@ -1271,6 +1287,14 @@ export default function Dashboard() {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="flex flex-col justify-start">
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">Peringatan</div>
+                          <div className="text-tiny">
+                            Input jumlah pH tidak berfungsi (Karena terkendala
+                            pada proses pengaturan jumlah nutrisi (PPM) di IoT).
+                            Silahkan gunakan switch manual!
+                          </div>
+                        </div>
                         <div className="px-1 py-2">
                           <div className="text-small font-bold">
                             Standar Parameter
@@ -1382,6 +1406,13 @@ export default function Dashboard() {
                   </PopoverTrigger>
                   <PopoverContent>
                     <div className="flex flex-col justify-start">
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">Peringatan</div>
+                        <div className="text-tiny">
+                          Terkadang kelembapan dan suhu udara tidak berfungsi
+                          (Karena terkendala pada proses di IoT).
+                        </div>
+                      </div>
                       <div className="px-1 py-2">
                         <div className="text-small font-bold">
                           Standar Parameter
@@ -1518,6 +1549,14 @@ export default function Dashboard() {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="flex flex-col justify-start">
+                        <div className="px-1 py-2">
+                          <div className="text-small font-bold">Peringatan</div>
+                          <div className="text-tiny">
+                            Terkadang kamera pemantauan hama tidak berfungsi
+                            yang disebabkan oleh jaringan. database penyimpanan
+                            data penuh, atau bug dari modul ESP32CAM.
+                          </div>
+                        </div>
                         <div className="px-1 py-2">
                           <div className="text-small font-bold">
                             Standar Parameter

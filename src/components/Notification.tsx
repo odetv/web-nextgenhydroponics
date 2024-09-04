@@ -7,6 +7,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Tooltip,
 } from "@nextui-org/react";
 import CampaignIcon from "@mui/icons-material/Campaign";
 
@@ -30,16 +31,23 @@ export default function AccessibleBadges() {
       className=""
     >
       <PopoverTrigger>
-        <IconButton aria-label={notificationsLabel(100)}>
-          <Badge
-            badgeContent={0}
-            color="warning"
-            variant="standard"
-            className="text-default-400"
-          >
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        <Tooltip
+          showArrow={true}
+          size="sm"
+          content="Maaf, Fitur belum tersedia."
+          color="danger"
+        >
+          <IconButton aria-label={notificationsLabel(100)}>
+            <Badge
+              badgeContent={0}
+              color="warning"
+              variant="standard"
+              className="text-default-400"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Tooltip>
       </PopoverTrigger>
       <PopoverContent>
         <div className="px-1 py-2">
